@@ -17,7 +17,6 @@ config :myscinet, MySciNet.Repo,
 # you can enable the server option below.
 config :myscinet, MySciNetWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "nXk7K4UcWwbbPrsd018qVC3CJkKXq/X50naP+hlAz9mPjp0iAZmnkCHfO7vZyZxQ",
   server: false
 
 # Print only warnings and errors during test

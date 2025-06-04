@@ -24,7 +24,6 @@ config :myscinet, MySciNetWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "WfS/E125yEf+Aic6T1XWoZUblzYtQ7Kj2tSYoQ0hpN/vdgvCWUosnv5nWYU1kc8Q",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:myscinet, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:myscinet, ~w(--watch)]}
