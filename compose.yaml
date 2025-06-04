@@ -1,0 +1,27 @@
+services:
+  myscinet:
+    build: .
+    command: ["sh", "-c", "if [ ! -f /.setup_done ]; then mix setup && touch /.setup_done; else mix deps.get && mix compile && mix assets.deploy; fi && mix phx.digest.clean --all && mix phx.server"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      MIX_ENV: dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./app:/app:Z
+    working_dir: /app
+
+  postgres:
+    image: timescale/timescaledb-ha:pg17
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./test/dump.sql:/docker-entrypoint-initdb.d/dump.sql:ro
+

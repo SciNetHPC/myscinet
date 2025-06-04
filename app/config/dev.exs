@@ -4,8 +4,8 @@ import Config
 config :myscinet, MySciNet.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
-  database: "myscinet_dev",
+  hostname: "postgres",
+  database: "postgres",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
