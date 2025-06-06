@@ -40,14 +40,7 @@
             <ul
               tabindex="0"
               class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-              <li>
-                <a>Jobs</a>
-                <ul class="p-2">
-                  <li><a>Trillium CPU</a></li>
-                  <li><a>Trillium GPU</a></li>
-                  <li><a>Balam</a></li>
-                </ul>
-              </li>
+              <li><a href={~p"/jobs"}>Jobs</a></li>
               <li><a href={~p"/allocations"}>Allocations</a></li>
               <li><a href={~p"/storage"}>Storage</a></li>
             </ul>
@@ -56,16 +49,7 @@
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary>Jobs</summary>
-                <ul class="p-2 w-32">
-                  <li><a>Trillium CPU</a></li>
-                  <li><a>Trillium GPU</a></li>
-                  <li><a>Balam</a></li>
-                </ul>
-              </details>
-            </li>
+            <li><a href={~p"/jobs"}>Jobs</a></li>
             <li><a href={~p"/allocations"}>Allocations</a></li>
             <li><a href={~p"/storage"}>Storage</a></li>
           </ul>
@@ -75,7 +59,7 @@
         </div>
       </div>
     </header>
-    <main>
+    <main class="p-6">
       {@inner_content}
     </main>
     <footer class="footer footer-horizontal footer-center bg-base-200 text-base-content rounded p-10">

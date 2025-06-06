@@ -20,6 +20,13 @@ defmodule MySciNetWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/jobs", MySciNetWeb do
+    pipe_through :browser
+
+    get "/", JobController, :index
+    get "/:id", JobController, :show
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MySciNetWeb do
   #   pipe_through :api

@@ -1,0 +1,32 @@
+<h1 class="text-2xl font-bold mb-4">Job List</h1>
+
+<table class="table w-full">
+  <thead>
+    <tr>
+      <th>Job ID</th>
+      <th>User</th>
+      <th>Account</th>
+      <th>Submit Time</th>
+      <th>State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for job <- @jobs do %>
+      <tr class="hover:bg-primary/10 cursor-pointer" onclick={"window.location='" <> ~p"/jobs/#{job.jobid}" <> "'"}>
+        <td><%= job.jobid %></td>
+        <td><%= job.username %></td>
+        <td><%= job.account %></td>
+        <td><%= job.submit %></td>
+        <td><%= job.state %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="flex items-center gap-4 mt-4 justify-center">
+  <%= if @page > 1 do %>
+    <a class="btn btn-outline" href={~p"/jobs?page=#{@page - 1}"}>Previous</a>
+  <% end %>
+  <span>Page <%= @page %></span>
+  <a class="btn btn-outline" href={~p"/jobs?page=#{@page + 1}"}>Next</a>
+</div>
