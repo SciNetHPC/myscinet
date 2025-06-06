@@ -2,6 +2,7 @@ defmodule MySciNetWeb.Router do
   use MySciNetWeb, :router
 
   pipeline :browser do
+    plug MySciNetWeb.Plugs.SetLocale
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash

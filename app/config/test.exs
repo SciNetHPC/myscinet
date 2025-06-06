@@ -8,10 +8,9 @@ import Config
 config :myscinet, MySciNet.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
-  database: "myscinet_test#{System.get_env("MIX_TEST_PARTITION")}",
-  pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: System.schedulers_online() * 2
+  hostname: "postgres",
+  database: "postgres",
+  pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

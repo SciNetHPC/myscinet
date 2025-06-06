@@ -54,8 +54,11 @@
             <li><a href={~p"/storage"}>Storage</a></li>
           </ul>
         </div>
-        <div class="navbar-end">
+        <div class="navbar-end flex gap-2">
           <Layouts.theme_toggle />
+          <a href={~p"/login"} class="btn btn-primary">
+            <%= gettext "Sign In" %>
+          </a>
         </div>
       </div>
     </header>
