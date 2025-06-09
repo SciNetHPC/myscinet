@@ -68,6 +68,28 @@ msgid "User"
 msgstr ""
 
 #: lib/myscinet_web/components/layouts/root.html.heex:60
+#: lib/myscinet_web/controllers/login_html/new.html.heex:1
+#: lib/myscinet_web/controllers/login_html/new.html.heex:6
 #, elixir-autogen, elixir-format
 msgid "Sign In"
+msgstr ""
+
+#: lib/myscinet_web/controllers/login_controller.ex:17
+#, elixir-autogen, elixir-format
+msgid "Invalid username or password."
+msgstr ""
+
+#: lib/myscinet_web/controllers/login_controller.ex:12
+#, elixir-autogen, elixir-format
+msgid "Login successful!"
+msgstr ""
+
+#: lib/myscinet_web/controllers/login_html/new.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Password"
+msgstr ""
+
+#: lib/myscinet_web/controllers/login_html/new.html.heex:4
+#, elixir-autogen, elixir-format
+msgid "Username"
 msgstr ""

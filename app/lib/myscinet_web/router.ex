@@ -28,6 +28,13 @@ defmodule MySciNetWeb.Router do
     get "/:id", JobController, :show
   end
 
+  scope "/login", MySciNetWeb do
+    pipe_through :browser
+
+    get "/", LoginController, :new
+    post "/", LoginController, :create
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MySciNetWeb do
   #   pipe_through :api

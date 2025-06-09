@@ -1,0 +1,7 @@
+<h1 class="text-2xl font-bold mb-4"><%= gettext "Sign In" %></h1>
+
+<.form for={} action={~p"/login"} class="space-y-4 max-w-sm mx-auto">
+  <.input label={gettext "Username"} name="username" value="" type="email" class="input input-bordered w-full" required />
+  <.input label={gettext "Password"} name="password" value="" type="password" class="input input-bordered w-full" required />
+  <button type="submit" class="btn btn-primary w-full"><%= gettext "Sign In" %></button>
+</.form>
