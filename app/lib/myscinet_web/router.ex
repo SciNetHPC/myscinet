@@ -19,6 +19,8 @@ defmodule MySciNetWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/allocations", AllocationsController, :index
+    get "/storage", StorageController, :index
   end
 
   scope "/jobs", MySciNetWeb do
