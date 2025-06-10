@@ -1,4 +1,4 @@
-<h1>Job Details</h1>
+<.header><%= gettext "Job Details" %></.header>
 <ul>
   <li><b>Job ID:</b> <%= @job.jobid %></li>
   <li><b>User:</b> <%= @job.username %></li>
@@ -9,4 +9,25 @@
   <li><b>Elapsed:</b> <%= @job.elapsed %></li>
   <li><b>Exit Code:</b> <%= @job.exitcode %></li>
   <li><b>Workdir:</b> <%= @job.workdir %></li>
+  <li><b>Nodes:</b> <%= @job.nodelist %></li>
 </ul>
+
+<%= if @jobscript do %>
+  <div class="card bg-base-200 shadow-md mt-6">
+    <div class="card-body">
+      <h2 class="text-base font-normal font-mono card-title"><%= if @command, do: "$ ", else: "" %><%= @command || "Job Script" %></h2>
+      <hr class="-mx-6 border-base-300 my-2" />
+      <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobscript %></pre>
+    </div>
+  </div>
+<% end %>
+
+<%= if @jobenv do %>
+  <div class="card bg-base-200 shadow-md mt-6">
+    <div class="card-body">
+      <h2 class="text-base font-normal font-mono card-title"><%= gettext "Job Environment" %></h2>
+      <hr class="-mx-6 border-base-300 my-2" />
+      <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobenv %></pre>
+    </div>
+  </div>
+<% end %>

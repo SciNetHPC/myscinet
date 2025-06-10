@@ -80,3 +80,13 @@ msgstr "Mot de passe"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Username"
 msgstr "Nom d'utilisateur"
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "Job Details"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:28
+#, elixir-autogen, elixir-format
+msgid "Job Environment"
+msgstr ""
