@@ -13,6 +13,7 @@ defmodule MySciNetWeb.JobController do
 
     jobs =
       Tgjsum
+      |> where([j], not ilike(j.partition, ^"debug%"))
       |> order_by([j], desc: j.submit)
       |> limit(^@page_size)
       |> offset(^offset)
