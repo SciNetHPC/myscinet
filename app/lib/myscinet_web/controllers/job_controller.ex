@@ -32,6 +32,27 @@ defmodule MySciNetWeb.JobController do
       end
     env_row = Repo.get_by(MySciNet.Tgjenv, jobid: id)
     jobenv = env_row && env_row.jobenv
-    render(conn, "show.html", job: job, jobscript: script && script.jobscript, command: command, jobenv: jobenv)
+
+    # Fetch all utilization data for the job in one query
+    util_data =
+      MySciNet.Tgutil
+      |> where([u], u.jobid == ^id)
+      |> select([u], %{
+        time: u.time,
+        nodename: u.nodename,
+        cpupercent: u.cpupercent,
+        dcgm_fi_prof_gr_engine_active: u.dcgm_fi_prof_gr_engine_active,
+        dcgm_fi_prof_pipe_fp64_active: u.dcgm_fi_prof_pipe_fp64_active,
+      })
+      |> order_by([u], u.time)
+      |> Repo.all()
+
+    render(conn, "show.html",
+      command: command,
+      job: job,
+      jobenv: jobenv,
+      jobscript: script && script.jobscript,
+      util_data: util_data,
+    )
   end
 end
