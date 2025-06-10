@@ -5,7 +5,7 @@
   %{id: "fp64-plot", label: gettext("FP64 Utilization"), y: "dcgm_fi_prof_pipe_fp64_active", y_label: "FP64 %"}
 ] %>
 <div class="tabs tabs-border">
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} />
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} checked />
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
@@ -24,44 +24,46 @@
     </div>
   </div>
 
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked/>
-  <div class="tab-content">
-    <%= for plot <- plots do %>
+  <%= if @util_data && length(@util_data) > 0 do %>
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} />
+    <div class="tab-content">
+      <%= for plot <- plots do %>
+        <div class="card bg-base-200 shadow-md">
+          <div class="card-body">
+            <h2 class="text-base font-normal font-mono card-title"><%= plot.label %></h2>
+            <hr class="-mx-6 border-base-300 my-2" />
+            <div id={plot.id} class="w-full h-64"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= if @jobscript do %>
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Script"} />
+    <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
-          <h2 class="text-base font-normal font-mono card-title"><%= plot.label %></h2>
+        <%= if @command do %>
+          <h2 class="text-base font-normal font-mono card-title">$ <%= @command %></h2>
           <hr class="-mx-6 border-base-300 my-2" />
-          <div id={plot.id} class="w-full h-64"></div>
+        <% end %>
+          <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobscript %></pre>
         </div>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-<%= if @jobscript do %>
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Script"} />
-  <div class="tab-content">
-    <div class="card bg-base-200 shadow-md">
-      <div class="card-body">
-      <%= if @command do %>
-        <h2 class="text-base font-normal font-mono card-title">$ <%= @command %></h2>
-        <hr class="-mx-6 border-base-300 my-2" />
-      <% end %>
-        <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobscript %></pre>
+  <%= if @jobenv do %>
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Environment"} />
+    <div class="tab-content">
+      <div class="card bg-base-200 shadow-md">
+        <div class="card-body">
+          <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobenv %></pre>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
-
-<%= if @jobenv do %>
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Environment"} />
-  <div class="tab-content">
-    <div class="card bg-base-200 shadow-md">
-      <div class="card-body">
-        <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobenv %></pre>
-      </div>
-    </div>
-  </div>
-<% end %>
+  <% end %>
 </div>
 
 <script type="module">
