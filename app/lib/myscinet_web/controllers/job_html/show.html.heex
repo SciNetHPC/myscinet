@@ -5,7 +5,7 @@
   %{id: "fp64-plot", label: gettext("FP64 Utilization"), y: "dcgm_fi_prof_pipe_fp64_active", y_label: "FP64 %"}
 ] %>
 <div class="tabs tabs-border">
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} checked />
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} />
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
@@ -25,7 +25,7 @@
   </div>
 
   <%= if @util_data && length(@util_data) > 0 do %>
-    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} />
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked />
     <div class="tab-content">
       <%= for plot <- plots do %>
         <div class="card bg-base-200 shadow-md">
@@ -82,7 +82,7 @@
         Plot.lineY(data, {x: "time", y: plot.y, stroke: "nodename"}),
         Plot.dot(data, {x: "time", y: plot.y, stroke: "nodename"})
       ],
-      width: el.offsetWidth || 600,
+      width: el.clientWidth || 600,
       height: 240,
       marginLeft: 50,
       marginBottom: 40
