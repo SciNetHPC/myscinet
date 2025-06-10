@@ -49,6 +49,10 @@ defmodule MySciNet.Tgutil do
     field :dcgm_fi_dev_vgpu_license_status, :float
     field :dcgm_fi_prof_gr_engine_active, :float
     field :dcgm_fi_prof_sm_active, :float
+    field :dcgm_fi_prof_sm_occupancy, :float
+    field :dcgm_fi_prof_pipe_tensor_active, :float
+    field :dcgm_fi_prof_dram_active, :float
+    field :dcgm_fi_prof_pipe_fp64_active, :float
     field :dcgm_fi_prof_pipe_fp32_active, :float
     field :dcgm_fi_prof_pipe_fp16_active, :float
     field :dcgm_fi_prof_pcie_tx_bytes, :string
