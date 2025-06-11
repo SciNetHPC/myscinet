@@ -53,7 +53,7 @@ defmodule MySciNetWeb.JobController do
       job: job,
       jobenv: jobenv,
       jobscript: script && script.jobscript,
-      util_data: util_data,
+      util_data: util_data
     )
   end
 end
