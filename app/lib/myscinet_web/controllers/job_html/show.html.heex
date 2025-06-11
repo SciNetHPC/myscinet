@@ -10,15 +10,34 @@
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
         <ul>
-          <li><b>User:</b> <%= @job.username %></li>
-          <li><b>Account:</b> <%= @job.account %></li>
-          <li><b>Submit Time:</b> <%= @job.submit %></li>
-          <li><b>State:</b> <%= @job.state %></li>
-          <li><b>Partition:</b> <%= @job.partition %></li>
-          <li><b>Elapsed:</b> <%= @job.elapsed %></li>
-          <li><b>Exit Code:</b> <%= @job.exitcode %></li>
-          <li><b>Workdir:</b> <%= @job.workdir %></li>
-          <li><b>Nodes:</b> <%= @job.nodelist %></li>
+          <li><b><%= gettext "Account" %>:</b> <%= @job.account %></li>
+          <li><b><%= gettext "Submit Time" %>:</b> <%= @job.submit %></li>
+          <li><b><%= gettext "Eligible" %>:</b> <%= @job.eligible %></li>
+          <li><b><%= gettext "Start Time" %>:</b> <%= @job.start %></li>
+          <li><b><%= gettext "End Time" %>:</b> <%= @job.endtime %></li>
+          <li><b><%= gettext "State" %>:</b> <%= @job.state %></li>
+          <li><b><%= gettext "Partition" %>:</b> <%= @job.partition %></li>
+          <li><b><%= gettext "Time Limit" %>:</b> <%= @job.timelimit %></li>
+          <li><b><%= gettext "Elapsed" %>:</b> <%= @job.elapsed %></li>
+          <li><b><%= gettext "Exit Code" %>:</b> <%= @job.exitcode %></li>
+          <li><b><%= gettext "Workdir" %>:</b> <%= @job.workdir %></li>
+          <li><b><%= gettext "Nodes" %>:</b> <%= @job.nodelist %></li>
+          <li><b><%= gettext "Alloc TRES" %>:</b> <%= @job.alloctres %></li>
+          <li><b><%= gettext "User" %>:</b> <%= @job.username %></li>
+          <li><b><%= gettext "Group" %>:</b> <%= @job.groupname %></li>
+          <li><b><%= gettext "UID" %>:</b> <%= @job.uid %></li>
+          <li><b><%= gettext "GID" %>:</b> <%= @job.gid %></li>
+          <li><b><%= gettext "Max Disk Read" %>:</b> <%= @job.maxdiskread %></li>
+          <li><b><%= gettext "Max Disk Write" %>:</b> <%= @job.maxdiskwrite %></li>
+          <li><b><%= gettext "Max RSS" %>:</b> <%= @job.maxrss %></li>
+          <li><b><%= gettext "Max VM Size" %>:</b> <%= @job.maxvmsize %></li>
+          <li><b><%= gettext "Node Count" %>:</b> <%= @job.nnodes %></li>
+          <li><b><%= gettext "Priority" %>:</b> <%= @job.priority %></li>
+          <li><b><%= gettext "QOS" %>:</b> <%= @job.qos %></li>
+          <li><b><%= gettext "CPU Time" %>:</b> <%= @job.cputime %></li>
+          <li><b><%= gettext "System CPU" %>:</b> <%= @job.systemcpu %></li>
+          <li><b><%= gettext "User CPU" %>:</b> <%= @job.usercpu %></li>
+          <li><b><%= gettext "Total CPU" %>:</b> <%= @job.totalcpu %></li>
         </ul>
       </div>
     </div>
