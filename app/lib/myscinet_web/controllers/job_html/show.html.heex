@@ -43,20 +43,23 @@
     </div>
   </div>
 
-  <%= if @util_data && length(@util_data) > 0 do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked />
     <div class="tab-content">
-      <%= for plot <- plots do %>
-        <div class="card bg-base-200 shadow-md">
-          <div class="card-body">
+      <div class="card bg-base-200 shadow-md">
+        <div class="card-body">
+          <div class="flex justify-end mb-2">
+            <a href={~p"/jobs/#{@job.jobid}/perf.csv"} download class="btn btn-sm btn-outline btn-primary">
+              <%= gettext "Download CSV" %>
+            </a>
+          </div>
+          <%= for plot <- plots do %>
             <h2 class="text-base font-normal font-mono card-title"><%= plot.label %></h2>
             <hr class="-mx-6 border-base-300 my-2" />
             <div id={plot.id} class="w-full h-64"></div>
-          </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
-  <% end %>
 
   <%= if @jobscript do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Script"} />
@@ -86,26 +89,30 @@
 </div>
 
 <script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
-  const data = <%= raw Jason.encode!(@util_data) %>;
+  const jobid = "<%= @job.jobid %>";
   const plots = <%= raw Jason.encode!(plots) %>;
-  for (const plot of plots) {
-    if (!data.some(d => d[plot.y] !== undefined && d[plot.y] !== null)) continue;
-    const el = document.getElementById(plot.id);
-    if (!el) continue;
-    const p = Plot.plot({
-      x: {label: "Time", type: "utc"},
-      y: {label: plot.y_label},
-      color: {legend: true, label: "Node", type: "categorical"},
-      marks: [
-        Plot.lineY(data, {x: "time", y: plot.y, stroke: "nodename"}),
-        Plot.dot(data, {x: "time", y: plot.y, stroke: "nodename"})
-      ],
-      width: el.clientWidth || 600,
-      height: 240,
-      marginLeft: 50,
-      marginBottom: 40
-    });
-    el.appendChild(p);
-  }
+  const csvUrl = `/jobs/${jobid}/perf.csv`;
+
+  d3.csv(csvUrl, d3.autoType).then(data => {
+    for (const plot of plots) {
+      if (!data.some(d => d[plot.y] !== undefined && d[plot.y] !== null)) continue;
+      const el = document.getElementById(plot.id);
+      if (!el) continue;
+      const p = Plot.plot({
+        x: {label: "Time", type: "time", nice: true},
+        y: {label: plot.y_label, nice: true},
+        color: {legend: true, label: "Node", type: "categorical"},
+        marks: [
+          Plot.line(data, {x: "time", y: plot.y, stroke: "nodename"}),
+        ],
+        width: el.clientWidth || 600,
+        height: 240,
+        marginLeft: 50,
+        marginBottom: 40
+      });
+      el.appendChild(p);
+    }
+  });
 </script>

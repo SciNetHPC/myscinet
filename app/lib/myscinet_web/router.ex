@@ -28,6 +28,7 @@ defmodule MySciNetWeb.Router do
 
     get "/", JobController, :index
     get "/:id", JobController, :show
+    get "/:id/perf.csv", JobController, :perf
   end
 
   scope "/login", MySciNetWeb do
