@@ -70,7 +70,7 @@
           <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
           <hr class="-mx-6 border-base-300 my-2" />
         <% end %>
-          <pre class="whitespace-pre-wrap overflow-x-auto"><%= @jobscript %></pre>
+          <pre class="whitespace-pre-wrap overflow-x-auto"><code class="language-bash"><%= @jobscript %></code></pre>
         </div>
       </div>
     </div>
@@ -116,3 +116,8 @@
     }
   });
 </script>
+
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
