@@ -67,10 +67,10 @@
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
         <%= if @command do %>
-          <h2 class="text-base font-normal font-mono card-title">$ <%= @command %></h2>
+          <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
           <hr class="-mx-6 border-base-300 my-2" />
         <% end %>
-          <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobscript %></pre>
+          <pre class="whitespace-pre-wrap overflow-x-auto"><%= @jobscript %></pre>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
-          <pre class="whitespace-pre-wrap overflow-x-auto text-sm"><%= @jobenv %></pre>
+          <pre class="whitespace-pre-wrap overflow-x-auto"><%= @jobenv %></pre>
         </div>
       </div>
     </div>
