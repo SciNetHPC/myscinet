@@ -27,8 +27,8 @@ defmodule MySciNetWeb.Router do
     pipe_through :browser
 
     get "/", JobController, :index
-    get "/:id", JobController, :show
-    get "/:id/perf.csv", JobController, :perf
+    get "/:cluster/:id", JobController, :show
+    get "/:cluster/:id/perf.csv", JobController, :perf
   end
 
   scope "/login", MySciNetWeb do

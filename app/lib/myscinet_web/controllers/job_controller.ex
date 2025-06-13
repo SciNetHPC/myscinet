@@ -22,7 +22,8 @@ defmodule MySciNetWeb.JobController do
     render(conn, "index.html", jobs: jobs, page: page)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"cluster" => cluster, "id" => cid}) do
+    id = "#{cid}" # XXX:TBD temporary fallback
     job = Repo.get_by!(Tgjsum, jobid: id)
     script = Repo.get_by(MySciNet.Tgjscript, jobid: id)
     command_row = Repo.get_by(MySciNet.Tgjcom, jobid: id)
@@ -42,7 +43,7 @@ defmodule MySciNetWeb.JobController do
     )
   end
 
-  def perf(conn, %{"id" => id}) do
+  def perf(conn, %{"cluster" => cluster, "id" => id}) do
     cols = [
       :time,
       :nodename,

@@ -1,4 +1,7 @@
-<.header><%= "#{gettext "Job"} #{@job.jobid}: #{@job.jobname}" %></.header>
+<% {cluster, cjobid} = split_jobid(@job.jobid) %>
+<% perf_csv_path = ~p"/jobs/#{cluster}/#{cjobid}/perf.csv" %>
+
+<.header><%= "#{gettext "Job"} #{cluster}/#{cjobid}" %>: <%= {:safe, @job.jobname |> String.replace("_", "<wbr>_")} %></.header>
 
 <% plots = [
   %{id: "cpu-plot", label: gettext("CPU Utilization"), y: "cpupercent", y_label: "CPU %"},
@@ -55,7 +58,7 @@
         </div>
       </div>
       <div class="flex justify-end mt-4">
-        <a href={~p"/jobs/#{@job.jobid}/perf.csv"} download class="btn btn-sm btn-outline btn-primary">
+        <a href={perf_csv_path} download class="btn btn-sm btn-outline btn-primary">
           <%= gettext "Download CSV" %>
         </a>
       </div>
@@ -91,9 +94,8 @@
 <script type="module">
   import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
-  const jobid = "<%= @job.jobid %>";
   const plots = <%= raw Jason.encode!(plots) %>;
-  const csvUrl = `/jobs/${jobid}/perf.csv`;
+  const csvUrl = "<%= raw perf_csv_path %>";
 
   d3.csv(csvUrl, d3.autoType).then(data => {
     for (const plot of plots) {
