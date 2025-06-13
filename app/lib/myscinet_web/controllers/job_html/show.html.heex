@@ -14,7 +14,7 @@
   %{id: "fp64-plot", label: gettext("FP64 Utilization"), y: "dcgm_fi_prof_pipe_fp64_active", y_label: "FP64 %"}
 ] %>
 <div class="tabs tabs-border">
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} />
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} checked={@script == nil} />
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
@@ -52,7 +52,8 @@
     </div>
   </div>
 
-    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked />
+  <%= if @script do %>
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked={@script != nil} />
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
@@ -70,7 +71,6 @@
       </div>
     </div>
 
-  <%= if @jobscript do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Script"} />
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
@@ -79,18 +79,18 @@
           <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
           <hr class="-mx-6 border-base-300 my-2" />
         <% end %>
-          <pre class="whitespace-pre-wrap overflow-x-auto"><code class="language-bash"><%= @jobscript %></code></pre>
+          <pre class="whitespace-pre-wrap overflow-x-auto"><code class="language-bash"><%= @script %></code></pre>
         </div>
       </div>
     </div>
   <% end %>
 
-  <%= if @jobenv do %>
+  <%= if @env do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Environment"} />
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
-          <pre class="whitespace-pre-wrap overflow-x-auto"><%= @jobenv %></pre>
+          <pre class="whitespace-pre-wrap overflow-x-auto"><%= @env %></pre>
         </div>
       </div>
     </div>

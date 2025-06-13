@@ -24,23 +24,34 @@ defmodule MySciNetWeb.JobController do
 
   def show(conn, %{"cluster" => cluster, "id" => cid}) do
     id = "#{cid}" # XXX:TBD temporary fallback
-    job = Repo.get_by!(Tgjsum, jobid: id)
-    script = Repo.get_by(MySciNet.Tgjscript, jobid: id)
-    command_row = Repo.get_by(MySciNet.Tgjcom, jobid: id)
-    command =
-      case command_row && command_row.jobcom do
-        nil -> nil
-        str -> String.replace(str, "/opt/slurm/bin/sbatch --export=NONE", "sbatch")
-      end
-    env_row = Repo.get_by(MySciNet.Tgjenv, jobid: id)
-    jobenv = env_row && env_row.jobenv
 
-    render(conn, "show.html",
-      command: command,
-      job: job,
-      jobenv: jobenv,
-      jobscript: script && script.jobscript
-    )
+    job = Repo.get_by(Tgjsum, jobid: id)
+    case job do
+      nil ->
+        conn
+        |> put_status(:not_found)
+        |> text("not found or not permitted")
+      _ ->
+        row = Repo.get_by(MySciNet.Tgjscript, jobid: id)
+        script = row && row.jobscript
+
+        row = Repo.get_by(MySciNet.Tgjcom, jobid: id)
+        command =
+          case row && row.jobcom do
+            nil -> nil
+            str -> String.replace(str, "/opt/slurm/bin/sbatch --export=NONE", "sbatch")
+          end
+
+        row = Repo.get_by(MySciNet.Tgjenv, jobid: id)
+        env = row && row.jobenv
+
+        render(conn, "show.html",
+          command: command,
+          job: job,
+          env: env,
+          script: script
+        )
+    end
   end
 
   def perf(conn, %{"cluster" => cluster, "id" => id}) do
