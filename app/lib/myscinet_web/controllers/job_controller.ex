@@ -19,7 +19,10 @@ defmodule MySciNetWeb.JobController do
       |> offset(^offset)
       |> Repo.all()
 
-    render(conn, "index.html", jobs: jobs, page: page)
+    render(conn, "index.html", page_title: "jobs",
+      jobs: jobs,
+      page: page
+    )
   end
 
   def show(conn, %{"cluster" => cluster, "id" => cid}) do
@@ -45,7 +48,7 @@ defmodule MySciNetWeb.JobController do
         row = Repo.get_by(MySciNet.Tgjenv, jobid: id)
         env = row && row.jobenv
 
-        render(conn, "show.html",
+        render(conn, "show.html", page_title: "job #{id}",
           command: command,
           job: job,
           env: env,
