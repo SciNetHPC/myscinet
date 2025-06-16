@@ -3,6 +3,10 @@ defmodule MySciNetWeb.JobHTML do
 
   embed_templates "job_html/*"
 
+  def add_underscore_breaks(s) do
+    {:safe, String.replace(s, "_", "_<wbr/>")}
+  end
+
   defp split_jobid(jobid) do
     case String.split(jobid, "-") do
       [cluster, id] -> {cluster, id}
