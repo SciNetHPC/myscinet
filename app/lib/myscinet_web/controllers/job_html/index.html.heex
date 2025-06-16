@@ -1,4 +1,12 @@
-<.header><%= gettext "Jobs" %></.header>
+<div class="flex justify-between items-center">
+  <.header><%= gettext "Jobs" %></.header>
+  <form method="get" action="" class="flex items-center pb-4">
+    <span class="join">
+      <input name="q" type="text" value={@conn.query_params["q"]} placeholder={gettext "Search for..."} class="input input-bordered input-sm join-item w-48" />
+      <button type="submit" class="btn btn-sm btn-primary join-item">Search</button>
+    </span>
+  </form>
+</div>
 
 <table class="table w-full">
   <thead>
