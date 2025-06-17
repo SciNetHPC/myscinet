@@ -14,7 +14,7 @@ services:
     working_dir: /app
 
   postgres:
-    image: timescale/timescaledb-ha:pg17
+    image: timescale/timescaledb-ha:pg17.5-ts2.20.3
     environment:
       POSTGRES_PASSWORD: postgres
     healthcheck:
