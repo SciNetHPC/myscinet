@@ -1,8 +1,8 @@
-defmodule MySciNet.Tgjscript do
+defmodule MySciNet.Jscript do
   use Ecto.Schema
 
   @primary_key false
-  schema "tgjscript" do
+  schema "jscript" do
     field :jobid, :string
     field :jobscript, :string
   end

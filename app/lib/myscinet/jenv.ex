@@ -1,8 +1,8 @@
-defmodule MySciNet.Tgjenv do
+defmodule MySciNet.Jenv do
   use Ecto.Schema
 
   @primary_key false
-  schema "tgjenv" do
+  schema "jenv" do
     field :jobid, :string
     field :jobenv, :string
   end

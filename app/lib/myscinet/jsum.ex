@@ -1,8 +1,8 @@
-defmodule MySciNet.Tgjsum do
+defmodule MySciNet.Jsum do
   use Ecto.Schema
 
   @primary_key false
-  schema "tgjsum" do
+  schema "jsum" do
     field :account, :string
     field :alloctres, :string
     field :cputime, :string

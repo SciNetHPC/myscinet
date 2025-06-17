@@ -7,10 +7,18 @@ defmodule MySciNetWeb.JobHTML do
     {:safe, String.replace(s, "_", "_<wbr/>")}
   end
 
+  defp cluster_name(slug) do
+    case slug do
+      "tric" -> "trillium"
+      "trig" -> "grillium"
+      _ -> slug
+    end
+  end
+
   defp split_jobid(jobid) do
-    case String.split(jobid, "-") do
-      [cluster, id] -> {cluster, id}
-      _ -> {"balam", jobid} # XXX:TBD temporary fallback
+    case String.split(jobid, ":") do
+      [slug, id] -> {cluster_name(slug), id}
+      _ -> nil
     end
   end
 

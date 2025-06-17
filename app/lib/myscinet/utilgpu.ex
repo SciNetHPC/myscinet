@@ -1,8 +1,8 @@
-defmodule MySciNet.Tgutil do
+defmodule MySciNet.Utilgpu do
   use Ecto.Schema
 
   @primary_key false
-  schema "tgutil" do
+  schema "utilgpu" do
     field :nodename, :string
     field :time, :naive_datetime
     field :jobid, :string

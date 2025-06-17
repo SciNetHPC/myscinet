@@ -1,8 +1,8 @@
-defmodule MySciNet.Tcutil do
+defmodule MySciNet.Utilcpu do
   use Ecto.Schema
 
   @primary_key false
-  schema "tcutil" do
+  schema "utilcpu" do
     field :nodename, :string
     field :time, :naive_datetime
     field :jobid, :string
