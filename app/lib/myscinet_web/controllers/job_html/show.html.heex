@@ -10,8 +10,8 @@
 </.header>
 
 <% plots = [
-  %{id: "cpu-plot", label: gettext("CPU Utilization"), y: "cpupercent", y_label: "CPU %"},
-  %{id: "fp64-plot", label: gettext("FP64 Utilization"), y: "dcgm_fi_prof_pipe_fp64_active", y_label: "FP64 %"}
+  %{id: "cpu-plot", label: gettext("CPU Utilization"), y: "cpupercent", y_label: "CPU %", range: [0,100]},
+  %{id: "fp64-plot", label: gettext("FP64 Utilization"), y: "dcgm_fi_prof_pipe_fp64_active", y_label: "FP64 %", range: [0,100]}
 ] %>
 <div class="tabs tabs-border">
   <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} checked={@script == nil} />
@@ -58,16 +58,17 @@
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
           <%= for plot <- plots do %>
-            <h2 class="text-base font-normal font-mono card-title"><%= plot.label %></h2>
-            <hr class="-mx-6 border-base-300 my-2" />
-            <div id={plot.id} class="w-full h-64"></div>
+            <div class="mb-6">
+              <h2 class="text-base font-normal font-mono card-title"><%= plot.label %></h2>
+              <div id={plot.id} class="w-full"></div>
+            </div>
           <% end %>
+          <div class="flex justify-end">
+            <a href={perf_csv_path} download class="btn btn-sm btn-outline btn-primary">
+              <%= gettext "Download CSV" %>
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="flex justify-end mt-4">
-        <a href={perf_csv_path} download class="btn btn-sm btn-outline btn-primary">
-          <%= gettext "Download CSV" %>
-        </a>
       </div>
     </div>
 
@@ -109,10 +110,21 @@
       const el = document.getElementById(plot.id);
       if (!el) continue;
       const p = Plot.plot({
-        x: {label: "Time", type: "time", nice: true},
-        y: {label: plot.y_label, nice: true},
-        color: {legend: true, label: "Node", type: "categorical"},
+        x: {
+          nice: true,
+          type: "time",
+        },
+        y: {
+          domain: plot.range,
+          nice: true,
+        },
+        color: {
+          label: "Node",
+          type: "categorical",
+        },
+        grid: true,
         marks: [
+          Plot.frame(),
           Plot.line(data, {x: "time", y: plot.y, stroke: "nodename"}),
         ],
         width: el.clientWidth || 600,
