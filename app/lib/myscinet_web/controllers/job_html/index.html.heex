@@ -31,7 +31,9 @@
         <td><span class="font-mono"><%= add_underscore_breaks job.jobname %></span></td>
         <td><%= job.elapsed %></td>
         <td>
-          <.job_state_icon state={job.state} class="size-5" />
+          <span aria-hidden="true">
+            <.job_state_icon state={job.state} class="size-5" />
+          </span>
           <span class="inline-block align-middle"><%= job.state %></span>
         </td>
       </tr>
