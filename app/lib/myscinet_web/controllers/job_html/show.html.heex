@@ -9,12 +9,8 @@
     </span>
 </.header>
 
-<% plots = [
-  %{id: "cpu-plot", label: gettext("CPU Utilization"), y: "cpupercent", y_label: "CPU %", range: [0,100]},
-  %{id: "fp64-plot", label: gettext("FP64 Utilization"), y: "dcgm_fi_prof_pipe_fp64_active", y_label: "FP64 %", range: [0,100]}
-] %>
 <div class="tabs tabs-border">
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} checked={@script == nil} />
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} />
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
@@ -52,26 +48,24 @@
     </div>
   </div>
 
-  <%= if @script do %>
-    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked={@script != nil} />
-    <div class="tab-content">
-      <div class="card bg-base-200 shadow-md">
-        <div class="card-body">
-          <%= for plot <- plots do %>
-            <div class="mb-6">
-              <h2 class="text-base font-normal font-mono card-title"><%= plot.label %></h2>
-              <div id={plot.id} class="w-full"></div>
-            </div>
-          <% end %>
-          <div class="flex justify-end">
-            <a href={perf_csv_path} download class="btn btn-sm btn-outline btn-primary">
-              <%= gettext "Download CSV" %>
-            </a>
-          </div>
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked />
+  <div class="tab-content">
+    <div class="card bg-base-200 shadow-md">
+      <div class="card-body">
+        <div id="plots-spinner" class="flex justify-center items-center h-48">
+          <span class="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+        <div id="plots-container"></div>
+        <div id="download-button" class="flex justify-end" hidden>
+          <a href={perf_csv_path} download class="btn btn-sm btn-outline btn-primary">
+            <%= gettext "Download CSV" %>
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
+  <%= if @script do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Script"} />
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
@@ -101,40 +95,77 @@
 <script type="module">
   import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
-  const plots = <%= raw Jason.encode!(plots) %>;
+  const plots = [
+    {
+      id: "cpu-plot",
+      label: "CPU Usage [%]",
+      y: d => d.cpupercent,
+      range: [0, 100]
+    },
+    {
+      id: "fp64-plot",
+      label: "FP64 Utilization",
+      y: d => d.dcgm_fi_prof_pipe_fp64_active,
+      range: [0, 100]
+    }
+  ];
   const csvUrl = "<%= raw perf_csv_path %>";
 
-  d3.csv(csvUrl, d3.autoType).then(data => {
-    for (const plot of plots) {
-      if (!data.some(d => d[plot.y] !== undefined && d[plot.y] !== null)) continue;
-      const el = document.getElementById(plot.id);
-      if (!el) continue;
-      const p = Plot.plot({
-        x: {
-          nice: true,
-          type: "time",
-        },
-        y: {
-          domain: plot.range,
-          nice: true,
-        },
-        color: {
-          label: "Node",
-          type: "categorical",
-        },
-        grid: true,
-        marks: [
-          Plot.frame(),
-          Plot.line(data, {x: "time", y: plot.y, stroke: "nodename"}),
-        ],
-        width: el.clientWidth || 600,
-        height: 240,
-        marginLeft: 50,
-        marginBottom: 40
-      });
-      el.appendChild(p);
-    }
-  });
+  d3.csv(csvUrl, d3.autoType)
+    .finally(() => {
+      document.getElementById("plots-spinner").remove();
+    })
+    .then(data => {
+      const plotsContainer = document.getElementById("plots-container");
+      if (data == null || data.length == 0) {
+        plotsContainer.innerHTML = '<div class="text-center text-base-content/60 py-12">No performance data.</div>';
+        return;
+      }
+      for (const plot of plots) {
+        if (!data.some(d => plot.y(d) !== undefined && plot.y(d) !== null)) continue;
+        // Create container for each plot
+        const plotDiv = document.createElement("div");
+        plotDiv.className = "mb-6";
+        plotDiv.id = plot.id;
+        // Add label
+        const label = document.createElement("h2");
+        label.className = "text-base font-normal font-mono card-title";
+        label.textContent = plot.label;
+        plotDiv.appendChild(label);
+        plotsContainer.appendChild(plotDiv);
+        // Render plot
+        const p = Plot.plot({
+          x: {
+            nice: true,
+            type: "time",
+          },
+          y: {
+            domain: plot.range,
+            nice: true,
+          },
+          color: {
+            label: "Node",
+            type: "categorical",
+          },
+          grid: true,
+          marks: [
+            Plot.frame(),
+            Plot.line(data, {x: "time", y: plot.y, stroke: "nodename"}),
+          ],
+          width: plotDiv.clientWidth || 600,
+          height: 240,
+          marginLeft: 50,
+          marginBottom: 40
+        });
+        plotDiv.appendChild(p);
+      }
+      document.getElementById("download-button").removeAttribute("hidden");
+    })
+    .catch(error => {
+      const plotsContainer = document.getElementById("plots-container");
+      plotsContainer.innerHTML = '<div class="text-center text-error-content py-12">Error loading performance data.</div>';
+      console.error("Error loading CSV:", error);
+    });
 </script>
 
 <!-- Prism.js for syntax highlighting -->
