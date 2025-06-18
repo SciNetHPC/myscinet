@@ -16,36 +16,41 @@
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
-        <ul>
-          <li><b><%= gettext "Account" %>:</b> <%= @job.account %></li>
-          <li><b><%= gettext "Submit Time" %>:</b> <%= @job.submit %></li>
-          <li><b><%= gettext "Eligible" %>:</b> <%= @job.eligible %></li>
-          <li><b><%= gettext "Start Time" %>:</b> <%= @job.start %></li>
-          <li><b><%= gettext "End Time" %>:</b> <%= @job.endtime %></li>
-          <li><b><%= gettext "State" %>:</b> <%= @job.state %></li>
-          <li><b><%= gettext "Partition" %>:</b> <%= @job.partition %></li>
-          <li><b><%= gettext "Time Limit" %>:</b> <%= @job.timelimit %></li>
-          <li><b><%= gettext "Elapsed" %>:</b> <%= @job.elapsed %></li>
-          <li><b><%= gettext "Exit Code" %>:</b> <%= @job.exitcode %></li>
-          <li><b><%= gettext "Workdir" %>:</b> <%= @job.workdir %></li>
-          <li><b><%= gettext "Nodes" %>:</b> <%= @job.nodelist %></li>
-          <li><b><%= gettext "Alloc TRES" %>:</b> <%= @job.alloctres %></li>
-          <li><b><%= gettext "User" %>:</b> <%= @job.username %></li>
-          <li><b><%= gettext "Group" %>:</b> <%= @job.groupname %></li>
-          <li><b><%= gettext "UID" %>:</b> <%= @job.uid %></li>
-          <li><b><%= gettext "GID" %>:</b> <%= @job.gid %></li>
-          <li><b><%= gettext "Max Disk Read" %>:</b> <%= @job.maxdiskread %></li>
-          <li><b><%= gettext "Max Disk Write" %>:</b> <%= @job.maxdiskwrite %></li>
-          <li><b><%= gettext "Max RSS" %>:</b> <%= @job.maxrss %></li>
-          <li><b><%= gettext "Max VM Size" %>:</b> <%= @job.maxvmsize %></li>
-          <li><b><%= gettext "Node Count" %>:</b> <%= @job.nnodes %></li>
-          <li><b><%= gettext "Priority" %>:</b> <%= @job.priority %></li>
-          <li><b><%= gettext "QOS" %>:</b> <%= @job.qos %></li>
-          <li><b><%= gettext "CPU Time" %>:</b> <%= @job.cputime %></li>
-          <li><b><%= gettext "System CPU" %>:</b> <%= @job.systemcpu %></li>
-          <li><b><%= gettext "User CPU" %>:</b> <%= @job.usercpu %></li>
-          <li><b><%= gettext "Total CPU" %>:</b> <%= @job.totalcpu %></li>
-        </ul>
+        <style>
+          dt {
+            font-weight: bold;
+            text-align: right;
+          }
+        </style>
+        <dl class="grid grid-cols-[auto_1fr] gap-x-4">
+          <dt><%= gettext "State" %>:</dt><dd><%= @job.state %></dd>
+          <dt><%= gettext "User" %>:</dt><dd><%= @job.username %></dd>
+          <dt><%= gettext "Group" %>:</dt><dd><%= @job.groupname %></dd>
+          <dt><%= gettext "Account" %>:</dt><dd><%= @job.account %></dd>
+          <dt><%= gettext "Partition" %>:</dt><dd><%= @job.partition %></dd>
+          <dt><%= gettext "QOS" %>:</dt><dd><%= @job.qos %></dd>
+          <dt><%= gettext "Workdir" %>:</dt><dd><%= @job.workdir %></dd>
+          <dt><%= gettext "Time Limit" %>:</dt><dd><%= @job.timelimit %></dd>
+          <dt><%= gettext "Elapsed" %>:</dt><dd><%= @job.elapsed %></dd>
+          <dt><%= gettext "CPU Time" %>:</dt><dd><%= @job.cputime %></dd>
+          <dt><%= gettext "Nodes" %>:</dt><dd><%= @job.nnodes %></dd>
+          <dt><%= gettext "Node List" %>:</dt><dd><%= @job.nodelist %></dd>
+          <dt><%= gettext "Alloc TRES" %>:</dt><dd><%= @job.alloctres %></dd>
+          <dt><%= gettext "Submit Time" %>:</dt><dd><%= @job.submit %></dd>
+          <dt><%= gettext "Eligible Time" %>:</dt><dd><%= @job.eligible %></dd>
+          <dt><%= gettext "Start Time" %>:</dt><dd><%= @job.start %></dd>
+          <%= if @job.state != "RUNNING" do %>
+            <dt><%= gettext "End Time" %>:</dt><dd><%= @job.endtime %></dd>
+            <dt><%= gettext "Exit Code" %>:</dt><dd><%= @job.exitcode %></dd>
+            <dt><%= gettext "Max Disk Read" %>:</dt><dd><%= @job.maxdiskread %></dd>
+            <dt><%= gettext "Max Disk Write" %>:</dt><dd><%= @job.maxdiskwrite %></dd>
+            <dt><%= gettext "Max RSS" %>:</dt><dd><%= @job.maxrss %></dd>
+            <dt><%= gettext "Max VM Size" %>:</dt><dd><%= @job.maxvmsize %></dd>
+            <dt><%= gettext "Total CPU" %>:</dt><dd><%= @job.totalcpu %></dd>
+            <dt><%= gettext "User CPU" %>:</dt><dd><%= @job.usercpu %></dd>
+            <dt><%= gettext "System CPU" %>:</dt><dd><%= @job.systemcpu %></dd>
+          <% end %>
+        </dl>
       </div>
     </div>
   </div>
