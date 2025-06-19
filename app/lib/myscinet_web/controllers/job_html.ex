@@ -40,7 +40,7 @@ defmodule MySciNetWeb.JobHTML do
     assigns = assign(assigns, icon: icon, color: color)
 
     ~H"""
-    <.icon name={@icon} class={[@color, @class]} title={@state} />
+    <.icon name={@icon} class={[@color, @class]} />
     """
   end
 
