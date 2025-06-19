@@ -79,3 +79,12 @@ if (process.env.NODE_ENV === "development") {
   })
 }
 
+// Switch to dark mode if ?dark is present in the URL
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("dark")) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.documentElement.classList.add("dark");
+  }
+})();
+
