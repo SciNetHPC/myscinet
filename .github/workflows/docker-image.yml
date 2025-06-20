@@ -43,19 +43,20 @@ jobs:
           script: |
             const repo = process.env.GITHUB_REPOSITORY;
             const [owner, name] = repo.split('/');
-            const images = await github.rest.packages.getAllPackageVersionsForPackageOwnedByUser({
+            const images = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
               package_type: 'container',
               package_name: name,
-              username: owner,
+              org: owner,
               per_page: 100
             });
             const versions = images.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
             const toDelete = versions.slice(8);
             for (const v of toDelete) {
-              await github.rest.packages.deletePackageVersionForUser({
+              await github.rest.packages.deletePackageVersionForOrg({
                 package_type: 'container',
                 package_name: name,
-                username: owner,
+                org: owner,
                 package_version_id: v.id
               });
               console.log(`Deleted image version ${v.id}`);
+            }
