@@ -15,7 +15,8 @@ The website is an [Elixir/Phoenix](https://phoenixframework.org/) app.
 Requires the following environment variables to be defined:
 
 ```
-DATABASE_URL=ecto://username:password@hostname/database?pool_size=10  # postgres/timescaledb
+# postgres/timescaledb job database
+DATABASE_URL=ecto://username:password@hostname/database?pool_size=10
 ```
 
 ## Miscellaneous
