@@ -1,4 +1,24 @@
-# my.scinet
+# my.scinet: SciNet user portal
+
+This is the user web portal for the SciNet supercomputing centre.
+Shows information about:
+
+- jobs
+- storage
+- group allocations
+- overall cluster stats
+
+The website is an [Elixir/Phoenix](https://phoenixframework.org/) app.
+
+## Configuration environment variables
+
+Requires the following environment variables to be defined:
+
+```
+DATABASE_URL=ecto://username:password@hostname/database?pool_size=10  # postgres/timescaledb
+```
+
+## Miscellaneous
 
 Generated the phoenix app via:
 
