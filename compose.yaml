@@ -1,7 +1,6 @@
 services:
   myscinet:
     build: .
-    command: ./start.sh
     depends_on:
       postgres:
         condition: service_healthy
@@ -11,7 +10,6 @@ services:
       - "4000:4000"
     volumes:
       - ./app:/app:Z
-    working_dir: /app
 
   postgres:
     image: timescale/timescaledb-ha:pg17.5-ts2.20.3
