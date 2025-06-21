@@ -9,4 +9,8 @@ RUN cd /usr/local/bin && curl -sL https://github.com/tidewave-ai/mcp_proxy_rust/
 
 COPY ./app /app
 WORKDIR /app
+RUN mix deps.get && \
+    mix deps.compile && \
+    mix assets.deploy && \
+    mix compile
 CMD ["/app/start.sh"]
