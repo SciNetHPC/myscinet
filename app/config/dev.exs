@@ -5,14 +5,6 @@ config :myscinet, MySciNet.Repo,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
 
-config :myscinet, MySciNet.LDAP,
-  hosts: ["ldap"],
-  port: 636,
-  user_base: "dc=myscinet,dc=org",
-  group_base: "ou=groups,dc=myscinet,dc=org",
-  bind_dn: "uid=%s,ou=users,dc=myscinet,dc=org",
-  bind_pw: "cn=%s,ou=groups,dc=myscinet,dc=org"
-
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

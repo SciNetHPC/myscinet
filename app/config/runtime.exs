@@ -23,18 +23,19 @@ end
 # The secret key base is used to sign/encrypt cookies and other secrets.
 config :myscinet, MySciNetWeb.Endpoint, secret_key_base: System.get_env("SECRET_KEY_BASE")
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise """
-    environment variable DATABASE_URL is missing.
-    For example: ecto://USER:PASS@HOST/DATABASE
-    """
-
 maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
 config :myscinet, MySciNet.Repo,
-  url: database_url,
+  url: System.get_env("DATABASE_URL"),
   socket_options: maybe_ipv6
+
+config :myscinet, MySciNet.LDAP,
+  hosts: System.get_env("LDAP_HOSTS"),
+  port: String.to_integer(System.get_env("LDAP_PORT") || "636"),
+  bind_dn: System.get_env("LDAP_BIND_DN"),
+  bind_pw: System.get_env("LDAP_BIND_PW"),
+  user_base: System.get_env("LDAP_USER_BASE") || "ou=users,dc=scinet,dc=utoronto,dc=ca",
+  group_base: System.get_env("LDAP_GROUP_BASE") || "ou=groups,dc=scinet,dc=utoronto,dc=ca"
 
 if config_env() == :prod do
   host = System.get_env("PHX_HOST") || "my.scinet.utoronto.ca"

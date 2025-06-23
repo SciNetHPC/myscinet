@@ -1,27 +1,30 @@
 defmodule MySciNet.LDAP do
-
-  @config Application.compile_env(:myscinet, MySciNet.LDAP)
-  @hosts Enum.map(@config[:hosts], &to_charlist/1)
+  # Fetch config at runtime for runtime configurability
+  defp config, do: Application.get_env(:myscinet, __MODULE__)
 
   defp uid2dn(uid) when is_binary(uid) do
     uid = Regex.replace(~r/[^a-zA-Z0-9_]/, uid, "")
-    ~c"uid=#{uid},#{@config[:user_base]}"
+    ~c"uid=#{uid},#{config()[:user_base]}"
   end
 
   defp gid2dn(gid) when is_binary(gid) do
     gid = Regex.replace(~r/[^a-zA-Z0-9]/, gid, "")
-    ~c"cn=#{gid},#{@config[:group_base]}"
+    ~c"cn=#{gid},#{config()[:group_base]}"
   end
 
   defp open() do
-    {:ok, handle} = :eldap.open(@hosts, port: @config[:port],
+    hosts = config()[:hosts]
+      |> String.split(",")
+      |> Enum.map(&to_charlist/1)
+    port = config()[:port]
+    {:ok, handle} = :eldap.open(hosts, port: port,
       ssl: true, sslopts: [verify: :verify_none])
     handle
   end
 
   defp connect() do
     handle = open()
-    :ok = :eldap.simple_bind(handle, to_charlist(@config[:bind_dn]), to_charlist(@config[:bind_pw]))
+    :ok = :eldap.simple_bind(handle, to_charlist(config()[:bind_dn]), to_charlist(config()[:bind_pw]))
     handle
   end
 
@@ -48,7 +51,7 @@ defmodule MySciNet.LDAP do
     [%{cn: [fullname], gidNumber: [gid], mail: emails, uid: [username], loginShell: [shell]}] = results
 
     results = search(handle,
-      base: @config[:group_base],
+      base: config()[:group_base],
       scope: :eldap.singleLevel(),
       filter: :eldap.or([:eldap.equalityMatch(~c"memberUid", uid),
                          :eldap.equalityMatch(~c"gidNumber", gid)]),
@@ -90,7 +93,7 @@ defmodule MySciNet.LDAP do
     handle = connect()
     attr = [~c"cn", ~c"mail", ~c"uid"]
     results = search(handle,
-      base: @config[:user_base],
+      base: config()[:user_base],
       scope: :eldap.singleLevel(),
       filter: :eldap.or([
         :eldap.substrings(~c"cn", [{:any, q}]),
@@ -99,7 +102,7 @@ defmodule MySciNet.LDAP do
       attributes: attr)
     results = case length(results) do
       0 -> search(handle,
-        base: @config[:user_base],
+        base: config()[:user_base],
         scope: :eldap.singleLevel(),
         filter: :eldap.or([
           :eldap.approxMatch(~c"cn", q),
