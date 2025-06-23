@@ -1,4 +1,5 @@
 <% {cluster, cjobid} = split_jobid(@job.jobid) %>
+<% cpumem = cluster_cpumem(cluster) %>
 <% perf_csv_path = ~p"/jobs/#{cluster}/#{cjobid}/perf.csv" %>
 
 <.header>
@@ -102,19 +103,71 @@
 <script type="module">
   import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+  const nodegpu = d => d.nodename + ":" + d.gpu
   const plots = [
+    {
+      id: "gpu-util",
+      label: "GPU Usage [%]",
+      y: d => 100*d.dcgm_fi_prof_gr_engine_active,
+      z: nodegpu,
+      range: [0, 100]
+    },
     {
       id: "cpu-plot",
       label: "CPU Usage [%]",
       y: d => d.cpupercent,
+      z: "nodename",
       range: [0, 100]
     },
     {
+      id: "mem-plot",
+      label: "CPU Memory Available [GiB]",
+      y: d => (d.memfree + d.buffers + d.cached)/1024.,
+      z: "nodename",
+      range: [0, <%= cpumem %>]
+    },
+    {
       id: "fp64-plot",
-      label: "FP64 Utilization",
-      y: d => d.dcgm_fi_prof_pipe_fp64_active,
+      label: "FP64 Usage",
+      y: d => 100*d.dcgm_fi_prof_pipe_fp64_active,
+      z: nodegpu,
       range: [0, 100]
-    }
+    },
+    {
+      id: "fp32-plot",
+      label: "FP32 Usage",
+      y: d => 100*d.dcgm_fi_prof_pipe_fp32_active,
+      z: nodegpu,
+      range: [0, 100]
+    },
+    {
+      id: "fp16-plot",
+      label: "FP16 Usage",
+      y: d => 100*d.dcgm_fi_prof_pipe_fp16_active,
+      z: nodegpu,
+      range: [0, 100]
+    },
+    {
+      id: "tensor-plot",
+      label: "Tensor Usage",
+      y: d => 100*d.dcgm_fi_prof_pipe_tensor_active,
+      z: nodegpu,
+      range: [0, 100]
+    },
+    {
+      id: "smact-plot",
+      label: "SM Active [%]",
+      y: d => 100*d.dcgm_fi_prof_sm_active,
+      z: nodegpu,
+      range: [0, 100]
+    },
+    {
+      id: "smocc-plot",
+      label: "SM Occupancy [%]",
+      y: d => 100*d.dcgm_fi_prof_sm_occupancy,
+      z: nodegpu,
+      range: [0, 100]
+    },
   ];
   const csvUrl = "<%= raw perf_csv_path %>";
 
@@ -155,13 +208,12 @@
             nice: true,
           },
           color: {
-            label: "Node",
             type: "categorical",
           },
           grid: true,
           marks: [
             Plot.frame(),
-            Plot.line(data, {x: "time", y: plot.y, stroke: "nodename"}),
+            Plot.line(data, {x: "time", y: plot.y, z: plot.z, title: plot.z, stroke: plot.z}),
           ],
           width: plotDiv.clientWidth || 600,
           height: 240,

@@ -79,11 +79,18 @@ defmodule MySciNetWeb.JobController do
       {MySciNet.Utilgpu, [
         :time,
         :nodename,
+        :gpu,
         :cpupercent,
+        :memfree,
+        :buffers,
+        :cached,
         :dcgm_fi_prof_gr_engine_active,
         :dcgm_fi_prof_pipe_fp16_active,
         :dcgm_fi_prof_pipe_fp32_active,
-        :dcgm_fi_prof_pipe_fp64_active
+        :dcgm_fi_prof_pipe_fp64_active,
+        :dcgm_fi_prof_pipe_tensor_active,
+        :dcgm_fi_prof_sm_active,
+        :dcgm_fi_prof_sm_occupancy,
       ]}
     else
       {MySciNet.Utilcpu, [

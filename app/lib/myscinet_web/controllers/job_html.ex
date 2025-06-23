@@ -7,6 +7,13 @@ defmodule MySciNetWeb.JobHTML do
     {:safe, String.replace(s, "_", "_<wbr/>")}
   end
 
+  def cluster_cpumem(cluster) do
+    case cluster do
+      "balam" -> 1000
+      _ -> 768
+    end
+  end
+
   defp cluster_name(slug) do
     case slug do
       "tric" -> "trillium"
