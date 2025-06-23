@@ -129,7 +129,11 @@
         return;
       }
       for (const plot of plots) {
-        if (!data.some(d => plot.y(d) !== undefined && plot.y(d) !== null)) continue;
+        const [min, max] = d3.extent(data, plot.y);
+        let yrange = [
+          Math.min(plot.range[0], min),
+          Math.max(plot.range[1], max)
+        ];
         // Create container for each plot
         const plotDiv = document.createElement("div");
         plotDiv.className = "mb-6";
@@ -147,7 +151,7 @@
             type: "time",
           },
           y: {
-            domain: plot.range,
+            domain: yrange,
             nice: true,
           },
           color: {
