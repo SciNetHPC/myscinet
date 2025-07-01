@@ -6,6 +6,12 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      LDAP_HOSTS: ${LDAP_HOSTS}
+      LDAP_PORT: ${LDAP_PORT}
+      LDAP_BIND_DN: ${LDAP_BIND_DN}
+      LDAP_BIND_PW: ${LDAP_BIND_PW}
+      LDAP_USER_BASE: ${LDAP_USER_BASE}
+      LDAP_GROUP_BASE: ${LDAP_GROUP_BASE}
       MIX_ENV: dev
     ports:
       - "4000:4000"
