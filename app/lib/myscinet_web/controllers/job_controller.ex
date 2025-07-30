@@ -146,7 +146,7 @@ defmodule MySciNetWeb.JobController do
       |> Enum.join("")
 
     conn
-    |> put_resp_content_type("text/tab-separated-values")
+    |> put_resp_content_type("text/csv")
     |> put_resp_header("cache-control", "max-age=120, private")
     |> send_resp(200, csv)
   end
