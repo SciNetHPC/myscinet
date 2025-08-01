@@ -29,6 +29,7 @@ defmodule MySciNetWeb.JobController do
     case name do
       "trillium" -> "tric"
       "grillium" -> "trig"
+      "trillium-gpu" -> "trig"
       _ -> name
     end
   end
@@ -38,7 +39,7 @@ defmodule MySciNetWeb.JobController do
   end
 
   defp is_gpu_cluster?(cluster) do
-    cluster in ["balam", "grillium"]
+    cluster in ["balam", "grillium", "trillium-gpu", "trig"]
   end
 
   def show(conn, %{"cluster" => cluster, "id" => cid}) do

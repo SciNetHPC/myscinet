@@ -17,7 +17,7 @@ defmodule MySciNetWeb.JobHTML do
   defp cluster_name(slug) do
     case slug do
       "tric" -> "trillium"
-      "trig" -> "grillium"
+      "trig" -> "trillium-gpu"
       _ -> slug
     end
   end
