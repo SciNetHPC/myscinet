@@ -110,63 +110,124 @@
       label: "GPU Usage [%]",
       y: d => 100*d.dcgm_fi_prof_gr_engine_active,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
     },
     {
       id: "cpu-plot",
       label: "CPU Usage [%]",
       y: d => d.cpupercent,
       z: "nodename",
-      range: [0, 100]
+      range: [0, 100],
+      when: "all"
+    },
+    {
+      id: "iowait-plot",
+      label: "IO Wait [?]",
+      y: d => d.iowait,
+      z: "nodename",
+      range: [0, 100],
+      when: "cpu"
+    },
+    {
+      id: "loadavg-plot",
+      label: "Load Average",
+      y: d => d.loadavg,
+      z: "nodename",
+      range: [0, 200],
+      when: "cpu"
     },
     {
       id: "mem-plot",
       label: "CPU Memory Available [GiB]",
       y: d => (d.memfree + d.buffers + d.cached)/1024.,
       z: "nodename",
-      range: [0, <%= cpumem %>]
+      range: [0, <%= cpumem %>],
+      when: "all"
     },
     {
       id: "fp64-plot",
       label: "FP64 Usage",
       y: d => 100*d.dcgm_fi_prof_pipe_fp64_active,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
     },
     {
       id: "fp32-plot",
       label: "FP32 Usage",
       y: d => 100*d.dcgm_fi_prof_pipe_fp32_active,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
     },
     {
       id: "fp16-plot",
       label: "FP16 Usage",
       y: d => 100*d.dcgm_fi_prof_pipe_fp16_active,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
     },
     {
       id: "tensor-plot",
       label: "Tensor Usage",
       y: d => 100*d.dcgm_fi_prof_pipe_tensor_active,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
     },
     {
       id: "smact-plot",
       label: "SM Active [%]",
       y: d => 100*d.dcgm_fi_prof_sm_active,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
     },
     {
       id: "smocc-plot",
       label: "SM Occupancy [%]",
       y: d => 100*d.dcgm_fi_prof_sm_occupancy,
       z: nodegpu,
-      range: [0, 100]
+      range: [0, 100],
+      when: "gpu"
+    },
+    {
+      id: "portxmitdata-plot",
+      label: "Infiniband data transmitted [GiB/s]",
+      y: d => d.portxmitdata*4/1024**3, // portxmitdata has units of 4 bytes
+      z: "nodename",
+      range: [0, 1],
+      when: "cpu",
+      counter: true
+    },
+    {
+      id: "portrcvdata-plot",
+      label: "Infiniband data received [GiB/s]",
+      y: d => d.portrcvdata*4/1024**3, // portrcvdata has units of 4 bytes
+      z: "nodename",
+      range: [0, 1],
+      when: "cpu",
+      counter: true
+    },
+    {
+      id: "portxmitpkts-plot",
+      label: "Infiniband packets transmitted [million/s]",
+      y: d => d.portxmitpkts*1e-6,
+      z: "nodename",
+      range: [0, 1],
+      when: "cpu",
+      counter: true
+    },
+    {
+      id: "portrcvpkts-plot",
+      label: "Infiniband packets received [million/s]",
+      y: d => d.portrcvpkts*1e-6,
+      z: "nodename",
+      range: [0, 1],
+      when: "cpu",
+      counter: true
     },
   ];
   const csvUrl = "<%= raw perf_csv_path %>";
@@ -181,8 +242,52 @@
         plotsContainer.innerHTML = '<div class="text-center text-base-content/60 py-12">No performance data.</div>';
         return;
       }
+
+      // the port* fields are counters, so diff to turn into rates
+      var data_by_node = d3.group(data, d => d.nodename);
+      var diff = [];
+      const parseDate = d => d3.isoParse(d['time']);
+      data_by_node.forEach(function(values, key) {
+        values.sort(function(a,b) {
+          return parseDate(a).getTime() - parseDate(b).getTime();
+        });
+
+        for (var i = 1; i < values.length; i++) {
+          var a = values[i-1];
+          var b = values[i];
+          var atime = parseDate(a).getTime(),
+              btime = parseDate(b).getTime();
+          var scale = 1000/(btime - atime);
+
+          var xd = b.portxmitdata - a.portxmitdata;
+          var rd = b.portrcvdata - a.portrcvdata;
+          var xp = b.portxmitpkts - a.portxmitpkts;
+          var rp = b.portrcvpkts - a.portrcvpkts;
+          if (xd < 0 ){ xd = NaN; }
+          if (rd < 0 ){ rd = NaN; }
+          if (xp < 0 ){ xp = NaN; }
+          if (rp < 0 ){ rp = NaN; }
+
+          diff.push({
+            "nodename": key,
+            "time": new Date((atime + btime)/2),
+            "portxmitdata": xd*scale,
+            "portrcvdata": rd*scale,
+            "portxmitpkts": xp*scale,
+            "portrcvpkts": rp*scale,
+          });
+        }
+      });
+
+      const hasGPUs = "gpu" in data[0];
       for (const plot of plots) {
-        const [min, max] = d3.extent(data, plot.y);
+        if (hasGPUs) {
+          if (plot.when == "cpu") continue;
+        } else {
+          if (plot.when == "gpu") continue;
+        };
+        const plotdata = plot.counter ? diff : data;
+        const [min, max] = d3.extent(plotdata, plot.y);
         let yrange = [
           Math.min(plot.range[0], min),
           Math.max(plot.range[1], max)
@@ -213,7 +318,7 @@
           grid: true,
           marks: [
             Plot.frame(),
-            Plot.line(data, {x: "time", y: plot.y, z: plot.z, title: plot.z, stroke: plot.z}),
+            Plot.line(plotdata, {x: "time", y: plot.y, z: plot.z, title: plot.z, stroke: plot.z}),
           ],
           width: plotDiv.clientWidth || 600,
           height: 240,
