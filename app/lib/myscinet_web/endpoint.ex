@@ -37,7 +37,9 @@ defmodule MySciNetWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :myscinet
+
+    # source of "[error] Could not create schema migrations table." console messages
+    #plug Phoenix.Ecto.CheckRepoStatus, otp_app: :myscinet
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
