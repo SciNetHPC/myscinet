@@ -76,8 +76,7 @@ defmodule MySciNetWeb.JobController do
     id = join_jobid(cluster, cid)
 
     {table, cols} = if is_gpu_cluster?(cluster) do
-      {MySciNet.Utilgpu, [
-        :time,
+      {:utilgpu, [
         :nodename,
         :gpu,
         :cpupercent,
@@ -93,8 +92,7 @@ defmodule MySciNetWeb.JobController do
         :dcgm_fi_prof_sm_occupancy,
       ]}
     else
-      {MySciNet.Utilcpu, [
-        :time,
+      {:utilcpu, [
         :nodename,
         :memfree,
         :buffers,
@@ -123,31 +121,21 @@ defmodule MySciNetWeb.JobController do
       ]}
     end
 
-    util_data =
-      table
-      |> where([u], u.jobid == ^id)
-      |> select([u], ^cols)
-      |> order_by([u], u.time)
-      |> Repo.all()
+    cols = Enum.join(Enum.map(cols, &Atom.to_string/1), ",")
+    escaped_id = String.replace(id, "'", "''")
+    query = "COPY (SELECT to_char(time,'YYYY-MM-DD\"T\"HH24:MI:SS') as time,#{cols} FROM #{table} WHERE jobid = '#{escaped_id}' ORDER BY time) TO STDOUT CSV HEADER"
 
-    rows = for row <- util_data do
-      for col <- cols do
-        v = Map.get(row, col)
-        if col == :time do
-          NaiveDateTime.to_iso8601(v)
-        else
-          v
-        end
-      end
-    end
-
-    csv =
-      CSV.encode([cols|rows], delimiter: "\n")
-      |> Enum.join("")
-
-    conn
+    conn = conn
     |> put_resp_content_type("text/csv")
     |> put_resp_header("cache-control", "max-age=120, private")
-    |> send_resp(200, csv)
+    |> send_chunked(:ok)
+
+    Repo.transaction fn ->
+      Ecto.Adapters.SQL.stream(MySciNet.Repo, query)
+      |> Stream.map(&(chunk(conn, &1.rows)))
+      |> Stream.run
+    end
+
+    conn
   end
 end
