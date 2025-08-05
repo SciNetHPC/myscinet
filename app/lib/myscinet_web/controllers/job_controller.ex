@@ -11,13 +11,25 @@ defmodule MySciNetWeb.JobController do
     page = Map.get(params, "page", "1") |> String.to_integer()
     offset = (page - 1) * @page_size
 
-    jobs =
+    jobsq =
       Jsum
       |> where([j], not ilike(j.partition, ^"debug%"))
       |> order_by([j], desc: j.submit)
       |> limit(^@page_size)
       |> offset(^offset)
-      |> Repo.all()
+
+    filters =
+      Map.get(params, "q", "")
+      |> String.trim()
+      |> MySciNet.JobQuery.parse()
+
+    {conn, jobsq} =
+      case filters do
+        {:ok, ast} -> {conn, jobsq |> apply_filters(ast)}
+        _ -> {conn |> put_flash(:error, "Invalid query"), jobsq}
+      end
+
+    jobs = jobsq |> Repo.all()
 
     render(conn, "index.html", page_title: "jobs",
       jobs: jobs,
@@ -25,12 +37,33 @@ defmodule MySciNetWeb.JobController do
     )
   end
 
+  defp apply_filters(query, []), do: query
+  defp apply_filters(query, [filter | rest]) do
+    query |> apply_filter(filter) |> apply_filters(rest)
+  end
+
+  defp apply_filter(query, filter) do
+    dbg(filter)
+    case filter do
+      {:is_eq, :cluster, cluster} ->
+        query |> where([j], ilike(j.jobid, ^"#{cluster_slug(cluster)}:%"))
+      {:is_eq, :user, u} -> query |> where([j], j.username == ^to_string(u))
+      {:is_eq, :group, g} -> query |> where([j], j.groupname == ^to_string(g))
+      {:is_eq, :nodes, n} -> query |> where([j], j.nnodes == ^n)
+      {:is_lt, :nodes, n} -> query |> where([j], j.nnodes < ^n)
+      {:is_le, :nodes, n} -> query |> where([j], j.nnodes <= ^n)
+      {:is_gt, :nodes, n} -> query |> where([j], j.nnodes > ^n)
+      {:is_ge, :nodes, n} -> query |> where([j], j.nnodes >= ^n)
+      _ -> query
+    end
+  end
+
   defp cluster_slug(name) do
-    case name do
+    case to_string(name) do
       "trillium" -> "tric"
       "grillium" -> "trig"
       "trillium-gpu" -> "trig"
-      _ -> name
+      other -> other
     end
   end
 
