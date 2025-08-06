@@ -34,8 +34,8 @@ config :myscinet, MySciNet.LDAP,
   port: String.to_integer(System.get_env("LDAP_PORT") || "636"),
   bind_dn: System.get_env("LDAP_BIND_DN"),
   bind_pw: System.get_env("LDAP_BIND_PW"),
-  user_base: System.get_env("LDAP_USER_BASE") || "ou=users,dc=scinet,dc=utoronto,dc=ca",
-  group_base: System.get_env("LDAP_GROUP_BASE") || "ou=groups,dc=scinet,dc=utoronto,dc=ca"
+  user_base: System.get_env("LDAP_USER_BASE"),
+  group_base: System.get_env("LDAP_GROUP_BASE")
 
 if config_env() == :prod do
   host = System.get_env("PHX_HOST") || "my.scinet.utoronto.ca"
