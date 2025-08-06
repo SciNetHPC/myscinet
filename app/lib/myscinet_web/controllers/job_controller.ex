@@ -4,8 +4,25 @@ defmodule MySciNetWeb.JobController do
   alias MySciNet.Repo
   alias MySciNet.Jsum
   import Ecto.Query
+  import MySciNetWeb.Permissions
 
   @page_size 20
+
+  defp query_authz(query, conn) do
+    username = conn.assigns.current_user.username
+    #groups = conn.assigns.current_user.groups
+    cond do
+      is_staff_user?(conn) ->
+        # staff can see all jobs
+        query
+      #username in groups ->
+      #  # PIs can see their group's jobs
+      #  query |> where(groupname: ^username)
+      true ->
+        # everyone else can only see their own jobs
+        query |> where(username: ^username)
+    end
+  end
 
   def index(conn, params) do
     page = Map.get(params, "page", "1") |> String.to_integer()
@@ -13,6 +30,7 @@ defmodule MySciNetWeb.JobController do
 
     jobsq =
       Jsum
+      |> query_authz(conn)
       |> where([j], not ilike(j.partition, ^"debug%"))
       |> order_by([j], desc: j.submit)
       |> limit(^@page_size)
@@ -43,13 +61,12 @@ defmodule MySciNetWeb.JobController do
   end
 
   defp apply_filter(query, filter) do
-    dbg(filter)
     case filter do
       {:is_eq, :cluster, cluster} ->
         query |> where([j], ilike(j.jobid, ^"#{cluster_slug(cluster)}:%"))
-      {:is_eq, :user, u} -> query |> where([j], j.username == ^to_string(u))
-      {:is_eq, :group, g} -> query |> where([j], j.groupname == ^to_string(g))
-      {:is_eq, :nodes, n} -> query |> where([j], j.nnodes == ^n)
+      {:is_eq, :user, u} -> query |> where(username: ^to_string(u))
+      {:is_eq, :group, g} -> query |> where(groupname: ^to_string(g))
+      {:is_eq, :nodes, n} -> query |> where(nnodes: ^n)
       {:is_lt, :nodes, n} -> query |> where([j], j.nnodes < ^n)
       {:is_le, :nodes, n} -> query |> where([j], j.nnodes <= ^n)
       {:is_gt, :nodes, n} -> query |> where([j], j.nnodes > ^n)
@@ -77,7 +94,12 @@ defmodule MySciNetWeb.JobController do
 
   def show(conn, %{"cluster" => cluster, "id" => cid}) do
     id = join_jobid(cluster, cid)
-    job = Repo.get_by(Jsum, jobid: id)
+    job =
+      Jsum
+      |> query_authz(conn)
+      |> where(jobid: ^id)
+      |> Repo.one()
+
     case job do
       nil ->
         conn
