@@ -56,9 +56,17 @@
         </div>
         <div class="navbar-end flex gap-2">
           <Layouts.theme_toggle />
-          <a href={~p"/login"} class="btn btn-primary">
-            <%= gettext "Sign In" %>
-          </a>
+          <%= if assigns[:current_user] do %>
+            <.form for={} action={~p"/logout"} method="post">
+              <button type="submit" class="btn btn-primary">
+                <%= gettext "Sign out %{user}", user: assigns[:current_user].username %>
+              </button>
+            </.form>
+          <% else %>
+            <a href={~p"/login"} class="btn btn-primary">
+              <%= gettext "Sign in" %>
+            </a>
+          <% end %>
         </div>
       </div>
     </header>

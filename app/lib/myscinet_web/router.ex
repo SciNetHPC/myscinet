@@ -1,6 +1,19 @@
 defmodule MySciNetWeb.Router do
   use MySciNetWeb, :router
 
+  defp assign_if_in_session(conn, key) do
+    if conn.assigns[key] do
+      conn
+    else
+      val = get_session(conn, key)
+      if val do
+        assign conn, key, val
+      else
+        conn
+      end
+    end
+  end
+
   pipeline :browser do
     plug MySciNetWeb.Plugs.SetLocale
     plug :accepts, ["html"]
@@ -9,33 +22,48 @@ defmodule MySciNetWeb.Router do
     plug :put_root_layout, html: {MySciNetWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :assign_if_in_session, :current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  defp authenticate(conn, _) do
+    if conn.assigns[:current_user] do
+      conn
+    else
+      full_path =
+        %URI{path: conn.request_path, query: conn.query_string}
+        |> URI.to_string()
+      conn
+      |> put_session(:redirect_to, full_path)
+      |> redirect(to: "/login")
+      |> halt
+    end
+  end
+
+  pipeline :authenticated do
+    plug :authenticate
+  end
+
   scope "/", MySciNetWeb do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/login", LoginController, :new
+    post "/login", LoginController, :create
+  end
+
+  scope "/", MySciNetWeb do
+    pipe_through [:browser, :authenticated]
+
     get "/allocations", AllocationsController, :index
+    get "/jobs", JobController, :index
+    get "/jobs/:cluster/:id", JobController, :show
+    get "/jobs/:cluster/:id/perf.csv", JobController, :perf
+    post "/logout", LoginController, :delete
     get "/storage", StorageController, :index
-  end
-
-  scope "/jobs", MySciNetWeb do
-    pipe_through :browser
-
-    get "/", JobController, :index
-    get "/:cluster/:id", JobController, :show
-    get "/:cluster/:id/perf.csv", JobController, :perf
-  end
-
-  scope "/login", MySciNetWeb do
-    pipe_through :browser
-
-    get "/", LoginController, :new
-    post "/", LoginController, :create
   end
 
   # Other scopes may use custom stacks.
