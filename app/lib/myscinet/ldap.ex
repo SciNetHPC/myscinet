@@ -33,7 +33,7 @@ defmodule MySciNet.LDAP do
   # call :eldap.search and 'unpeel' the result into a map
   defp search(handle, opts) do
     case :eldap.search(handle, opts) do
-      {:ok, {:eldap_search_result, entries, []}} ->
+      {:ok, {:eldap_search_result, entries, [], _}} ->
         for {:eldap_entry,_,entry} <- entries do
           for {k,vs} <- entry, do: {:erlang.list_to_atom(k),map_to_s(vs)}, into: %{}
         end
