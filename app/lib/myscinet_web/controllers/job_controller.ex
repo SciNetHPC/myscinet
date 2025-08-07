@@ -67,7 +67,7 @@ defmodule MySciNetWeb.JobController do
       {:is_eq, :cluster, cluster} ->
         query |> where([j], ilike(j.jobid, ^"#{cluster_slug(cluster)}:%"))
       {:is_eq, :user, u} -> query |> where(username: ^to_string(u))
-      {:is_eq, :group, g} -> query |> where(groupname: ^to_string(g))
+      {:is_eq, :group, g} -> query |> where([j], ilike(j.account, ^"%-#{g}%"))
       {:is_eq, :nodes, n} -> query |> where(nnodes: ^n)
       {:is_lt, :nodes, n} -> query |> where([j], j.nnodes < ^n)
       {:is_le, :nodes, n} -> query |> where([j], j.nnodes <= ^n)
