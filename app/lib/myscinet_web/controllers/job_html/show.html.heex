@@ -107,7 +107,7 @@
   const plots = [
     {
       id: "gpu-util",
-      label: "GPU Usage [%]",
+      label: "<%= gettext "GPU Usage [%]" %>",
       y: d => 100*d.dcgm_fi_prof_gr_engine_active,
       z: nodegpu,
       range: [0, 100],
@@ -115,7 +115,7 @@
     },
     {
       id: "cpu-plot",
-      label: "CPU Usage [%]",
+      label: "<%= gettext "CPU Usage [%]" %>",
       y: d => d.cpupercent,
       z: "nodename",
       range: [0, 100],
@@ -123,7 +123,7 @@
     },
     {
       id: "iowait-plot",
-      label: "IO Wait [?]",
+      label: "<%= gettext "IO Wait [?]" %>",
       y: d => d.iowait,
       z: "nodename",
       range: [0, 100],
@@ -131,7 +131,7 @@
     },
     {
       id: "loadavg-plot",
-      label: "Load Average",
+      label: "<%= gettext "Load Average" %>",
       y: d => d.loadavg,
       z: "nodename",
       range: [0, 200],
@@ -139,7 +139,7 @@
     },
     {
       id: "mem-plot",
-      label: "CPU Memory Available [GiB]",
+      label: "<%= gettext "CPU Memory Available [GiB]" %>",
       y: d => (d.memfree + d.buffers + d.cached)/1024.,
       z: "nodename",
       range: [0, <%= cpumem %>],
@@ -147,7 +147,7 @@
     },
     {
       id: "fp64-plot",
-      label: "FP64 Usage",
+      label: "<%= gettext "FP64 Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_fp64_active,
       z: nodegpu,
       range: [0, 100],
@@ -155,7 +155,7 @@
     },
     {
       id: "fp32-plot",
-      label: "FP32 Usage",
+      label: "<%= gettext "FP32 Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_fp32_active,
       z: nodegpu,
       range: [0, 100],
@@ -163,7 +163,7 @@
     },
     {
       id: "fp16-plot",
-      label: "FP16 Usage",
+      label: "<%= gettext "FP16 Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_fp16_active,
       z: nodegpu,
       range: [0, 100],
@@ -171,7 +171,7 @@
     },
     {
       id: "tensor-plot",
-      label: "Tensor Usage",
+      label: "<%= gettext "Tensor Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_tensor_active,
       z: nodegpu,
       range: [0, 100],
@@ -179,7 +179,7 @@
     },
     {
       id: "smact-plot",
-      label: "SM Active [%]",
+      label: "<%= gettext "SM Active [%]" %>",
       y: d => 100*d.dcgm_fi_prof_sm_active,
       z: nodegpu,
       range: [0, 100],
@@ -187,7 +187,7 @@
     },
     {
       id: "smocc-plot",
-      label: "SM Occupancy [%]",
+      label: "<%= gettext "SM Occupancy [%]" %>",
       y: d => 100*d.dcgm_fi_prof_sm_occupancy,
       z: nodegpu,
       range: [0, 100],
@@ -195,7 +195,7 @@
     },
     {
       id: "portxmitdata-plot",
-      label: "Infiniband data transmitted [GiB/s]",
+      label: "<%= gettext "Infiniband data transmitted [GiB/s]" %>",
       y: d => d.portxmitdata*4/1024**3, // portxmitdata has units of 4 bytes
       z: "nodename",
       range: [0, 1],
@@ -204,7 +204,7 @@
     },
     {
       id: "portrcvdata-plot",
-      label: "Infiniband data received [GiB/s]",
+      label: "<%= gettext "Infiniband data received [GiB/s]" %>",
       y: d => d.portrcvdata*4/1024**3, // portrcvdata has units of 4 bytes
       z: "nodename",
       range: [0, 1],
@@ -213,7 +213,7 @@
     },
     {
       id: "portxmitpkts-plot",
-      label: "Infiniband packets transmitted [million/s]",
+      label: "<%= gettext "Infiniband packets transmitted [million/s]" %>",
       y: d => d.portxmitpkts*1e-6,
       z: "nodename",
       range: [0, 1],
@@ -222,7 +222,7 @@
     },
     {
       id: "portrcvpkts-plot",
-      label: "Infiniband packets received [million/s]",
+      label: "<%= gettext "Infiniband packets received [million/s]" %>",
       y: d => d.portrcvpkts*1e-6,
       z: "nodename",
       range: [0, 1],
@@ -331,7 +331,7 @@
     })
     .catch(error => {
       const plotsContainer = document.getElementById("plots-container");
-      plotsContainer.innerHTML = '<div class="text-center text-error-content py-12">Error loading performance data.</div>';
+      plotsContainer.innerHTML = '<div class="text-center text-error-content py-12"><%= gettext "Error loading performance data." %></div>';
       console.error("Error loading CSV:", error);
     });
 </script>

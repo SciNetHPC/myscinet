@@ -258,3 +258,83 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "Signed out %{user}"
 msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:142
+#, elixir-autogen, elixir-format
+msgid "CPU Memory Available [GiB]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:118
+#, elixir-autogen, elixir-format
+msgid "CPU Usage [%]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:166
+#, elixir-autogen, elixir-format
+msgid "FP16 Usage"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:158
+#, elixir-autogen, elixir-format
+msgid "FP32 Usage"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:150
+#, elixir-autogen, elixir-format
+msgid "FP64 Usage"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:110
+#, elixir-autogen, elixir-format
+msgid "GPU Usage [%]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:126
+#, elixir-autogen, elixir-format
+msgid "IO Wait [?]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:207
+#, elixir-autogen, elixir-format
+msgid "Infiniband data received [GiB/s]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:198
+#, elixir-autogen, elixir-format
+msgid "Infiniband data transmitted [GiB/s]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:225
+#, elixir-autogen, elixir-format
+msgid "Infiniband packets received [million/s]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:216
+#, elixir-autogen, elixir-format
+msgid "Infiniband packets transmitted [million/s]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:134
+#, elixir-autogen, elixir-format
+msgid "Load Average"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:182
+#, elixir-autogen, elixir-format
+msgid "SM Active [%]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:190
+#, elixir-autogen, elixir-format
+msgid "SM Occupancy [%]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:174
+#, elixir-autogen, elixir-format
+msgid "Tensor Usage"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:334
+#, elixir-autogen, elixir-format
+msgid "Error loading performance data."
+msgstr ""
