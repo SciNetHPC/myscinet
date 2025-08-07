@@ -16,11 +16,13 @@ Terminals
     '>='
     ident
     number
+    string
 .
 
 Rootsymbol root.
 
 root -> '$empty' : [].
+root -> value : '$1'.
 root -> filters : '$1'.
 
 filters -> filter : ['$1'].
@@ -37,5 +39,6 @@ num -> number : element(2, '$1').
 
 value -> number : element(2, '$1').
 value -> ident  : element(2, '$1').
+value -> string : element(2, '$1').
 
 Erlang code.
