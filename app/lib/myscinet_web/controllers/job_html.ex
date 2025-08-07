@@ -29,6 +29,14 @@ defmodule MySciNetWeb.JobHTML do
     end
   end
 
+  def job_state_pretty(job) do
+    if job.state == "CANCELLED by #{job.uid}" do
+      "CANCELLED"
+    else
+      job.state
+    end
+  end
+
   attr :state, :string, required: true
   attr :class, :string, default: ""
 
