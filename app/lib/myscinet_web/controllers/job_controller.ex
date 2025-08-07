@@ -10,14 +10,16 @@ defmodule MySciNetWeb.JobController do
 
   defp query_authz(query, conn) do
     username = conn.assigns.current_user.username
-    #groups = conn.assigns.current_user.groups
+    groups = conn.assigns.current_user.groups
     cond do
       is_staff_user?(conn) ->
         # staff can see all jobs
         query
-      #username in groups ->
-      #  # PIs can see their group's jobs
-      #  query |> where(groupname: ^username)
+      "def-#{username}" in groups ->
+        # PIs can see their group's jobs
+        query
+        |> where([j], like(j.groupname, ^"%-#{username}"))
+        |> where([j], like(j.groupname, ^"%-#{username}-%"))
       true ->
         # everyone else can only see their own jobs
         query |> where(username: ^username)
