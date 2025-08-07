@@ -289,11 +289,6 @@ msgstr ""
 msgid "GPU Usage [%]"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:126
-#, elixir-autogen, elixir-format
-msgid "IO Wait [?]"
-msgstr ""
-
 #: lib/myscinet_web/controllers/job_html/show.html.heex:207
 #, elixir-autogen, elixir-format
 msgid "Infiniband data received [GiB/s]"
@@ -337,4 +332,9 @@ msgstr ""
 #: lib/myscinet_web/controllers/job_html/show.html.heex:334
 #, elixir-autogen, elixir-format
 msgid "Error loading performance data."
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:126
+#, elixir-autogen, elixir-format
+msgid "IO Wait [ms]"
 msgstr ""
