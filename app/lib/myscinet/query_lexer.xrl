@@ -2,7 +2,7 @@ Definitions.
 
 WHITESPACE = [\s\t\n\r]+
 NUMBER     = [0-9]+
-IDENT      = [a-zA-Z_][a-zA-Z0-9_]*
+IDENT      = [a-zA-Z_][a-zA-Z0-9_-]*
 
 Rules.
 

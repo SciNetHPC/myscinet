@@ -426,6 +426,8 @@ yystate(2, Ics, Line, Col, Tlen, _, _) ->
     {6,Tlen,Ics,Line,Col,2};
 yystate(1, [95|Ics], Line, Col, Tlen, _, _) ->
     yystate(1, Ics, Line, Col, Tlen+1, 2, Tlen);
+yystate(1, [45|Ics], Line, Col, Tlen, _, _) ->
+    yystate(1, Ics, Line, Col, Tlen+1, 2, Tlen);
 yystate(1, [C|Ics], Line, Col, Tlen, _, _) when C >= 48, C =< 57 ->
     yystate(1, Ics, Line, Col, Tlen+1, 2, Tlen);
 yystate(1, [C|Ics], Line, Col, Tlen, _, _) when C >= 65, C =< 90 ->
