@@ -45,7 +45,10 @@
               <li><a href={~p"/storage"}>Storage</a></li>
             </ul>
           </div>
-          <a class="btn btn-ghost text-xl" href={~p"/"}>my.SciNet</a>
+          <a class="btn btn-ghost text-xl flex items-baseline gap-2" href={~p"/"}>
+            <span>my.SciNet</span>
+            <span class="text-xs text-base-content/60">v<%= Application.spec(:myscinet, :vsn) |> to_string() %></span>
+          </a>
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal px-1">
