@@ -17,6 +17,14 @@ Requires the following environment variables to be defined:
 ```
 # postgres/timescaledb job database
 DATABASE_URL=ecto://username:password@hostname/database?pool_size=10
+
+# ldap
+LDAP_HOSTS=ldap1.example.com,ldap2.example.com
+LDAP_PORT=636
+LDAP_BIND_DN="xxx"
+LDAP_BIND_PW="xxx"
+LDAP_USER_BASE="ou=people,dc=example,dc=com"
+LDAP_GROUP_BASE="ou=group,dc=example,dc=com"
 ```
 
 ## Miscellaneous
