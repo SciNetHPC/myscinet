@@ -29,6 +29,10 @@ config :myscinet, MySciNet.Repo,
   url: System.get_env("DATABASE_URL"),
   socket_options: maybe_ipv6
 
+config :myscinet, MySciNet.Redis,
+  url: System.get_env("REDIS_URL"),
+  password: System.get_env("REDIS_PASSWORD")
+
 config :myscinet, MySciNet.LDAP,
   hosts: System.get_env("LDAP_HOSTS"),
   port: String.to_integer(System.get_env("LDAP_PORT") || "636"),

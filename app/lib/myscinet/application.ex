@@ -9,6 +9,7 @@ defmodule MySciNet.Application do
   def start(_type, _args) do
     children = [
       MySciNetWeb.Telemetry,
+      MySciNet.Redis,
       MySciNet.Repo,
       {DNSCluster, query: Application.get_env(:myscinet, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: MySciNet.PubSub},

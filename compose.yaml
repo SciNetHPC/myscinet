@@ -13,6 +13,8 @@ services:
       LDAP_USER_BASE: ${LDAP_USER_BASE}
       LDAP_GROUP_BASE: ${LDAP_GROUP_BASE}
       MIX_ENV: dev
+      REDIS_URL: ${REDIS_URL}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
       - "4000:4000"
     volumes:
