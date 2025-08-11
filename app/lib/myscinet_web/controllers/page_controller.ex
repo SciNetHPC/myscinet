@@ -22,7 +22,7 @@ defmodule MySciNetWeb.PageController do
   defp string_to_float(s) do
     case Float.parse(s) do
       {f, _} -> f
-      :error -> :erlang.nan()
+      :error -> -0.0
     end
   end
 
