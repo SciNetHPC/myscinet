@@ -37,7 +37,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.extract_tag.outputs.tag }}
 
-      - name: Prune old images (keep last 8)
+      - name: Prune old images (keep last 9)
         uses: actions/github-script@v7
         with:
           script: |
@@ -50,7 +50,7 @@ jobs:
               per_page: 100
             });
             const versions = images.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-            const toDelete = versions.slice(8);
+            const toDelete = versions.slice(9);
             for (const v of toDelete) {
               await github.rest.packages.deletePackageVersionForOrg({
                 package_type: 'container',
