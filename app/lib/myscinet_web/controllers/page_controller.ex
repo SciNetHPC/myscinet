@@ -34,7 +34,7 @@ defmodule MySciNetWeb.PageController do
     case MySciNet.Redis.pipeline(cmds) do
       {:ok, raws} ->
         # convert ["a", "0", ...] -> %{a: 0, ...}
-        results = for {cluster, raw} <- Enum.zip(clusters, raws) |> dbg(), do:
+        results = for {cluster, raw} <- Enum.zip(clusters, raws), do:
           raw
           |> Enum.chunk_every(2)
           |> Enum.into(cluster, fn [k, v] -> {String.to_atom(k), parse_val(k,v)} end)
@@ -45,7 +45,7 @@ defmodule MySciNetWeb.PageController do
   end
 
   def home(conn, _params) do
-    case get_clusters(@clusters) |> dbg() do
+    case get_clusters(@clusters) do
       {:ok, clusters} ->
         conn
         |> assign(:clusters, clusters)
