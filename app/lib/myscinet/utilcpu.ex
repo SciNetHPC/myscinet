@@ -19,9 +19,9 @@ defmodule MySciNet.Utilcpu do
     field :clicks, :float
     field :freq, :float
     field :cpi, :float
-    field :temp, :float
-    field :power, :float
-    field :powerdram, :float
+    field :powercore, :float
+    field :powerpkg, :float
+    field :powerl3, :float
     field :mflops, :float
     field :memread, :float
     field :memwrite, :float
