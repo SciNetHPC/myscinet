@@ -15,5 +15,14 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ./app:/app:Z
+      - ./app/.formatter.exs:/app/.formatter.exs:Z
+      - ./app/.gitignore:/app/.gitignore:Z
+      - ./app/assets:/app/assets:Z
+      - ./app/config:/app/config:Z
+      - ./app/lib:/app/lib:Z
+      - ./app/mix.exs:/app/mix.exs:Z
+      - ./app/mix.lock:/app/mix.lock:Z
+      - ./app/priv:/app/priv:Z
+      - ./app/start.sh:/app/start.sh:Z
+      - ./app/test:/app/test:Z
 
