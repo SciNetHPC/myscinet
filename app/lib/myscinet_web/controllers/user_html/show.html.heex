@@ -1,0 +1,24 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4"><%= gettext("User: ") <> @user.username %></h1>
+  <div class="card bg-base-200 shadow-md p-6 w-full mx-auto">
+    <table class="table w-full">
+      <tbody>
+        <tr>
+          <th><%= gettext("Name") %></th>
+          <td><%= @user.fullname %></td>
+        </tr>
+        <tr>
+          <th><%= gettext("Email(s)") %></th>
+          <td><%= Enum.join(@user.emails, ", ") %></td>
+        </tr>
+        <tr>
+          <th><%= gettext("Groups") %></th>
+          <td><%= @user.groups |> Enum.sort() |> Enum.join(", ") %></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="mt-6 flex gap-4">
+      <a href={"/jobs/?q=user:" <> @user.username} class="btn btn-primary"><%= gettext("View Jobs for User") %></a>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ defmodule MySciNetWeb.UserController do
   def index(conn, _), do: render(conn, :index)
 
   def show(conn, %{"id" => id}) do
-    redirect(conn, to: ~p"/jobs?q=user:#{id}")
+    info = MySciNet.LDAP.user_info(id)
+    render(conn, :show, user: info)
   end
 end
