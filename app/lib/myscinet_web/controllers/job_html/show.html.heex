@@ -106,7 +106,7 @@
   const nodegpu = d => d.nodename + ":" + d.gpu
   const plots = [
     {
-      id: "gpu-util",
+      id: "gpu-usage-util",
       label: "<%= gettext "GPU Usage [%]" %>",
       y: d => 100*d.dcgm_fi_prof_gr_engine_active,
       z: nodegpu,
@@ -114,7 +114,7 @@
       when: "gpu"
     },
     {
-      id: "cpu-plot",
+      id: "cpu-usage-plot",
       label: "<%= gettext "CPU Usage [%]" %>",
       y: d => d.cpupercent,
       z: "nodename",
@@ -122,72 +122,128 @@
       when: "all"
     },
     {
-      id: "iowait-plot",
-      label: "<%= gettext "IO Wait [ms]" %>",
+      id: "cpu-iowait-plot",
+      label: "<%= gettext "CPU IO Wait [ms]" %>",
       y: d => d.iowait,
       z: "nodename",
-      range: [0, 100],
+      range: [0, 1000],
       when: "cpu"
     },
     {
-      id: "loadavg-plot",
-      label: "<%= gettext "Load Average" %>",
+      id: "cpu-loadavg-plot",
+      label: "<%= gettext "CPU Load Average" %>",
       y: d => d.loadavg,
       z: "nodename",
       range: [0, 200],
       when: "cpu"
     },
     {
-      id: "mem-plot",
+      id: "cpu-mem-plot",
       label: "<%= gettext "CPU Memory Available [GiB]" %>",
-      y: d => (d.memfree + d.buffers + d.cached)/1024.,
+      y: d => (d.memfree + d.buffers + d.cached)/1024,
       z: "nodename",
       range: [0, <%= cpumem %>],
       when: "all"
     },
     {
-      id: "fp64-plot",
-      label: "<%= gettext "FP64 Usage" %>",
+      id: "cpu-freq-plot",
+      label: "<%= gettext "CPU frequency [GHz]" %>",
+      y: d => d.freq,
+      z: "nodename",
+      range: [2, 4],
+      when: "cpu"
+    },
+    {
+      id: "cpu-cpi-plot",
+      label: "<%= gettext "CPU cycles per instruction" %>",
+      y: d => d.cpi,
+      z: "nodename",
+      range: [0, 10],
+      when: "cpu"
+    },
+    {
+      id: "cpu-power-plot",
+      label: "<%= gettext "CPU power [W]" %>",
+      y: d => d.powerl3,
+      z: "nodename",
+      range: [500, 1500],
+      when: "cpu"
+    },
+    {
+      id: "cpu-dflops-plot",
+      label: "<%= gettext "Double-precision floating point operations [TFLOP/s]" %>",
+      y: d => d.mflops*1e-6,
+      z: "nodename",
+      range: [0, 10],
+      when: "cpu"
+    },
+    {
+      id: "cpu-sflops-plot",
+      label: "<%= gettext "Single-precision floating point operations [TFLOP/s]" %>",
+      y: d => d.smflops*1e-6,
+      z: "nodename",
+      range: [0, 10],
+      when: "cpu"
+    },
+    {
+      id: "cpu-memread-plot",
+      label: "<%= gettext "Memory read bandwidth [GiB/s]" %>",
+      y: d => d.memread/1024,
+      z: "nodename",
+      range: [0, 10],
+      when: "cpu"
+    },
+    {
+      id: "cpu-memwrite-plot",
+      label: "<%= gettext "Memory write bandwidth [GiB/s]" %>",
+      y: d => d.memwrite/1024,
+      z: "nodename",
+      range: [0, 10],
+      when: "cpu"
+    },
+    {
+      id: "gpu-fp64-plot",
+      label: "<%= gettext "GPU FP64 Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_fp64_active,
       z: nodegpu,
       range: [0, 100],
       when: "gpu"
     },
     {
-      id: "fp32-plot",
-      label: "<%= gettext "FP32 Usage" %>",
+      id: "gpu-fp32-plot",
+      label: "<%= gettext "GPU FP32 Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_fp32_active,
       z: nodegpu,
       range: [0, 100],
       when: "gpu"
     },
     {
-      id: "fp16-plot",
-      label: "<%= gettext "FP16 Usage" %>",
+      id: "gpu-fp16-plot",
+      label: "<%= gettext "GPU FP16 Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_fp16_active,
       z: nodegpu,
       range: [0, 100],
       when: "gpu"
     },
     {
-      id: "tensor-plot",
-      label: "<%= gettext "Tensor Usage" %>",
+      id: "gpu-tensor-plot",
+      label: "<%= gettext "GPU Tensor Usage" %>",
       y: d => 100*d.dcgm_fi_prof_pipe_tensor_active,
       z: nodegpu,
       range: [0, 100],
       when: "gpu"
     },
     {
-      id: "smact-plot",
-      label: "<%= gettext "SM Active [%]" %>",
+      id: "gpu-smact-plot",
+      label: "<%= gettext "GPU SM Active [%]" %>",
       y: d => 100*d.dcgm_fi_prof_sm_active,
       z: nodegpu,
       range: [0, 100],
       when: "gpu"
     },
     {
-      id: "smocc-plot",
-      label: "<%= gettext "SM Occupancy [%]" %>",
+      id: "gpu-smocc-plot",
+      label: "<%= gettext "GPU SM Occupancy [%]" %>",
       y: d => 100*d.dcgm_fi_prof_sm_occupancy,
       z: nodegpu,
       range: [0, 100],
