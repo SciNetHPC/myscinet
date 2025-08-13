@@ -43,6 +43,9 @@
               <li><a href={~p"/jobs"}>Jobs</a></li>
               <li><a href={~p"/allocations"}>Allocations</a></li>
               <li><a href={~p"/storage"}>Storage</a></li>
+              <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
+                <li><a href={~p"/users"}><%= gettext "Users" %></a></li>
+              <% end %>
             </ul>
           </div>
           <a class="btn btn-ghost text-xl flex items-baseline gap-2" href={~p"/"}>
@@ -55,6 +58,9 @@
             <li><a href={~p"/jobs"}>Jobs</a></li>
             <li><a href={~p"/allocations"}>Allocations</a></li>
             <li><a href={~p"/storage"}>Storage</a></li>
+            <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
+              <li><a href={~p"/users"}><%= gettext "Users" %></a></li>
+            <% end %>
           </ul>
         </div>
         <div class="navbar-end flex gap-2">

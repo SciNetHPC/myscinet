@@ -43,8 +43,22 @@ defmodule MySciNetWeb.Router do
     end
   end
 
+  defp is_staff_user(conn, _) do
+    if MySciNetWeb.Permissions.is_staff_user?(conn) do
+      conn
+    else
+      conn
+      |> put_status(404)
+      |> halt
+    end
+  end
+
   pipeline :authenticated do
     plug :authenticate
+  end
+
+  pipeline :staff do
+    plug :is_staff_user
   end
 
   scope "/", MySciNetWeb do
@@ -64,6 +78,13 @@ defmodule MySciNetWeb.Router do
     get "/jobs/:cluster/:id/perf.csv", JobController, :perf
     post "/logout", LoginController, :delete
     get "/storage", StorageController, :index
+  end
+
+  scope "/", MySciNetWeb do
+    pipe_through [:browser, :authenticated, :staff]
+
+    get "/users", UserController, :index
+    get "/users/:id", UserController, :show
   end
 
   # Other scopes may use custom stacks.
