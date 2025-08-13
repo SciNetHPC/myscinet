@@ -628,7 +628,7 @@ yyaction_5() ->
 -compile({inline,yyaction_6/0}).
 -file("lib/myscinet/query_lexer.xrl", 15).
 yyaction_6() ->
-     { token, { '<k' } } .
+     { token, { '<' } } .
 
 -compile({inline,yyaction_7/0}).
 -file("lib/myscinet/query_lexer.xrl", 16).

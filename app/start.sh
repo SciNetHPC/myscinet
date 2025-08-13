@@ -3,7 +3,7 @@ set -eu
 
 if [ "$MIX_ENV" = "dev" ]; then
     mix deps.get --only "$MIX_ENV"
-    mix compile
+    mix compile --force
     mix assets.deploy
     mix phx.digest.clean --all
 fi
