@@ -11,6 +11,8 @@ COPY ./app /app
 WORKDIR /app
 RUN mix deps.get && \
     mix deps.compile && \
-    mix assets.deploy && \
-    mix compile
+    mix assets.setup && \
+    mix compile && \
+    mix assets.build && \
+    mix assets.deploy
 CMD ["/app/start.sh"]
