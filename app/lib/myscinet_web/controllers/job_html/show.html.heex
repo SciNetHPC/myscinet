@@ -175,7 +175,7 @@
       label: "<%= gettext "Double-precision floating point operations [TFLOP/s]" %>",
       y: d => d.mflops*1e-6,
       z: "nodename",
-      range: [0, 10],
+      range: [0, 1],
       when: "cpu"
     },
     {
@@ -183,7 +183,7 @@
       label: "<%= gettext "Single-precision floating point operations [TFLOP/s]" %>",
       y: d => d.smflops*1e-6,
       z: "nodename",
-      range: [0, 10],
+      range: [0, 1],
       when: "cpu"
     },
     {
