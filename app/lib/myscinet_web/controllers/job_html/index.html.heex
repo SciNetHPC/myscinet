@@ -24,8 +24,9 @@
   <tbody>
     <%= for job <- @jobs do %>
       <% {cluster, cjobid} = split_jobid(job.jobid) %>
-      <tr class="hover:bg-primary/10 cursor-pointer" onclick={"window.location='" <> ~p"/jobs/#{cluster}/#{cjobid}" <> "'"}>
-        <td><span class="font-mono"><%= cluster %></span>/<wbr/><span class="font-mono"><%= cjobid %></span></td>
+      <% href = ~p"/jobs/#{cluster}/#{cjobid}" %>
+      <tr class="hover:bg-primary/10 cursor-pointer" onclick={"window.location='" <> href <> "'"}>
+        <td><a class="link-hover" href={href}><span class="font-mono"><%= cluster %>/</span><wbr/><span class="font-mono"><%= cjobid %></span></a></td>
         <td><%= job.username %></td>
         <td><%= job.account %></td>
         <td><%= job.submit %></td>
