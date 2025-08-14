@@ -1,4 +1,4 @@
-defmodule MySciNetWeb.AllocationsController do
+defmodule MySciNetWeb.AllocationController do
   use MySciNetWeb, :controller
 
   def index(conn, _params) do
