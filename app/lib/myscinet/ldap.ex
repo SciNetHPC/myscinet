@@ -12,20 +12,35 @@ defmodule MySciNet.LDAP do
     ~c"cn=#{gid},#{config()[:group_base]}"
   end
 
-  defp open() do
-    hosts = config()[:hosts]
+  defp transact(dn, pw, handler) do
+    conf = config()
+
+    hosts =
+      conf[:hosts]
       |> String.split(",")
       |> Enum.map(&to_charlist/1)
-    port = config()[:port]
-    {:ok, handle} = :eldap.open(hosts, port: port,
-      ssl: true, sslopts: [verify: :verify_none])
-    handle
+
+    port = conf[:port]
+
+    case :eldap.open(hosts, port: port, ssl: true, sslopts: [verify: :verify_none]) do
+      {:ok, handle} ->
+        result =
+          case :eldap.simple_bind(handle, to_charlist(dn), to_charlist(pw)) do
+            :ok -> handler.(handle)
+            error -> error
+          end
+
+        :eldap.close(handle)
+        result
+
+      error ->
+        error
+    end
   end
 
-  defp connect() do
-    handle = open()
-    :ok = :eldap.simple_bind(handle, to_charlist(config()[:bind_dn]), to_charlist(config()[:bind_pw]))
-    handle
+  defp transact_as_admin(handler) do
+    conf = config()
+    transact(conf[:bind_dn], conf[:bind_pw], handler)
   end
 
   defp map_to_s(x), do: Enum.map(x, &IO.iodata_to_binary/1)
@@ -34,94 +49,129 @@ defmodule MySciNet.LDAP do
   defp search(handle, opts) do
     case :eldap.search(handle, opts) do
       {:ok, {:eldap_search_result, entries, [], _}} ->
-        for {:eldap_entry,_,entry} <- entries do
-          for {k,vs} <- entry, do: {:erlang.list_to_atom(k),map_to_s(vs)}, into: %{}
-        end
-      _ ->
-        []
+        results =
+          for {:eldap_entry, _, entry} <- entries do
+            for {k, vs} <- entry, do: {:erlang.list_to_atom(k), map_to_s(vs)}, into: %{}
+          end
+
+        {:ok, results}
+
+      error ->
+        error
     end
   end
 
-  defp userinfo(handle, uid, dn) when is_list(uid) and is_list(dn) do
-    results = search(handle,
-      base: dn,
-      scope: :eldap.baseObject(),
-      filter: :eldap.present(~c"gidNumber"),
-      attributes: [~c"cn", ~c"gidNumber", ~c"mail", ~c"uid", ~c"loginShell"])
-    [%{cn: [fullname], gidNumber: [gid], mail: emails, uid: [username], loginShell: [shell]}] = results
+  defp userinfo(handle, uid, dn) do
+    uid = to_charlist(uid)
+    dn = to_charlist(dn)
 
-    results = search(handle,
-      base: config()[:group_base],
-      scope: :eldap.singleLevel(),
-      filter: :eldap.or([:eldap.equalityMatch(~c"memberUid", uid),
-                         :eldap.equalityMatch(~c"gidNumber", gid)]),
-      attributes: [~c"cn"])
-    groups = for %{cn: [val]} <- results, do: val
+    with {:ok,
+          [
+            %{
+              cn: [fullname],
+              gidNumber: [gid],
+              mail: emails,
+              uid: [username],
+              loginShell: [shell]
+            }
+          ]} <-
+           search(handle,
+             base: dn,
+             scope: :eldap.baseObject(),
+             filter: :eldap.present(~c"gidNumber"),
+             attributes: [~c"cn", ~c"gidNumber", ~c"mail", ~c"uid", ~c"loginShell"]
+           ),
+         {:ok, results} <-
+           search(handle,
+             base: config()[:group_base],
+             scope: :eldap.singleLevel(),
+             filter:
+               :eldap.or([
+                 :eldap.equalityMatch(~c"memberUid", uid),
+                 :eldap.equalityMatch(~c"gidNumber", gid)
+               ]),
+             attributes: [~c"cn"]
+           ) do
+      groups = for %{cn: [val]} <- results, do: val
 
-    %{fullname: fullname, username: username, groups: groups, emails: emails, shell: shell}
+      {:ok,
+       %{
+         fullname: fullname,
+         username: username,
+         groups: groups,
+         emails: emails,
+         shell: shell
+       }}
+    else
+      error -> error
+    end
   end
 
   def authenticate(username, password) do
-    uid = to_charlist username
-    pw = to_charlist password
-    dn = uid2dn username
-    handle = open()
-    result = case :eldap.simple_bind(handle, dn, pw) do
-      :ok ->
-        case userinfo(handle, uid, dn) do
-          %{shell: "/sbin/nologin"} -> :error
-          info -> {:ok, info}
-        end
-      _ ->
-        :error
-    end
-    :eldap.close(handle)
-    result
+    dn = uid2dn(username)
+
+    transact(dn, password, fn handle ->
+      case userinfo(handle, username, dn) do
+        {:ok, %{shell: "/sbin/nologin"}} -> {:error, :nologin}
+        {:ok, info} -> {:ok, info}
+        error -> error
+      end
+    end)
   end
 
   def user_info(username) do
-    uid = to_charlist username
-    dn = uid2dn username
-    handle = connect()
-    info = userinfo(handle, uid, dn)
-    :eldap.close(handle)
-    info
+    transact_as_admin(&userinfo(&1, username, uid2dn(username)))
   end
 
   def user_search(q) do
-    q = to_charlist q
-    handle = connect()
-    attr = [~c"cn", ~c"mail", ~c"uid"]
-    results = search(handle,
-      base: config()[:user_base],
-      scope: :eldap.singleLevel(),
-      filter: :eldap.or([
-        :eldap.substrings(~c"cn", [{:any, q}]),
-        :eldap.substrings(~c"uid", [{:any, q}]),
-        :eldap.substrings(~c"mail", [{:any, q}])]),
-      attributes: attr)
-    results = case length(results) do
-      0 -> search(handle,
-        base: config()[:user_base],
-        scope: :eldap.singleLevel(),
-        filter: :eldap.or([
-          :eldap.approxMatch(~c"cn", q),
-          :eldap.approxMatch(~c"mail", q)]),
-        attributes: attr)
-      _ -> results
-    end
-    :eldap.close(handle)
-    results
+    transact_as_admin(fn handle ->
+      conf = config()
+      q = to_charlist(q)
+      attr = [~c"cn", ~c"mail", ~c"uid"]
+
+      case search(handle,
+             base: conf[:user_base],
+             scope: :eldap.singleLevel(),
+             filter:
+               :eldap.or([
+                 :eldap.substrings(~c"cn", [{:any, q}]),
+                 :eldap.substrings(~c"uid", [{:any, q}]),
+                 :eldap.substrings(~c"mail", [{:any, q}])
+               ]),
+             attributes: attr
+           ) do
+        {:ok, []} ->
+          search(handle,
+            base: conf[:user_base],
+            scope: :eldap.singleLevel(),
+            filter:
+              :eldap.or([
+                :eldap.approxMatch(~c"cn", q),
+                :eldap.approxMatch(~c"mail", q)
+              ]),
+            attributes: attr
+          )
+
+        {:ok, results} ->
+          {:ok, results}
+
+        error ->
+          error
+      end
+    end)
   end
 
   def group_members(group) do
-    handle = connect()
-    [%{memberUid: members}] = search(handle,
-      base: gid2dn(group),
-      scope: :eldap.baseObject(),
-      filter: :eldap.present(~c"memberUid"),
-      attributes: [~c"memberUid"])
-    :eldap.close(handle)
-    members
+    transact_as_admin(fn handle ->
+      case search(handle,
+             base: gid2dn(group),
+             scope: :eldap.baseObject(),
+             filter: :eldap.present(~c"memberUid"),
+             attributes: [~c"memberUid"]
+           ) do
+        [%{memberUid: members}] -> members
+        error -> error
+      end
+    end)
   end
 end
