@@ -3,8 +3,8 @@ defmodule MySciNetWeb.JobHTML do
 
   embed_templates "job_html/*"
 
-  def add_underscore_breaks(s) do
-    {:safe, String.replace(s, "_", "_<wbr/>")}
+  def add_breakpoints(s) do
+    {:safe, s |> String.replace("_", "_<wbr/>") |> String.replace("-", "-<wbr/>")}
   end
 
   def cluster_cpumem(cluster) do
