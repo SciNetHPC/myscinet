@@ -360,6 +360,14 @@
         plotDiv.appendChild(label);
         plotsContainer.appendChild(plotDiv);
         // Render plot
+        var lines_or_dots;
+        if (data.length < 2000) {
+            lines_or_dots = Plot.dot(plotdata, {x: "time", y: plot.y, z: plot.z, title: plot.z, fill: plot.z, r: 4});
+        } else {
+            lines_or_dots = Plot.line(plotdata, {x: "time", y: plot.y, z: plot.z, title: plot.z, stroke: plot.z});
+        }
+        const avg = d3.mean(plotdata, plot.y);
+        const width = plotDiv.clientWidth || 600;
         const p = Plot.plot({
           x: {
             nice: true,
@@ -374,10 +382,10 @@
           },
           grid: true,
           marks: [
-            Plot.frame(),
-            Plot.line(plotdata, {x: "time", y: plot.y, z: plot.z, title: plot.z, stroke: plot.z}),
+            Plot.ruleY([avg], { strokeDasharray: [2,2] }),
+            lines_or_dots,
           ],
-          width: plotDiv.clientWidth || 600,
+          width: width,
           height: 240,
           marginLeft: 50,
           marginBottom: 40
