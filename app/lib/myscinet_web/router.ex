@@ -73,6 +73,7 @@ defmodule MySciNetWeb.Router do
     pipe_through [:browser, :authenticated]
 
     get "/allocations", AllocationController, :index
+    get "/allocations/:cluster/:id", AllocationController, :show
     get "/jobs", JobController, :index
     get "/jobs/:cluster/:id", JobController, :show
     get "/jobs/:cluster/:id/perf.csv", JobController, :perf

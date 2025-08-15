@@ -1,0 +1,55 @@
+<.header>{gettext("Allocation")} {@cluster}/{@allocation}</.header>
+<div class="card bg-base-200 shadow-sm max-w-4xl mx-auto">
+  <div class="card-body">
+    <div class="card-title">
+      <h2 class="">{gettext("Queue Priority")}</h2>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-8 items-start">
+      <div class="flex-1">
+        <p class="mt-4">
+          {raw(
+            gettext(
+              "Recently, this account has used <strong>%{percent}%</strong> of its rolling Niagara allocation (<strong>~%{cores} cores</strong>).",
+              percent: round(@overall.percent_used),
+              cores: round(@overall.cores)
+            )
+          )}
+        </p>
+        <p class="mt-4">
+          {gettext("""
+          Allocations are "use it or lose it", not a lump sum.
+          The scheduler adjusts your job priority based on your recent usage,
+          so that your average usage matches your allocation.
+          """)}
+        </p>
+        <p class="mt-4">
+          {gettext("""
+          "Recent" here means a few weeks.
+          The scheduler's memory of past usage decays with a half-life of one week.
+          The pie-chart shows each user's share of recent usage.
+          """)}
+        </p>
+      </div>
+      <div class="flex-1">
+        <div class="max-w-xs mx-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="text-left">{gettext("User")}</th>
+                <th class="text-right">{gettext("Recent Usage (%)")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for {user, usage} <- @sshare |> Enum.filter(fn {_, u} -> u > 0 end) |> Enum.sort_by(fn {_, u} -> -u end) do %>
+                <tr>
+                  <td class="text-left">{user}</td>
+                  <td class="text-right">{Float.round(100 * usage, 1)}</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

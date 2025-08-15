@@ -1,2 +1,24 @@
-<h1>Allocations</h1>
-<p>This is a stub page for allocations.</p>
+<.header>{gettext("Allocations")}</.header>
+
+<%= if assigns[:allocations] do %>
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>Cluster</th>
+        <th>Allocation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for {cluster, allocations} <- @allocations do %>
+        <%= for allocation <- allocations do %>
+          <tr>
+            <td>{cluster}</td>
+            <td>
+              <a class="link" href={~p"/allocations/#{cluster}/#{allocation}"}>{allocation}</a>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
