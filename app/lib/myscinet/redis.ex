@@ -12,4 +12,21 @@ defmodule MySciNet.Redis do
     Redix.pipeline(__MODULE__, commands)
   end
 
+  defp hgetall_result_to_map(raw, parse_val) do
+    raw
+    |> Enum.chunk_every(2)
+    |> Enum.into(%{}, fn [k, v] -> {String.to_atom(k), parse_val.(k, v)} end)
+  end
+
+  def hgetalls(keys, parse_val) do
+    cmds = for key <- keys, do: ["HGETALL", key]
+
+    case pipeline(cmds) do
+      {:ok, results} ->
+        {:ok, Enum.map(results, &hgetall_result_to_map(&1, parse_val))}
+
+      error ->
+        error
+    end
+  end
 end

@@ -32,31 +32,15 @@ defmodule MySciNetWeb.PageController do
   defp parse_cluster_val("nodesRunning", sval), do: string_to_float(sval)
   defp parse_cluster_val(_, sval), do: String.to_integer(sval)
 
-  defp hgetall_result_to_map(raw, parse_val) do
-    raw
-    |> Enum.chunk_every(2)
-    |> Enum.into(%{}, fn [k, v] -> {String.to_atom(k), parse_val.(k, v)} end)
-  end
-
-  defp hgetalls(keys, parse_val) do
-    cmds = for key <- keys, do: ["HGETALL", key]
-    case MySciNet.Redis.pipeline(cmds) do
-      {:ok, results} ->
-        {:ok, Enum.map(results, &hgetall_result_to_map(&1, parse_val))}
-      error ->
-        error
-    end
-  end
-
   defp get_clusters(clusters) do
     cluster_keys = for cluster <- clusters, do: "cluster:#{cluster[:slug]}"
-    case hgetalls(cluster_keys, &parse_cluster_val/2) do
+    case MySciNet.Redis.hgetalls(cluster_keys, &parse_cluster_val/2) do
       {:ok, clusters_stats} ->
         clusters_stats_with_logins =
           for {cluster, cluster_stats} <- Enum.zip(clusters, clusters_stats) do
             # Fetch login node statuses
             login_keys = for login <- cluster[:logins], do: "#{login}:stats"
-            login_stats = case hgetalls(login_keys, fn _, v -> String.to_float(v) end) do
+            login_stats = case MySciNet.Redis.hgetalls(login_keys, fn _, v -> String.to_float(v) end) do
               {:ok, results} -> results
               _ -> for _ <- cluster[:logins], do: nil
             end
