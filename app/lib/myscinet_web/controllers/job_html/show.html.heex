@@ -344,10 +344,10 @@
           if (plot.when == "gpu") continue;
         };
         const plotdata = plot.counter ? diff : data;
-        const [min, max] = d3.extent(plotdata, plot.y);
+        const [datamin, datamax] = d3.extent(plotdata, plot.y);
         let yrange = [
-          Math.min(plot.range[0], min),
-          Math.max(plot.range[1], max)
+          Math.min(plot.range[0], datamin),
+          Math.max(plot.range[1], datamax)
         ];
         // Create container for each plot
         const plotDiv = document.createElement("div");
@@ -374,6 +374,7 @@
             type: "time",
           },
           y: {
+            axis: "left",
             domain: yrange,
             nice: true,
           },
@@ -382,6 +383,7 @@
           },
           grid: true,
           marks: [
+            Plot.axisY([avg], { anchor: "right", y: d3.scaleLinear(yrange, yrange) }),
             Plot.ruleY([avg], { strokeDasharray: [2,2] }),
             lines_or_dots,
           ],
