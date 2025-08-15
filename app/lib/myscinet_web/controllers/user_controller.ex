@@ -27,7 +27,7 @@ defmodule MySciNetWeb.UserController do
 
         conn
         |> put_flash(:error, "User not found")
-        |> redirect(to: "/users")
+        |> redirect(to: ~p"/users")
     end
   end
 end
