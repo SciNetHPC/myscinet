@@ -1,5 +1,6 @@
 defmodule MySciNetWeb.AllocationController do
   use MySciNetWeb, :controller
+  require MySciNetWeb.Permissions
 
   @clusters ["trillium", "grillium", "balam"]
 
@@ -50,15 +51,17 @@ defmodule MySciNetWeb.AllocationController do
   end
 
   def show(conn, %{"cluster" => cluster, "id" => id}) do
-    case get_allocation(cluster, id) do
-      {:ok, cluster, overall, sshare} ->
-        render(conn, :show, cluster: cluster, allocation: id, overall: overall, sshare: sshare)
+    authz = id in conn.assigns.current_user.groups or MySciNetWeb.Permissions.is_staff_user?(conn)
 
+    with true <- authz,
+         {:ok, cluster, overall, sshare} <- get_allocation(cluster, id) do
+      render(conn, :show, cluster: cluster, allocation: id, overall: overall, sshare: sshare)
+    else
       error ->
         dbg(error)
 
         conn
-        |> put_flash(:error, "Allocation not found")
+        |> put_flash(:error, "Allocation not found or permission denied")
         |> redirect(to: ~p"/allocations")
     end
   end
