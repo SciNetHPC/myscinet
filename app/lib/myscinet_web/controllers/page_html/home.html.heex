@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 gap-6">
-  <div class="card bg-base-200 shadow-md">
+  <div class="card bg-base-200 shadow-sm">
     <div class="card-body grid grid-cols-6 gap-8 items-center">
       <div class="col-span-1">
         <h2 class="card-title">Storage</h2>
@@ -31,7 +31,7 @@
   </div>
   <% now = DateTime.utc_now() |> DateTime.to_unix() %>
   <%= for cluster <- @clusters do %>
-    <div class="card bg-base-200 shadow-md">
+    <div class="card bg-base-200 shadow-sm">
       <div class="card-body grid grid-cols-6 gap-8 items-center">
         <div class="col-span-1">
           <h2 class="card-title"><%= cluster.name %></h2>
