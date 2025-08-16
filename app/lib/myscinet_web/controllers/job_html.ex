@@ -31,10 +31,10 @@ defmodule MySciNetWeb.JobHTML do
         _                -> {"hero-question-mark-circle", "text-base-content/60"}
       end
 
-    assigns = assign(assigns, icon: icon, color: color)
+    assigns = assign(assigns, icon: icon, class: [assigns.class, color])
 
     ~H"""
-    <.icon name={@icon} class={[@color, @class]} />
+    <.icon name={@icon} class={@class} />
     """
   end
 
