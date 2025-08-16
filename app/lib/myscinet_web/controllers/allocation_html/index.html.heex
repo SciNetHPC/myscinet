@@ -4,22 +4,27 @@
   <table class="table w-full">
     <thead>
       <tr>
-        <th>Cluster</th>
-        <th>Allocation</th>
+        <th>{gettext("Cluster")}</th>
+        <th>{gettext("Allocations")}</th>
       </tr>
     </thead>
     <tbody>
       <%= for {cluster, allocations} <- @allocations do %>
-        <%= for allocation <- allocations do %>
-          <tr>
-            <td>{cluster.name}</td>
-            <td>
-              <a class="link" href={~p"/allocations/#{cluster.slug_web}/#{allocation}"}>
-                {allocation}
-              </a>
-            </td>
-          </tr>
-        <% end %>
+        <tr>
+          <td>{cluster.name}</td>
+          <td>
+            <% len = length(allocations) %>
+            <%= for {allocation, idx} <- Enum.with_index(allocations) do %>
+              <% href = ~p"/allocations/#{cluster.slug_web}/#{allocation}" %>
+              <% class =
+                "link " <>
+                  if String.starts_with?(allocation, "def-"),
+                    do: "",
+                    else: "text-primary font-bold" %>
+              <a class={class} href={href}>{allocation}</a>{if idx < len - 1, do: ","}
+            <% end %>
+          </td>
+        </tr>
       <% end %>
     </tbody>
   </table>
