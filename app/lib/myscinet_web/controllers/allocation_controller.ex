@@ -1,13 +1,16 @@
 defmodule MySciNetWeb.AllocationController do
   use MySciNetWeb, :controller
   require MySciNetWeb.Permissions
-
-  @clusters ["trillium", "grillium", "balam"]
+  alias MySciNetWeb.Clusters
 
   def get_allocations_for_user(username) do
-    cmds = for cluster <- @clusters, do: ["GET", "#{cluster}:allocation:accounts:#{username}"]
+    clusters = Clusters.get_clusters()
 
-    case MySciNet.Redis.pipeline(cmds) do
+    redis_cmds =
+      for cluster <- clusters,
+          do: ["GET", "#{cluster.slug_redis}:allocation:accounts:#{username}"]
+
+    case MySciNet.Redis.pipeline(redis_cmds) do
       {:ok, results} ->
         allocs =
           for result <- results,
@@ -17,7 +20,7 @@ defmodule MySciNetWeb.AllocationController do
                 |> String.split()
                 |> Enum.sort()
 
-        {:ok, Enum.zip(@clusters, allocs)}
+        {:ok, Enum.zip(clusters, allocs)}
 
       error ->
         error

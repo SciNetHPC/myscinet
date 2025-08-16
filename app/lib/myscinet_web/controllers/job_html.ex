@@ -1,32 +1,11 @@
 defmodule MySciNetWeb.JobHTML do
   use MySciNetWeb, :html
+  import MySciNetWeb.Clusters
 
   embed_templates "job_html/*"
 
   def add_breakpoints(s) do
     {:safe, s |> String.replace("_", "_<wbr/>") |> String.replace("-", "-<wbr/>")}
-  end
-
-  def cluster_cpumem(cluster) do
-    case cluster do
-      "balam" -> 1000
-      _ -> 768
-    end
-  end
-
-  defp cluster_name(slug) do
-    case slug do
-      "tric" -> "trillium"
-      "trig" -> "trillium-gpu"
-      _ -> slug
-    end
-  end
-
-  defp split_jobid(jobid) do
-    case String.split(jobid, ":") do
-      [slug, id] -> {cluster_name(slug), id}
-      _ -> nil
-    end
   end
 
   def job_state_pretty(job) do

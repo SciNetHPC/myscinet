@@ -12,9 +12,11 @@
       <%= for {cluster, allocations} <- @allocations do %>
         <%= for allocation <- allocations do %>
           <tr>
-            <td>{cluster}</td>
+            <td>{cluster.name}</td>
             <td>
-              <a class="link" href={~p"/allocations/#{cluster}/#{allocation}"}>{allocation}</a>
+              <a class="link" href={~p"/allocations/#{cluster.slug_web}/#{allocation}"}>
+                {allocation}
+              </a>
             </td>
           </tr>
         <% end %>

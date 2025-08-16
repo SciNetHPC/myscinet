@@ -1,5 +1,5 @@
-<% {cluster, cjobid} = split_jobid(@job.jobid) %>
-<% cpumem = cluster_cpumem(cluster) %>
+<% {cluster, cjobid} = from_psql_jobid(@job.jobid) %>
+<% cpumem = get_cluster(cluster).cpumem %>
 <% perf_csv_path = ~p"/jobs/#{cluster}/#{cjobid}/perf.csv" %>
 
 <.header>

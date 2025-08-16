@@ -5,6 +5,7 @@ defmodule MySciNetWeb.JobController do
   alias MySciNet.Jsum
   import Ecto.Query
   import MySciNetWeb.Permissions
+  import MySciNetWeb.Clusters
 
   @page_size 20
 
@@ -67,8 +68,8 @@ defmodule MySciNetWeb.JobController do
 
   defp apply_filter(query, filter) do
     case filter do
-      {:is_eq, :cluster, cluster} ->
-        query |> where([j], ilike(j.jobid, ^"#{cluster_slug(cluster)}:%"))
+      {:is_eq, :cluster, slug} ->
+        query |> where([j], ilike(j.jobid, ^"#{get_cluster(slug).slug_psql}:%"))
       {:is_eq, :user, u} -> query |> where(username: ^to_string(u))
       {:is_eq, :group, g} -> query |> where([j], ilike(j.account, ^"%-#{g}%"))
       {:is_eq, :nodes, n} -> query |> where(nnodes: ^n)
@@ -80,25 +81,8 @@ defmodule MySciNetWeb.JobController do
     end
   end
 
-  defp cluster_slug(name) do
-    case to_string(name) do
-      "trillium" -> "tric"
-      "grillium" -> "trig"
-      "trillium-gpu" -> "trig"
-      other -> other
-    end
-  end
-
-  defp join_jobid(cluster, id) do
-    "#{cluster_slug(cluster)}:#{id}"
-  end
-
-  defp is_gpu_cluster?(cluster) do
-    cluster in ["balam", "grillium", "trillium-gpu", "trig"]
-  end
-
-  def show(conn, %{"cluster" => cluster, "id" => cid}) do
-    id = join_jobid(cluster, cid)
+  def show(conn, %{"cluster" => cluster_slug, "id" => cluster_job_id}) do
+    id = to_psql_jobid(cluster_slug, cluster_job_id)
     job =
       Jsum
       |> query_authz(conn)
@@ -133,10 +117,10 @@ defmodule MySciNetWeb.JobController do
     end
   end
 
-  def perf(conn, %{"cluster" => cluster, "id" => cid}) do
-    id = join_jobid(cluster, cid)
+  def perf(conn, %{"cluster" => cluster_slug, "id" => cluster_job_id}) do
+    id = to_psql_jobid(cluster_slug, cluster_job_id)
 
-    {table, cols} = if is_gpu_cluster?(cluster) do
+    {table, cols} = if get_cluster(cluster_slug).gpu? do
       {:utilgpu, [
         :nodename,
         :gpu,

@@ -23,7 +23,7 @@
   </thead>
   <tbody>
     <%= for job <- @jobs do %>
-      <% {cluster, cjobid} = split_jobid(job.jobid) %>
+      <% {cluster, cjobid} = from_psql_jobid(job.jobid) %>
       <% href = ~p"/jobs/#{cluster}/#{cjobid}" %>
       <tr class="hover:bg-primary/10 cursor-pointer" onclick={"window.location='#{href}'"}>
         <td><a class="link font-mono" href={href}>{cluster}/<wbr/>{cjobid}</a></td>
