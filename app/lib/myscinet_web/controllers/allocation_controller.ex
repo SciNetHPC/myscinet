@@ -20,7 +20,9 @@ defmodule MySciNetWeb.AllocationController do
                 |> String.split()
                 |> Enum.sort()
 
-        {:ok, Enum.zip(clusters, allocs)}
+        Enum.zip(clusters, allocs)
+        |> Enum.filter(fn {_, allocs} -> allocs != [] end)
+        |> then(&{:ok, &1})
 
       error ->
         error
@@ -64,7 +66,7 @@ defmodule MySciNetWeb.AllocationController do
         dbg(error)
 
         conn
-        |> put_flash(:error, "Allocation not found or permission denied")
+        |> put_flash(:error, "Allocation not found or permission denied: #{cluster}/#{id}")
         |> redirect(to: ~p"/allocations")
     end
   end
