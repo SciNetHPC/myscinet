@@ -42,6 +42,9 @@ defmodule MySciNetWeb.AllocationController do
              other -> String.to_float(other)
            end
          end) do
+      {:ok, [%{}, %{}]} ->
+        {:error, :not_found}
+
       {:ok, [overall, sshare]} ->
         {:ok, cluster, overall, sshare}
 
