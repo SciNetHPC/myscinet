@@ -1,2 +1,62 @@
-<h1>Storage</h1>
-<p>This is a stub page for storage.</p>
+<.header>Storage</.header>
+
+<%= if assigns[:storage] && length(@storage) > 0 do %>
+  <div class="overflow-x-auto">
+    <table class="table w-full table-auto border-collapse">
+      <colgroup>
+        <col style="width: 20%;" />
+        <col style="width: 40%;" />
+        <col style="width: 40%;" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="text-left px-4 py-2">Path</th>
+          <th class="text-left px-4 py-2">Capacity</th>
+          <th class="text-left px-4 py-2">Inodes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for map <- @storage do %>
+          <% display_path = display_path(map[:path]) %>
+
+          <% percent_capacity = map[:percent_capacity] %>
+          <% percent_inodes = map[:percent_inodes] %>
+
+          <% used_capacity = map[:used_capacity] %>
+          <% max_capacity = map[:hard_limit] %>
+          <% used_inodes = map[:used_inodes] %>
+          <% max_inodes = map[:hard_limit_inodes] %>
+
+          <tr class="border-t">
+            <td class="px-4 py-3 align-top whitespace-nowrap">
+              <div class="font-bold">{display_path}</div>
+              <%= if map.state != "OK" do %>
+                <div class="text-xs">{map.state}</div>
+              <% end %>
+            </td>
+
+            <td class="px-4 py-3 align-to">
+              <.usagebar
+                percent={percent_capacity}
+                used={used_capacity}
+                max={max_capacity}
+                format={:bytes}
+              />
+            </td>
+
+            <td class="px-4 py-3 align-top">
+              <.usagebar
+                percent={percent_inodes}
+                used={used_inodes}
+                max={max_inodes}
+                format={:inodes}
+              />
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p>No storage information available.</p>
+<% end %>
