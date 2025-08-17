@@ -9,7 +9,7 @@
         <p class="mt-4">
           {raw(
             gettext(
-              "Recently, this account has used <strong>%{percent}%</strong> of its rolling Niagara allocation (<strong>~%{cores} cores</strong>).",
+              "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} cores</strong>).",
               percent: round(@overall.percent_used),
               cores: round(@overall.cores)
             )
