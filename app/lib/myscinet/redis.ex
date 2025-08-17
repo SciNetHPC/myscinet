@@ -23,10 +23,13 @@ defmodule MySciNet.Redis do
 
     case pipeline(cmds) do
       {:ok, results} ->
-        if Enum.any?(results, &(&1 == [])) do
-          {:error, :not_found}
-        else
-          {:ok, Enum.map(results, &hgetall_result_to_map(&1, parse_val))}
+        case Enum.find_index(results, &(&1 == [])) do
+          nil ->
+            {:ok, Enum.map(results, &hgetall_result_to_map(&1, parse_val))}
+
+          idx ->
+            key = Enum.at(keys, idx)
+            {:error, {:not_found, key}}
         end
 
       error ->
