@@ -32,7 +32,13 @@ defmodule MySciNetWeb.AllocationController do
   def get_allocation(cluster, name) do
     keys = ["#{cluster}:allocation:#{name}", "#{cluster}:allocation:#{name}:sshare"]
 
-    case MySciNet.Redis.hgetalls(keys, fn _, v -> String.to_float(v) end) do
+    case MySciNet.Redis.hgetalls(keys, fn _, v ->
+           case v do
+             # 0/0
+             "Infinity" -> 0.0
+             other -> String.to_float(other)
+           end
+         end) do
       {:ok, [overall, sshare]} ->
         {:ok, cluster, overall, sshare}
 
