@@ -29,8 +29,11 @@ defmodule MySciNetWeb.AllocationController do
     end
   end
 
-  def get_allocation(cluster, name) do
-    keys = ["#{cluster}:allocation:#{name}", "#{cluster}:allocation:#{name}:sshare"]
+  def get_allocation(cluster_slug, name) do
+    cluster = Clusters.get_cluster(cluster_slug)
+
+    key = "#{cluster.slug_redis}:allocation:#{name}"
+    keys = [key, "#{key}:sshare"]
 
     case MySciNet.Redis.hgetalls(keys, fn _, v ->
            case v do

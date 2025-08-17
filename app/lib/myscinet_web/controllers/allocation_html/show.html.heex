@@ -1,4 +1,4 @@
-<.header>{gettext("Allocation")} {@cluster}/{@allocation}</.header>
+<.header>{gettext("Allocation")} {@cluster.slug_web}/{@allocation}</.header>
 <div class="card bg-base-200 shadow-sm max-w-4xl mx-auto">
   <div class="card-body">
     <div class="card-title">
@@ -9,9 +9,10 @@
         <p class="mt-4">
           {raw(
             gettext(
-              "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} cores</strong>).",
+              "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} %{units}</strong>).",
               percent: round(@overall.percent_used),
-              cores: round(@overall.cores)
+              cores: round(@overall.cores),
+              units: (if @cluster.gpu?, do: "GPUs", else: "cores")
             )
           )}
         </p>
