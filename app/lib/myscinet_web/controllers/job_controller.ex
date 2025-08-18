@@ -73,8 +73,12 @@ defmodule MySciNetWeb.JobController do
 
   defp apply_filter(query, filter) do
     case filter do
-      {:is_eq, :cluster, slug} ->
-        query |> where([j], ilike(j.jobid, ^"#{get_cluster(slug).slug_psql}:%"))
+      {:is_eq, :cluster, cluster} ->
+        slug = case get_cluster(to_string(cluster)) do
+          %{slug_psql: slug_psql} -> slug_psql
+          _ -> cluster
+        end
+        query |> where([j], ilike(j.jobid, ^"#{slug}:%"))
       {:is_eq, :user, u} -> query |> where(username: ^to_string(u))
       {:is_eq, :group, g} -> query |> where([j], ilike(j.account, ^"%-#{g}%"))
       {:is_eq, :nodes, n} -> query |> where(nnodes: ^n)

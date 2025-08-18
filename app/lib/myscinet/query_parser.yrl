@@ -22,7 +22,9 @@ Terminals
 Rootsymbol root.
 
 root -> '$empty' : [].
-root -> value : '$1'.
+root -> number : '$1'.
+root -> ident : '$1'.
+root -> string : '$1'.
 root -> filters : '$1'.
 
 filters -> filter : ['$1'].
@@ -37,8 +39,8 @@ filter -> name '<=' num : {is_le, '$1', '$3'}.
 name -> ident : element(2, '$1').
 num -> number : element(2, '$1').
 
-value -> number : '$1'.
-value -> ident  : '$1'.
-value -> string : '$1'.
+value -> number : element(2, '$1').
+value -> ident  : element(2, '$1').
+value -> string : element(2, '$1').
 
 Erlang code.
