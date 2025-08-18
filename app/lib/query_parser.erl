@@ -494,7 +494,7 @@ yeccpars2_5_(__Stack0) ->
 'yeccpars2_6_$end'(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
-                  element(2, ___1)
+                  ___1
   end | __Stack].
 
 -compile({inline,yeccpars2_6_/1}).
@@ -514,7 +514,7 @@ yeccpars2_6_(__Stack0) ->
 yeccpars2_7_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
-                  element(2, ___1)
+                  ___1
   end | __Stack].
 
 -compile({inline,yeccpars2_8_/1}).
@@ -524,7 +524,7 @@ yeccpars2_7_(__Stack0) ->
 yeccpars2_8_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
-                  element(2, ___1)
+                  ___1
   end | __Stack].
 
 -compile({inline,yeccpars2_9_/1}).
@@ -614,7 +614,7 @@ yeccpars2_21_(__Stack0) ->
 yeccpars2_22_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
-                  element(2, ___1)
+                  ___1
   end | __Stack].
 
 

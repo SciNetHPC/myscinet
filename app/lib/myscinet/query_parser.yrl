@@ -37,8 +37,8 @@ filter -> name '<=' num : {is_le, '$1', '$3'}.
 name -> ident : element(2, '$1').
 num -> number : element(2, '$1').
 
-value -> number : element(2, '$1').
-value -> ident  : element(2, '$1').
-value -> string : element(2, '$1').
+value -> number : '$1'.
+value -> ident  : '$1'.
+value -> string : '$1'.
 
 Erlang code.
