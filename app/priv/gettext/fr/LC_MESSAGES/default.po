@@ -1,28 +1,28 @@
 #: lib/myscinet_web/components/core_components.ex:342
 #, elixir-autogen, elixir-format
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: lib/myscinet_web/components/layouts.ex:99
 #: lib/myscinet_web/components/layouts.ex:111
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
-msgstr ""
+msgstr "Tentative de reconnexion"
 
 #: lib/myscinet_web/components/layouts.ex:106
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
-msgstr ""
+msgstr "Une erreur s'est produite !"
 
 #: lib/myscinet_web/components/layouts.ex:94
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
-msgstr ""
+msgstr "Connexion Internet introuvable"
 
 #: lib/myscinet_web/components/core_components.ex:74
 #, elixir-autogen, elixir-format
 msgid "close"
-msgstr ""
+msgstr "fermer"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:16
 #: lib/myscinet_web/controllers/job_html/show.html.heex:30
@@ -81,361 +81,361 @@ msgstr "Nom d'utilisateur"
 #: lib/myscinet_web/controllers/job_html/show.html.heex:39
 #, elixir-autogen, elixir-format
 msgid "Alloc TRES"
-msgstr ""
+msgstr "TRES alloués"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "CPU Time"
-msgstr ""
+msgstr "Temps CPU"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:16
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "Elapsed"
-msgstr ""
+msgstr "Temps écoulé"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:44
 #, elixir-autogen, elixir-format
 msgid "End Time"
-msgstr ""
+msgstr "Heure de fin"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:93
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Environment"
-msgstr ""
+msgstr "Environnement"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Exit Code"
-msgstr ""
+msgstr "Code de sortie"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:29
 #, elixir-autogen, elixir-format
 msgid "Group"
-msgstr ""
+msgstr "Groupe"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:10
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Job"
-msgstr "ID du job"
+msgstr "Tâche"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Max Disk Read"
-msgstr ""
+msgstr "Lecture disque maximale"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:47
 #, elixir-autogen, elixir-format
 msgid "Max Disk Write"
-msgstr ""
+msgstr "Écriture disque maximale"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:48
 #, elixir-autogen, elixir-format
 msgid "Max RSS"
-msgstr ""
+msgstr "RSS maximal"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:49
 #, elixir-autogen, elixir-format
 msgid "Max VM Size"
-msgstr ""
+msgstr "Taille VM maximale"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:20
 #: lib/myscinet_web/controllers/job_html/show.html.heex:37
 #, elixir-autogen, elixir-format
 msgid "Nodes"
-msgstr ""
+msgstr "Nœuds"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:31
 #, elixir-autogen, elixir-format
 msgid "Partition"
-msgstr ""
+msgstr "Partition"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Performance"
-msgstr ""
+msgstr "Performance"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "QOS"
-msgstr ""
+msgstr "QoS"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:78
 #, elixir-autogen, elixir-format
 msgid "Script"
-msgstr ""
+msgstr "Script"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:42
 #, elixir-autogen, elixir-format
 msgid "Start Time"
-msgstr ""
+msgstr "Heure de début"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:52
 #, elixir-autogen, elixir-format
 msgid "System CPU"
-msgstr ""
+msgstr "CPU système"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "Time Limit"
-msgstr ""
+msgstr "Limite de temps"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Total CPU"
-msgstr ""
+msgstr "CPU total"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:51
 #, elixir-autogen, elixir-format, fuzzy
 msgid "User CPU"
-msgstr "Utilisateur"
+msgstr "CPU utilisateur"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:33
 #, elixir-autogen, elixir-format
 msgid "Workdir"
-msgstr ""
+msgstr "Répertoire de travail"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:14
 #, elixir-autogen, elixir-format
 msgid "Cluster/ID"
-msgstr ""
+msgstr "Cluster/ID"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:70
 #, elixir-autogen, elixir-format
 msgid "Download CSV"
-msgstr ""
+msgstr "Télécharger CSV"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:2
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Jobs"
-msgstr "ID du job"
+msgstr "Tâches"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:18
 #: lib/myscinet_web/controllers/user_html/index.html.heex:15
 #: lib/myscinet_web/controllers/user_html/show.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:19
 #, elixir-autogen, elixir-format
 msgid "Walltime"
-msgstr ""
+msgstr "Temps mur"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:41
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Eligible Time"
-msgstr ""
+msgstr "Temps éligible"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:38
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Node List"
-msgstr ""
+msgstr "Liste des nœuds"
 
 #: lib/myscinet_web/controllers/job_html/index.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Search for..."
-msgstr ""
+msgstr "Rechercher..."
 
 #: lib/myscinet_web/components/layouts/root.html.heex:86
 #, elixir-autogen, elixir-format
 msgid "Sign out %{user}"
-msgstr ""
+msgstr "Déconnexion de %{user}"
 
 #: lib/myscinet_web/controllers/login_controller.ex:29
 #, elixir-autogen, elixir-format
 msgid "Signed out %{user}"
-msgstr ""
+msgstr "%{user} déconnecté"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:143
 #, elixir-autogen, elixir-format
 msgid "CPU Memory Available [GiB]"
-msgstr ""
+msgstr "Mémoire CPU disponible [GiB]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:119
 #, elixir-autogen, elixir-format
 msgid "CPU Usage [%]"
-msgstr ""
+msgstr "Utilisation CPU [%]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:111
 #, elixir-autogen, elixir-format
 msgid "GPU Usage [%]"
-msgstr ""
+msgstr "Utilisation GPU [%]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:264
 #, elixir-autogen, elixir-format
 msgid "Infiniband data received [GiB/s]"
-msgstr ""
+msgstr "Données Infiniband reçues [GiB/s]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:255
 #, elixir-autogen, elixir-format
 msgid "Infiniband data transmitted [GiB/s]"
-msgstr ""
+msgstr "Données Infiniband émises [GiB/s]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:282
 #, elixir-autogen, elixir-format
 msgid "Infiniband packets received [million/s]"
-msgstr ""
+msgstr "Paquets Infiniband reçus [millions/s]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:273
 #, elixir-autogen, elixir-format
 msgid "Infiniband packets transmitted [million/s]"
-msgstr ""
+msgstr "Paquets Infiniband émis [millions/s]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:401
 #, elixir-autogen, elixir-format
 msgid "Error loading performance data."
-msgstr ""
+msgstr "Erreur lors du chargement des données de performance."
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:27
 #, elixir-autogen, elixir-format
 msgid "\"Recent\" here means a few weeks.\nThe scheduler's memory of past usage decays with a half-life of one week.\nThe pie-chart shows each user's share of recent usage.\n"
-msgstr ""
+msgstr "Ici, \"récent\" signifie quelques semaines.\nLa mémoire de l'ordonnanceur pour l'utilisation passée décroît avec une demi-vie d'une semaine.\nLe graphique circulaire montre la part d'utilisation récente de chaque utilisateur.\n"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:1
 #, elixir-autogen, elixir-format
 msgid "Allocation"
-msgstr ""
+msgstr "Allocation"
 
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:1
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:8
 #, elixir-autogen, elixir-format
 msgid "Allocations"
-msgstr ""
+msgstr "Allocations"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Allocations are \"use it or lose it\", not a lump sum.\nThe scheduler adjusts your job priority based on your recent usage,\nso that your average usage matches your allocation.\n"
-msgstr ""
+msgstr "Les allocations sont \"utilisez-les ou perdez-les\", pas un montant forfaitaire.\nL'ordonnanceur ajuste la priorité de vos tâches en fonction de votre utilisation récente,\nafin que votre utilisation moyenne corresponde à votre allocation.\n"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:127
 #, elixir-autogen, elixir-format, fuzzy
 msgid "CPU IO Wait [ms]"
-msgstr ""
+msgstr "Attente E/S CPU [ms]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:135
 #, elixir-autogen, elixir-format, fuzzy
 msgid "CPU Load Average"
-msgstr ""
+msgstr "Charge moyenne CPU"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:159
 #, elixir-autogen, elixir-format
 msgid "CPU cycles per instruction"
-msgstr ""
+msgstr "Cycles CPU par instruction"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:151
 #, elixir-autogen, elixir-format
 msgid "CPU frequency [GHz]"
-msgstr ""
+msgstr "Fréquence CPU [GHz]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:167
 #, elixir-autogen, elixir-format
 msgid "CPU power [W]"
-msgstr ""
+msgstr "Puissance CPU [W]"
 
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:7
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Cluster"
-msgstr ""
+msgstr "Cluster"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:175
 #, elixir-autogen, elixir-format
 msgid "Double-precision floating point operations [TFLOP/s]"
-msgstr ""
+msgstr "Opérations en double précision [TFLOP/s]"
 
 #: lib/myscinet_web/controllers/user_html/index.html.heex:16
 #: lib/myscinet_web/controllers/user_html/show.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Email(s)"
-msgstr ""
+msgstr "Courriel(s)"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:223
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU FP16 Usage"
-msgstr ""
+msgstr "Utilisation GPU FP16"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:215
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU FP32 Usage"
-msgstr ""
+msgstr "Utilisation GPU FP32"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:207
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU FP64 Usage"
-msgstr ""
+msgstr "Utilisation GPU FP64"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:239
 #, elixir-autogen, elixir-format
 msgid "GPU SM Active [%]"
-msgstr ""
+msgstr "SM GPU actifs [%]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:247
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU SM Occupancy [%]"
-msgstr ""
+msgstr "Occupation des SM GPU [%]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:231
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU Tensor Usage"
-msgstr ""
+msgstr "Utilisation des tenseurs GPU"
 
 #: lib/myscinet_web/controllers/user_html/show.html.heex:15
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Groups"
-msgstr ""
+msgstr "Groupes"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:191
 #, elixir-autogen, elixir-format
 msgid "Memory read bandwidth [GiB/s]"
-msgstr ""
+msgstr "Bande passante lecture mémoire [GiB/s]"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:199
 #, elixir-autogen, elixir-format
 msgid "Memory write bandwidth [GiB/s]"
-msgstr ""
+msgstr "Bande passante écriture mémoire [GiB/s]"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Queue Priority"
-msgstr ""
+msgstr "Priorité de file d'attente"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:40
 #, elixir-autogen, elixir-format
 msgid "Recent Usage (%)"
-msgstr ""
+msgstr "Utilisation récente (%)"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} %{units}</strong>)."
-msgstr ""
+msgstr "Récemment, ce compte a utilisé <strong>%{percent}%</strong> de son allocation glissante (<strong>~%{cores} %{units}</strong>)."
 
 #: lib/myscinet_web/controllers/user_html/index.html.heex:6
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: lib/myscinet_web/controllers/user_html/index.html.heex:5
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Search users..."
-msgstr ""
+msgstr "Rechercher des utilisateurs..."
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:183
 #, elixir-autogen, elixir-format
 msgid "Single-precision floating point operations [TFLOP/s]"
-msgstr ""
+msgstr "Opérations en simple précision [TFLOP/s]"
 
 #: lib/myscinet_web/components/layouts/root.html.heex:48
 #: lib/myscinet_web/components/layouts/root.html.heex:63
 #: lib/myscinet_web/controllers/user_html/index.html.heex:3
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Users"
-msgstr "Utilisateur"
+msgstr "Utilisateurs"
 
 #: lib/myscinet_web/controllers/user_html/show.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "View Jobs for User"
-msgstr ""
+msgstr "Voir les tâches de l'utilisateur"
