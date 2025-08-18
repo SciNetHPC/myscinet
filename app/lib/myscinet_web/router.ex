@@ -15,9 +15,9 @@ defmodule MySciNetWeb.Router do
   end
 
   pipeline :browser do
-    plug MySciNetWeb.Plugs.SetLocale
     plug :accepts, ["html"]
     plug :fetch_session
+    plug MySciNetWeb.Plugs.SetLocale
     plug :fetch_live_flash
     plug :put_root_layout, html: {MySciNetWeb.Layouts, :root}
     plug :protect_from_forgery

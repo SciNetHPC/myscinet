@@ -1,5 +1,6 @@
+<% current_locale = Gettext.get_locale(MySciNetWeb.Gettext) %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang={current_locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -63,7 +64,21 @@
             <% end %>
           </ul>
         </div>
-        <div class="navbar-end flex gap-2">
+        <div class="navbar-end flex gap-2 items-center">
+          <% base = @conn.request_path %>
+          <% params = if @conn.query_string == "" or is_nil(@conn.query_string), do: %{}, else: Plug.Conn.Query.decode(@conn.query_string) %>
+          <% en_url = base <> "?" <> Plug.Conn.Query.encode(Map.put(params, "locale", "en")) %>
+          <% fr_url = base <> "?" <> Plug.Conn.Query.encode(Map.put(params, "locale", "fr")) %>
+
+          <div class="btn-group" role="group" aria-label="Language toggle">
+            <%= if current_locale != "fr" do %>
+              <a href={fr_url} class="btn btn-sm">FR</a>
+            <% end %>
+            <%= if current_locale != "en" do %>
+              <a href={en_url} class="btn btn-sm">EN</a>
+            <% end %>
+          </div>
+
           <Layouts.theme_toggle />
           <%= if assigns[:current_user] do %>
             <.form for={} action={~p"/logout"} method="post">
