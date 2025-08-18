@@ -1,9 +1,15 @@
 <div class="container mx-auto py-8">
   <div class="flex items-center mb-6 gap-4">
-  <h1 class="text-2xl font-bold mb-0"><%= gettext("Users") %></h1>
+    <h1 class="text-2xl font-bold mb-0">{gettext("Users")}</h1>
     <form method="get" class="flex items-center gap-2 mb-0">
-  <input type="text" name="q" value={Map.get(assigns, :q)} placeholder={gettext("Search users...")} class="input input-bordered w-64" />
-  <button type="submit" class="btn btn-primary"><%= gettext("Search") %></button>
+      <input
+        type="text"
+        name="q"
+        value={Map.get(assigns, :q)}
+        placeholder={gettext("Search users...")}
+        class="input input-bordered w-64"
+      />
+      <button type="submit" class="btn btn-primary">{gettext("Search")}</button>
     </form>
   </div>
 
@@ -11,17 +17,21 @@
     <table class="table w-full">
       <thead>
         <tr>
-          <th><%= gettext("Username") %></th>
-          <th><%= gettext("Name") %></th>
-          <th><%= gettext("Email(s)") %></th>
+          <th>{gettext("Username")}</th>
+          <th>{gettext("Name")}</th>
+          <th>{gettext("Email(s)")}</th>
         </tr>
       </thead>
       <tbody>
         <%= for user <- @users do %>
-          <tr class="hover:bg-base-200 cursor-pointer" onclick={"window.location='" <> ~p"/users/#{user.uid}" <> "'"} style="text-decoration: none;">
-            <td><%= user.uid %></td>
-            <td><%= user.cn %></td>
-            <td><%= Enum.join(user.mail, ", ") %></td>
+          <tr
+            class="hover:bg-base-200 cursor-pointer"
+            onclick={"window.location='" <> ~p"/users/#{user.uid}" <> "'"}
+            style="text-decoration: none;"
+          >
+            <td>{user.uid}</td>
+            <td>{user.cn}</td>
+            <td>{Enum.join(user.mail, ", ")}</td>
           </tr>
         <% end %>
       </tbody>

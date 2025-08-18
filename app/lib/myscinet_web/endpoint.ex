@@ -39,7 +39,7 @@ defmodule MySciNetWeb.Endpoint do
     plug Phoenix.CodeReloader
 
     # source of "[error] Could not create schema migrations table." console messages
-    #plug Phoenix.Ecto.CheckRepoStatus, otp_app: :myscinet
+    # plug Phoenix.Ecto.CheckRepoStatus, otp_app: :myscinet
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,

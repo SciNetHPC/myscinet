@@ -1,9 +1,15 @@
 <div class="flex justify-between items-center">
-  <.header><%= gettext "Jobs" %></.header>
+  <.header>{gettext("Jobs")}</.header>
   <form method="get" action="" class="flex items-center pb-4">
     <span class="join">
-      <input name="q" type="text" value={@conn.query_params["q"]} placeholder={gettext "Search for..."} class="input input-bordered input-sm join-item w-80" />
-      <button type="submit" class="btn btn-sm btn-primary join-item">{gettext "Search"}</button>
+      <input
+        name="q"
+        type="text"
+        value={@conn.query_params["q"]}
+        placeholder={gettext("Search for...")}
+        class="input input-bordered input-sm join-item w-80"
+      />
+      <button type="submit" class="btn btn-sm btn-primary join-item">{gettext("Search")}</button>
     </span>
   </form>
 </div>
@@ -11,14 +17,14 @@
 <table class="table w-full">
   <thead>
     <tr>
-      <th><%= gettext "Cluster/ID" %></th>
-      <th><%= gettext "User" %></th>
-      <th><%= gettext "Account" %></th>
-      <th><%= gettext "Submit Time" %></th>
-      <th><%= gettext "Name" %></th>
-      <th><%= gettext "Walltime" %></th>
-      <th><%= gettext "Nodes" %></th>
-      <th><%= gettext "State" %></th>
+      <th>{gettext("Cluster/ID")}</th>
+      <th>{gettext("User")}</th>
+      <th>{gettext("Account")}</th>
+      <th>{gettext("Submit Time")}</th>
+      <th>{gettext("Name")}</th>
+      <th>{gettext("Walltime")}</th>
+      <th>{gettext("Nodes")}</th>
+      <th>{gettext("State")}</th>
     </tr>
   </thead>
   <tbody>
@@ -26,18 +32,18 @@
       <% {cluster, cjobid} = from_psql_jobid(job.jobid) %>
       <% href = ~p"/jobs/#{cluster}/#{cjobid}" %>
       <tr class="hover:bg-primary/10 cursor-pointer" onclick={"window.location='#{href}'"}>
-        <td><a class="link font-mono" href={href}>{cluster}/<wbr/>{cjobid}</a></td>
-        <td><%= job.username %></td>
-        <td><%= job.account %></td>
-        <td><%= job.submit %></td>
-        <td><span class="font-mono"><%= add_breakpoints job.jobname %></span></td>
-        <td><%= job.elapsed %></td>
-        <td><%= job.nnodes %></td>
+        <td><a class="link font-mono" href={href}>{cluster}/<wbr />{cjobid}</a></td>
+        <td>{job.username}</td>
+        <td>{job.account}</td>
+        <td>{job.submit}</td>
+        <td><span class="font-mono">{add_breakpoints(job.jobname)}</span></td>
+        <td>{job.elapsed}</td>
+        <td>{job.nnodes}</td>
         <td>
           <span aria-hidden="true">
             <.job_state_icon state={job.state} class="size-5" />
           </span>
-          <span class="inline-block align-middle"><%= job_state_pretty(job) %></span>
+          <span class="inline-block align-middle">{job_state_pretty(job)}</span>
         </td>
       </tr>
     <% end %>
@@ -46,8 +52,8 @@
 
 <div class="flex items-center gap-4 mt-4 justify-center">
   <%= if @page > 1 do %>
-    <a class="btn btn-outline" href={~p"/jobs?page=#{@page - 1}"}>{gettext "Previous"}</a>
+    <a class="btn btn-outline" href={~p"/jobs?page=#{@page - 1}"}>{gettext("Previous")}</a>
   <% end %>
-  <span>{gettext "Page %{page}", page: @page}</span>
-  <a class="btn btn-outline" href={~p"/jobs?page=#{@page + 1}"}>{gettext "Next"}</a>
+  <span>{gettext("Page %{page}", page: @page)}</span>
+  <a class="btn btn-outline" href={~p"/jobs?page=#{@page + 1}"}>{gettext("Next")}</a>
 </div>

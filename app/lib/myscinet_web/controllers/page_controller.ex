@@ -14,19 +14,25 @@ defmodule MySciNetWeb.PageController do
 
   defp get_clusters(clusters) do
     cluster_keys = for cluster <- clusters, do: "cluster:#{cluster.slug_redis}"
+
     case MySciNet.Redis.hgetalls(cluster_keys, &parse_cluster_val/2) do
       {:ok, clusters_stats} ->
         clusters_stats_with_logins =
           for {cluster, cluster_stats} <- Enum.zip(clusters, clusters_stats) do
             # Fetch login node statuses
             login_keys = for login <- cluster.logins, do: "#{login}:stats"
-            login_stats = case MySciNet.Redis.hgetalls(login_keys, fn _, v -> String.to_float(v) end) do
-              {:ok, results} -> results
-              _ -> for _ <- cluster.logins, do: nil
-            end
+
+            login_stats =
+              case MySciNet.Redis.hgetalls(login_keys, fn _, v -> String.to_float(v) end) do
+                {:ok, results} -> results
+                _ -> for _ <- cluster.logins, do: nil
+              end
+
             cluster |> Map.merge(cluster_stats) |> Map.put(:login_stats, login_stats)
           end
+
         {:ok, clusters_stats_with_logins}
+
       error ->
         error
     end
@@ -38,6 +44,7 @@ defmodule MySciNetWeb.PageController do
         conn
         |> assign(:clusters, clusters)
         |> render(:home)
+
       _ ->
         conn
         |> assign(:clusters, [])

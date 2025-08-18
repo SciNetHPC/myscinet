@@ -7,13 +7,12 @@
     <.job_state_icon state={@job.state} class="size-8" />
   </span>
   <span class="inline-block align-middle">
-    <%= "#{gettext "Job"} #{cluster}/#{cjobid}" %>:
-    <%= add_breakpoints @job.jobname %>
+    {"#{gettext("Job")} #{cluster}/#{cjobid}"}: {add_breakpoints(@job.jobname)}
   </span>
 </.header>
 
 <div class="tabs tabs-border">
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Details"} />
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Details")} />
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
@@ -24,39 +23,64 @@
           }
         </style>
         <dl class="grid grid-cols-[auto_1fr] gap-x-4">
-          <dt><%= gettext "State" %>:</dt><dd><%= @job.state %></dd>
-          <dt><%= gettext "User" %>:</dt><dd><%= @job.username %></dd>
-          <dt><%= gettext "Group" %>:</dt><dd><%= @job.groupname %></dd>
-          <dt><%= gettext "Account" %>:</dt><dd><%= @job.account %></dd>
-          <dt><%= gettext "Partition" %>:</dt><dd><%= @job.partition %></dd>
-          <dt><%= gettext "QOS" %>:</dt><dd><%= @job.qos %></dd>
-          <dt><%= gettext "Workdir" %>:</dt><dd><%= @job.workdir %></dd>
-          <dt><%= gettext "Time Limit" %>:</dt><dd><%= @job.timelimit %></dd>
-          <dt><%= gettext "Elapsed" %>:</dt><dd><%= @job.elapsed %></dd>
-          <dt><%= gettext "CPU Time" %>:</dt><dd><%= @job.cputime %></dd>
-          <dt><%= gettext "Nodes" %>:</dt><dd><%= @job.nnodes %></dd>
-          <dt><%= gettext "Node List" %>:</dt><dd><%= @job.nodelist %></dd>
-          <dt><%= gettext "Alloc TRES" %>:</dt><dd><%= @job.alloctres %></dd>
-          <dt><%= gettext "Submit Time" %>:</dt><dd><%= @job.submit %></dd>
-          <dt><%= gettext "Eligible Time" %>:</dt><dd><%= @job.eligible %></dd>
-          <dt><%= gettext "Start Time" %>:</dt><dd><%= @job.start %></dd>
+          <dt>{gettext("State")}:</dt>
+          <dd>{@job.state}</dd>
+          <dt>{gettext("User")}:</dt>
+          <dd>{@job.username}</dd>
+          <dt>{gettext("Group")}:</dt>
+          <dd>{@job.groupname}</dd>
+          <dt>{gettext("Account")}:</dt>
+          <dd>{@job.account}</dd>
+          <dt>{gettext("Partition")}:</dt>
+          <dd>{@job.partition}</dd>
+          <dt>{gettext("QOS")}:</dt>
+          <dd>{@job.qos}</dd>
+          <dt>{gettext("Workdir")}:</dt>
+          <dd>{@job.workdir}</dd>
+          <dt>{gettext("Time Limit")}:</dt>
+          <dd>{@job.timelimit}</dd>
+          <dt>{gettext("Elapsed")}:</dt>
+          <dd>{@job.elapsed}</dd>
+          <dt>{gettext("CPU Time")}:</dt>
+          <dd>{@job.cputime}</dd>
+          <dt>{gettext("Nodes")}:</dt>
+          <dd>{@job.nnodes}</dd>
+          <dt>{gettext("Node List")}:</dt>
+          <dd>{@job.nodelist}</dd>
+          <dt>{gettext("Alloc TRES")}:</dt>
+          <dd>{@job.alloctres}</dd>
+          <dt>{gettext("Submit Time")}:</dt>
+          <dd>{@job.submit}</dd>
+          <dt>{gettext("Eligible Time")}:</dt>
+          <dd>{@job.eligible}</dd>
+          <dt>{gettext("Start Time")}:</dt>
+          <dd>{@job.start}</dd>
           <%= if @job.state != "RUNNING" do %>
-            <dt><%= gettext "End Time" %>:</dt><dd><%= @job.endtime %></dd>
-            <dt><%= gettext "Exit Code" %>:</dt><dd><%= @job.exitcode %></dd>
-            <dt><%= gettext "Max Disk Read" %>:</dt><dd><%= @job.maxdiskread %></dd>
-            <dt><%= gettext "Max Disk Write" %>:</dt><dd><%= @job.maxdiskwrite %></dd>
-            <dt><%= gettext "Max RSS" %>:</dt><dd><%= @job.maxrss %></dd>
-            <dt><%= gettext "Max VM Size" %>:</dt><dd><%= @job.maxvmsize %></dd>
-            <dt><%= gettext "Total CPU" %>:</dt><dd><%= @job.totalcpu %></dd>
-            <dt><%= gettext "User CPU" %>:</dt><dd><%= @job.usercpu %></dd>
-            <dt><%= gettext "System CPU" %>:</dt><dd><%= @job.systemcpu %></dd>
+            <dt>{gettext("End Time")}:</dt>
+            <dd>{@job.endtime}</dd>
+            <dt>{gettext("Exit Code")}:</dt>
+            <dd>{@job.exitcode}</dd>
+            <dt>{gettext("Max Disk Read")}:</dt>
+            <dd>{@job.maxdiskread}</dd>
+            <dt>{gettext("Max Disk Write")}:</dt>
+            <dd>{@job.maxdiskwrite}</dd>
+            <dt>{gettext("Max RSS")}:</dt>
+            <dd>{@job.maxrss}</dd>
+            <dt>{gettext("Max VM Size")}:</dt>
+            <dd>{@job.maxvmsize}</dd>
+            <dt>{gettext("Total CPU")}:</dt>
+            <dd>{@job.totalcpu}</dd>
+            <dt>{gettext("User CPU")}:</dt>
+            <dd>{@job.usercpu}</dd>
+            <dt>{gettext("System CPU")}:</dt>
+            <dd>{@job.systemcpu}</dd>
           <% end %>
         </dl>
       </div>
     </div>
   </div>
 
-  <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Performance"} checked />
+  <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Performance")} checked />
   <div class="tab-content">
     <div class="card bg-base-200 shadow-md">
       <div class="card-body">
@@ -67,7 +91,7 @@
         <div id="download-button" class="flex justify-end" hidden>
           <a href={perf_csv_path} download class="btn btn-sm btn-outline btn-primary">
             <.icon name="hero-arrow-down-tray" class="size-4 inline-block" />
-            <%= gettext "Download CSV" %>
+            {gettext("Download CSV")}
           </a>
         </div>
       </div>
@@ -75,14 +99,14 @@
   </div>
 
   <%= if @script do %>
-    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Script"} />
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Script")} />
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
-        <%= if @command do %>
-          <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
-          <hr class="-mx-6 border-base-300 my-2" />
-        <% end %>
+          <%= if @command do %>
+            <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
+            <hr class="-mx-6 border-base-300 my-2" />
+          <% end %>
           <pre class="whitespace-pre-wrap overflow-x-auto"><code class="language-bash"><%= @script %></code></pre>
         </div>
       </div>
@@ -90,7 +114,7 @@
   <% end %>
 
   <%= if @env do %>
-    <input type="radio" name="job_tabs" class="tab" aria-label={gettext "Environment"} />
+    <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Environment")} />
     <div class="tab-content">
       <div class="card bg-base-200 shadow-md">
         <div class="card-body">
@@ -404,6 +428,9 @@
 </script>
 
 <!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js">
+</script>

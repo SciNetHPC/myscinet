@@ -43,7 +43,8 @@ defmodule MySciNetWeb.AllocationController do
            end
          end) do
       # Explicitly detect both-empty maps as not found
-      {:ok, [overall, sshare]} when is_map(overall) and is_map(sshare) and map_size(overall) == 0 and map_size(sshare) == 0 ->
+      {:ok, [overall, sshare]}
+      when is_map(overall) and is_map(sshare) and map_size(overall) == 0 and map_size(sshare) == 0 ->
         {:error, :not_found}
 
       {:ok, [overall, sshare]} ->

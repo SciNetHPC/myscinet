@@ -22,13 +22,13 @@ defmodule MySciNetWeb.JobHTML do
   def job_state_icon(assigns) do
     {icon, color} =
       case assigns.state do
-        "RUNNING"        -> {"hero-arrow-path",           "text-primary"}
-        "COMPLETED"      -> {"hero-check-circle",         "text-success"}
-        "TIMEOUT"        -> {"hero-clock",                "text-warning"}
-        "FAILED"         -> {"hero-x-circle",             "text-error"}
-        "NODE_FAIL"      -> {"hero-exclamation-triangle", "text-error"}
-        "CANCELLED" <> _ -> {"hero-stop-circle",          "text-base-content/60"}
-        _                -> {"hero-question-mark-circle", "text-base-content/60"}
+        "RUNNING" -> {"hero-arrow-path", "text-primary"}
+        "COMPLETED" -> {"hero-check-circle", "text-success"}
+        "TIMEOUT" -> {"hero-clock", "text-warning"}
+        "FAILED" -> {"hero-x-circle", "text-error"}
+        "NODE_FAIL" -> {"hero-exclamation-triangle", "text-error"}
+        "CANCELLED" <> _ -> {"hero-stop-circle", "text-base-content/60"}
+        _ -> {"hero-question-mark-circle", "text-base-content/60"}
       end
 
     assigns = assign(assigns, icon: icon, class: [assigns.class, color])
@@ -37,5 +37,4 @@ defmodule MySciNetWeb.JobHTML do
     <.icon name={@icon} class={@class} />
     """
   end
-
 end

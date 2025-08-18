@@ -36,8 +36,10 @@
     <div class="card bg-base-200 shadow-sm">
       <div class="card-body grid grid-cols-6 gap-8 items-center">
         <div class="col-span-1">
-          <h2 class="card-title"><%= cluster.name %></h2>
-          <% title = "Last update: " <> (DateTime.from_unix!(cluster.time) |> Calendar.strftime("%Y-%m-%d %H:%M:%S")) %>
+          <h2 class="card-title">{cluster.name}</h2>
+          <% title =
+            "Last update: " <>
+              (DateTime.from_unix!(cluster.time) |> Calendar.strftime("%Y-%m-%d %H:%M:%S")) %>
           <%= if now - cluster.time < 600 do %>
             <p class="badge badge-success" title={title}>{gettext("Online")}</p>
           <% else %>
@@ -56,17 +58,18 @@
                   true -> "stat-value"
                 end
               }>
-                <%= Float.round(utilization, 1) %>%
+                {Float.round(utilization, 1)}%
               </div>
             </div>
             <div class="stat">
               <div class="stat-title">{gettext("Jobs in Queue")}</div>
-              <div class="stat-value"><%= cluster.active_count + cluster.queued_count %></div>
+              <div class="stat-value">{cluster.active_count + cluster.queued_count}</div>
             </div>
             <div class="stat">
               <div class="stat-title">{gettext("Days of Work")}</div>
-              <% days_of_work = (cluster.active_procsecs + cluster.queued_procsecs)/(86400 * cluster.nodes) %>
-              <div class="stat-value"><%= Float.round(days_of_work, 1) %></div>
+              <% days_of_work =
+                (cluster.active_procsecs + cluster.queued_procsecs) / (86400 * cluster.nodes) %>
+              <div class="stat-value">{Float.round(days_of_work, 1)}</div>
             </div>
             <div class="stat">
               <div class="stat-title">{gettext("Login Nodes")}</div>
@@ -74,15 +77,26 @@
                 <ul class="flex flex-row items-center">
                   <%= for {login_node, status} <- Enum.zip(cluster.logins, cluster.login_stats) do %>
                     <li class="flex items-center">
-                      <% title = "#{login_node}: " <> if status, do: "Load #{status.load}, CPU #{status.cpu}%, Mem free: #{status.memfree}%", else: "unknown" %>
+                      <% title =
+                        "#{login_node}: " <>
+                          if status,
+                            do:
+                              "Load #{status.load}, CPU #{status.cpu}%, Mem free: #{status.memfree}%",
+                            else: "unknown" %>
                       <span title={title}>
                         <%= cond do %>
-                        <% is_nil(status) -> %>
-                          <.icon name="hero-question-mark-circle-solid" class="text-gray-400 mr-1" />
-                        <% status.cpu > 90.0 or status.memfree < 10.0 or status.load > 8.0 -> %>
-                          <.icon name="hero-exclamation-triangle-solid" class="text-error mr-1" />
-                        <% true -> %>
-                          <.icon name="hero-check-circle-solid" class="text-success mr-1" />
+                          <% is_nil(status) -> %>
+                            <.icon
+                              name="hero-question-mark-circle-solid"
+                              class="text-gray-400 mr-1"
+                            />
+                          <% status.cpu > 90.0 or status.memfree < 10.0 or status.load > 8.0 -> %>
+                            <.icon
+                              name="hero-exclamation-triangle-solid"
+                              class="text-error mr-1"
+                            />
+                          <% true -> %>
+                            <.icon name="hero-check-circle-solid" class="text-success mr-1" />
                         <% end %>
                       </span>
                     </li>

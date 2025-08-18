@@ -14,8 +14,12 @@ defmodule MySciNetWeb.Plugs.SetLocale do
 
     locale =
       cond do
-        q_locale in available_locales -> q_locale
-        s_locale in available_locales -> s_locale
+        q_locale in available_locales ->
+          q_locale
+
+        s_locale in available_locales ->
+          s_locale
+
         true ->
           accept_language
           |> String.split(",")
@@ -26,6 +30,7 @@ defmodule MySciNetWeb.Plugs.SetLocale do
 
     IO.puts("Setting locale to: #{locale}")
     Gettext.put_locale(locale)
+
     conn
     |> put_session(:locale, locale)
   end

@@ -6,8 +6,9 @@ defmodule MySciNetWeb.Router do
       conn
     else
       val = get_session(conn, key)
+
       if val do
-        assign conn, key, val
+        assign(conn, key, val)
       else
         conn
       end
@@ -36,6 +37,7 @@ defmodule MySciNetWeb.Router do
       full_path =
         %URI{path: conn.request_path, query: conn.query_string}
         |> URI.to_string()
+
       conn
       |> put_session(:redirect_to, full_path)
       |> redirect(to: "/login")

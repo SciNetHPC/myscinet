@@ -9,7 +9,8 @@ defmodule MySciNet.JobQueryTest do
     end
 
     test "parses 'cluster:trillium nodes:4' as [{:is_eq, :cluster, :trillium},{:is_eq, :nodes, 4}]" do
-      assert JobQuery.parse("cluster:trillium nodes:4") == {:ok, [{:is_eq, :cluster, :trillium}, {:is_eq, :nodes, 4}]}
+      assert JobQuery.parse("cluster:trillium nodes:4") ==
+               {:ok, [{:is_eq, :cluster, :trillium}, {:is_eq, :nodes, 4}]}
     end
 
     test "parses 'cluster:trillium' as [{:is_eq, :cluster, :trillium}]" do

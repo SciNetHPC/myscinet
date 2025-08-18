@@ -1,5 +1,4 @@
 defmodule MySciNetWeb.Permissions do
-
   def contains_staff_group?(groups) do
     "scinet" in groups or "cc_staff" in groups
   end
@@ -15,5 +14,4 @@ defmodule MySciNetWeb.Permissions do
   def is_superuser?(conn) do
     conn.assigns[:current_user] && contains_superuser_group?(conn.assigns.current_user.groups)
   end
-
 end

@@ -12,7 +12,7 @@
               "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} %{units}</strong>).",
               percent: round(@overall.percent_used),
               cores: round(@overall.cores),
-              units: (if @cluster.gpu?, do: "GPUs", else: "cores")
+              units: if(@cluster.gpu?, do: "GPUs", else: "cores")
             )
           )}
         </p>
