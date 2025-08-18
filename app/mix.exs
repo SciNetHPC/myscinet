@@ -4,7 +4,7 @@ defmodule MySciNet.MixProject do
   def project do
     [
       app: :myscinet,
-      version: "0.8.0",
+      version: "0.8.1",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
       erlc_paths: elixirc_paths(Mix.env()),
