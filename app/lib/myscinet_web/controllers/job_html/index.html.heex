@@ -3,7 +3,7 @@
   <form method="get" action="" class="flex items-center pb-4">
     <span class="join">
       <input name="q" type="text" value={@conn.query_params["q"]} placeholder={gettext "Search for..."} class="input input-bordered input-sm join-item w-80" />
-      <button type="submit" class="btn btn-sm btn-primary join-item">Search</button>
+      <button type="submit" class="btn btn-sm btn-primary join-item">{gettext "Search"}</button>
     </span>
   </form>
 </div>
@@ -46,8 +46,8 @@
 
 <div class="flex items-center gap-4 mt-4 justify-center">
   <%= if @page > 1 do %>
-    <a class="btn btn-outline" href={~p"/jobs?page=#{@page - 1}"}>Previous</a>
+    <a class="btn btn-outline" href={~p"/jobs?page=#{@page - 1}"}>{gettext "Previous"}</a>
   <% end %>
-  <span>Page <%= @page %></span>
-  <a class="btn btn-outline" href={~p"/jobs?page=#{@page + 1}"}>Next</a>
+  <span>{gettext "Page %{page}", page: @page}</span>
+  <a class="btn btn-outline" href={~p"/jobs?page=#{@page + 1}"}>{gettext "Next"}</a>
 </div>

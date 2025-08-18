@@ -222,6 +222,8 @@ msgstr ""
 msgid "Download CSV"
 msgstr ""
 
+#: lib/myscinet_web/components/layouts/root.html.heex:44
+#: lib/myscinet_web/components/layouts/root.html.heex:59
 #: lib/myscinet_web/controllers/job_html/index.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Jobs"
@@ -314,6 +316,8 @@ msgstr ""
 msgid "Allocation"
 msgstr ""
 
+#: lib/myscinet_web/components/layouts/root.html.heex:45
+#: lib/myscinet_web/components/layouts/root.html.heex:60
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:1
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:8
 #, elixir-autogen, elixir-format
@@ -426,6 +430,7 @@ msgstr ""
 msgid "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} %{units}</strong>)."
 msgstr ""
 
+#: lib/myscinet_web/controllers/job_html/index.html.heex:6
 #: lib/myscinet_web/controllers/user_html/index.html.heex:6
 #, elixir-autogen, elixir-format
 msgid "Search"
@@ -451,4 +456,131 @@ msgstr ""
 #: lib/myscinet_web/controllers/user_html/show.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "View Jobs for User"
+msgstr ""
+
+#: lib/myscinet_web/components/layouts/root.html.heex:46
+#: lib/myscinet_web/components/layouts/root.html.heex:61
+#: lib/myscinet_web/controllers/storage_html/index.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "Storage"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:52
+#, elixir-autogen, elixir-format
+msgid "Next"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:51
+#, elixir-autogen, elixir-format
+msgid "Page %{page}"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:49
+#, elixir-autogen, elixir-format
+msgid "Previous"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/index.html.heex:61
+#, elixir-autogen, elixir-format
+msgid "No storage information available."
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/index.html.heex:15
+#, elixir-autogen, elixir-format
+msgid "Number of files"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/index.html.heex:13
+#, elixir-autogen, elixir-format
+msgid "Path"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:96
+#, elixir-autogen, elixir-format
+msgid "Used %{used} out of %{max}"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Space"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:26
+#, elixir-autogen, elixir-format
+msgid "%{val} B"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:15
+#, elixir-autogen, elixir-format
+msgid "%{val} GiB"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:23
+#, elixir-autogen, elixir-format
+msgid "%{val} KiB"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:19
+#, elixir-autogen, elixir-format
+msgid "%{val} MiB"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:11
+#, elixir-autogen, elixir-format
+msgid "%{val} TiB"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html.ex:30
+#, elixir-autogen, elixir-format
+msgid "0 B"
+msgstr ""
+
+#: lib/myscinet_web/controllers/page_html/home.html.heex:67
+#, elixir-autogen, elixir-format
+msgid "Days of Work"
+msgstr ""
+
+#: lib/myscinet_web/controllers/page_html/home.html.heex:63
+#, elixir-autogen, elixir-format
+msgid "Jobs in Queue"
+msgstr ""
+
+#: lib/myscinet_web/controllers/page_html/home.html.heex:72
+#, elixir-autogen, elixir-format
+msgid "Login Nodes"
+msgstr ""
+
+#: lib/myscinet_web/controllers/page_html/home.html.heex:42
+#, elixir-autogen, elixir-format
+msgid "Online"
+msgstr ""
+
+#: lib/myscinet_web/controllers/page_html/home.html.heex:44
+#, elixir-autogen, elixir-format
+msgid "Stale"
+msgstr ""
+
+#: lib/myscinet_web/controllers/page_html/home.html.heex:50
+#, elixir-autogen, elixir-format
+msgid "Utilization"
+msgstr ""
+
+#: lib/myscinet_web/components/layouts/root.html.heex:53
+#, elixir-autogen, elixir-format
+msgid "my.SciNet"
+msgstr ""
+
+#: lib/myscinet_web/components/layouts/root.html.heex:103
+#, elixir-autogen, elixir-format
+msgid "Documentation"
+msgstr ""
+
+#: lib/myscinet_web/components/layouts/root.html.heex:105
+#, elixir-autogen, elixir-format
+msgid "Education"
+msgstr ""
+
+#: lib/myscinet_web/components/layouts/root.html.heex:107
+#, elixir-autogen, elixir-format
+msgid "Support"
 msgstr ""

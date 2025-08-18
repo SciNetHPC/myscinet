@@ -1,4 +1,5 @@
 <div class="grid grid-cols-1 gap-6">
+  <!--
   <div class="card bg-base-200 shadow-sm">
     <div class="card-body grid grid-cols-6 gap-8 items-center">
       <div class="col-span-1">
@@ -29,6 +30,7 @@
       </div>
     </div>
   </div>
+  -->
   <% now = DateTime.utc_now() |> DateTime.to_unix() %>
   <%= for cluster <- @clusters do %>
     <div class="card bg-base-200 shadow-sm">
@@ -37,15 +39,15 @@
           <h2 class="card-title"><%= cluster.name %></h2>
           <% title = "Last update: " <> (DateTime.from_unix!(cluster.time) |> Calendar.strftime("%Y-%m-%d %H:%M:%S")) %>
           <%= if now - cluster.time < 600 do %>
-            <p class="badge badge-success" title={title}>Online</p>
+            <p class="badge badge-success" title={title}>{gettext("Online")}</p>
           <% else %>
-            <p class="badge badge-error" title={title}>Stale</p>
+            <p class="badge badge-error" title={title}>{gettext("Stale")}</p>
           <% end %>
         </div>
         <div class="col-span-4">
           <div class="stats stats-horizontal">
             <div class="stat">
-              <div class="stat-title">Utilization</div>
+              <div class="stat-title">{gettext("Utilization")}</div>
               <% utilization = 100 * cluster.nodesRunning / cluster.nodes %>
               <div class={
                 cond do
@@ -58,16 +60,16 @@
               </div>
             </div>
             <div class="stat">
-              <div class="stat-title">Jobs in Queue</div>
+              <div class="stat-title">{gettext("Jobs in Queue")}</div>
               <div class="stat-value"><%= cluster.active_count + cluster.queued_count %></div>
             </div>
             <div class="stat">
-              <div class="stat-title">Days of Work</div>
+              <div class="stat-title">{gettext("Days of Work")}</div>
               <% days_of_work = (cluster.active_procsecs + cluster.queued_procsecs)/(86400 * cluster.nodes) %>
               <div class="stat-value"><%= Float.round(days_of_work, 1) %></div>
             </div>
             <div class="stat">
-              <div class="stat-title">Login Nodes</div>
+              <div class="stat-title">{gettext("Login Nodes")}</div>
               <div class="stat-value">
                 <ul class="flex flex-row items-center">
                   <%= for {login_node, status} <- Enum.zip(cluster.logins, cluster.login_stats) do %>

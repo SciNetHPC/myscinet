@@ -41,26 +41,26 @@
             <ul
               tabindex="0"
               class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-              <li><a href={~p"/jobs"}>Jobs</a></li>
-              <li><a href={~p"/allocations"}>Allocations</a></li>
-              <li><a href={~p"/storage"}>Storage</a></li>
+              <li><a href={~p"/jobs"}>{gettext "Jobs"}</a></li>
+              <li><a href={~p"/allocations"}>{gettext "Allocations"}</a></li>
+              <li><a href={~p"/storage"}>{gettext "Storage"}</a></li>
               <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
-                <li><a href={~p"/users"}><%= gettext "Users" %></a></li>
+                <li><a href={~p"/users"}>{gettext "Users"}</a></li>
               <% end %>
             </ul>
           </div>
           <a class="btn btn-ghost text-xl flex items-baseline gap-2" href={~p"/"}>
-            <span>my.SciNet</span>
+            <span>{gettext "my.SciNet"}</span>
             <span class="text-xs text-base-content/60">v<%= Application.spec(:myscinet, :vsn) |> to_string() %></span>
           </a>
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal px-1">
-            <li><a href={~p"/jobs"}>Jobs</a></li>
-            <li><a href={~p"/allocations"}>Allocations</a></li>
-            <li><a href={~p"/storage"}>Storage</a></li>
+            <li><a href={~p"/jobs"}>{gettext "Jobs"}</a></li>
+            <li><a href={~p"/allocations"}>{gettext "Allocations"}</a></li>
+            <li><a href={~p"/storage"}>{gettext "Storage"}</a></li>
             <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
-              <li><a href={~p"/users"}><%= gettext "Users" %></a></li>
+              <li><a href={~p"/users"}>{gettext "Users"}</a></li>
             <% end %>
           </ul>
         </div>
@@ -100,11 +100,11 @@
     </main>
     <footer class="footer footer-horizontal footer-center bg-base-200 text-base-content rounded p-10">
       <nav class="grid grid-flow-col gap-4">
-        <a class="link link-hover" href="https://docs.scinet.utoronto.ca/">Documentation</a>
+        <a class="link link-hover" href="https://docs.scinet.utoronto.ca/">{gettext "Documentation"}</a>
         |
-        <a class="link link-hover" href="https://education.scinet.utoronto.ca/">Education</a>
+        <a class="link link-hover" href="https://education.scinet.utoronto.ca/">{gettext "Education"}</a>
         |
-        <a class="link link-hover" href="mailto:support@scinet.utoronto.ca">Support</a>
+        <a class="link link-hover" href="mailto:support@scinet.utoronto.ca">{gettext "Support"}</a>
       </nav>
       <aside><p>© 2025 <a class="link link-hover" href="https://www.scinethpc.ca/">SciNet HPC Consortium</a>, <a class="link link-hover" href="https://www.utoronto.ca/">University of Toronto</a></p></aside>
     </footer>

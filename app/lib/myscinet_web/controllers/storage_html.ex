@@ -4,20 +4,30 @@ defmodule MySciNetWeb.StorageHTML do
 
   @doc "Convert bytes to a human-readable string."
   def human_bytes(b) when is_integer(b) and b > 0 do
-    units = [
-      {1024 * 1024 * 1024 * 1024, "TiB"},
-      {1024 * 1024 * 1024, "GiB"},
-      {1024 * 1024, "MiB"},
-      {1024, "KiB"}
-    ]
+    # Gettext macro expects message keys to expand to strings at compile-time
+    cond do
+      b >= 1024 * 1024 * 1024 * 1024 ->
+        threshold = 1024 * 1024 * 1024 * 1024
+        gettext("%{val} TiB", val: Float.round(b / threshold, 2))
 
-    case Enum.find(units, fn {threshold, _} -> b >= threshold end) do
-      {threshold, unit} -> "#{Float.round(b / threshold, 2)} #{unit}"
-      nil -> "#{b} B"
+      b >= 1024 * 1024 * 1024 ->
+        threshold = 1024 * 1024 * 1024
+        gettext("%{val} GiB", val: Float.round(b / threshold, 2))
+
+      b >= 1024 * 1024 ->
+        threshold = 1024 * 1024
+        gettext("%{val} MiB", val: Float.round(b / threshold, 2))
+
+      b >= 1024 ->
+        threshold = 1024
+        gettext("%{val} KiB", val: Float.round(b / threshold, 2))
+
+      true ->
+        gettext("%{val} B", val: b)
     end
   end
 
-  def human_bytes(0), do: "0 B"
+  def human_bytes(0), do: gettext("0 B")
 
   @doc "Format inode counts with K/M/G suffixes for readability."
   def human_inodes(n) when is_integer(n) and n > 0 do
@@ -83,7 +93,10 @@ defmodule MySciNetWeb.StorageHTML do
       </div>
 
       <div class="text-xs text-base-content/50 mb-1">
-        Used {format_val(@used, @format)} out of {format_val(@max, @format)}
+        {gettext("Used %{used} out of %{max}",
+          used: format_val(@used, @format),
+          max: format_val(@max, @format)
+        )}
       </div>
     </div>
     """

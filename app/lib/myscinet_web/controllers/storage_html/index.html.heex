@@ -1,4 +1,4 @@
-<.header>Storage</.header>
+<.header>{gettext("Storage")}</.header>
 
 <%= if assigns[:storage] && length(@storage) > 0 do %>
   <div class="overflow-x-auto">
@@ -10,9 +10,9 @@
       </colgroup>
       <thead>
         <tr>
-          <th class="text-left px-4 py-2">Path</th>
-          <th class="text-left px-4 py-2">Capacity</th>
-          <th class="text-left px-4 py-2">Inodes</th>
+          <th class="text-left px-4 py-2">{gettext("Path")}</th>
+          <th class="text-left px-4 py-2">{gettext("Space")}</th>
+          <th class="text-left px-4 py-2">{gettext("Number of files")}</th>
         </tr>
       </thead>
       <tbody>
@@ -58,5 +58,5 @@
     </table>
   </div>
 <% else %>
-  <p>No storage information available.</p>
+  <p>{gettext("No storage information available.")}</p>
 <% end %>
