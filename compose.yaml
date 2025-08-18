@@ -9,7 +9,7 @@ services:
       LDAP_BIND_PW: ${LDAP_BIND_PW}
       LDAP_USER_BASE: ${LDAP_USER_BASE}
       LDAP_GROUP_BASE: ${LDAP_GROUP_BASE}
-        #MIX_ENV: dev
+      MIX_ENV: dev
       REDIS_URL: ${REDIS_URL}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
