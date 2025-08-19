@@ -145,6 +145,11 @@ defmodule MySciNetWeb.JobController do
         row = Repo.get_by(MySciNet.Jenv, jobid: id)
         env = row && row.jobenv
 
+        # cache authorization
+        Cachex.put(:myscinet_cache, {:job_authz, id, conn.assigns.current_user.username}, true,
+          ttl: :timer.seconds(3600)
+        )
+
         render(conn, "show.html",
           page_title: "job #{id}",
           command: command,
@@ -203,21 +208,29 @@ defmodule MySciNetWeb.JobController do
     cols = Enum.join(Enum.map(cols, &Atom.to_string/1), ",")
     escaped_id = String.replace(id, "'", "''")
 
-    query =
-      "COPY (SELECT to_char(time,'YYYY-MM-DD\"T\"HH24:MI:SS') as time,#{cols} FROM #{table} WHERE jobid = '#{escaped_id}' ORDER BY time) TO STDOUT CSV HEADER"
+    case Cachex.get(:myscinet_cache, {:job_authz, id, conn.assigns.current_user.username}) do
+      {:ok, true} ->
+        query =
+          "COPY (SELECT to_char(time,'YYYY-MM-DD\"T\"HH24:MI:SS') as time,#{cols} FROM #{table} WHERE jobid = '#{escaped_id}' ORDER BY time) TO STDOUT CSV HEADER"
 
-    conn =
-      conn
-      |> put_resp_content_type("text/csv")
-      |> put_resp_header("cache-control", "max-age=120, private")
-      |> send_chunked(:ok)
+        conn =
+          conn
+          |> put_resp_content_type("text/csv")
+          |> put_resp_header("cache-control", "max-age=120, private")
+          |> send_chunked(:ok)
 
-    Repo.transaction(fn ->
-      Ecto.Adapters.SQL.stream(MySciNet.Repo, query)
-      |> Stream.map(&chunk(conn, &1.rows))
-      |> Stream.run()
-    end)
+        Repo.transaction(fn ->
+          Ecto.Adapters.SQL.stream(MySciNet.Repo, query)
+          |> Stream.map(&chunk(conn, &1.rows))
+          |> Stream.run()
+        end)
 
-    conn
+        conn
+
+      _ ->
+        conn
+        |> put_status(:not_found)
+        |> text("not found or not permitted")
+    end
   end
 end

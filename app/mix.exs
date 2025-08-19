@@ -67,7 +67,8 @@ defmodule MySciNet.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:redix, "~> 1.5"},
-      {:castore, "~> 1.0"}
+      {:castore, "~> 1.0"},
+      {:cachex, "~> 4.1"}
     ]
   end
 

@@ -11,6 +11,7 @@ defmodule MySciNet.Application do
       MySciNetWeb.Telemetry,
       MySciNet.Redis,
       MySciNet.Repo,
+      {Cachex, name: :myscinet_cache},
       {DNSCluster, query: Application.get_env(:myscinet, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: MySciNet.PubSub},
       # Start a worker by calling: MySciNet.Worker.start_link(arg)
