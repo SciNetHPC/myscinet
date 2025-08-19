@@ -52,8 +52,12 @@
 
 <div class="flex items-center gap-4 mt-4 justify-center">
   <%= if @page > 1 do %>
-    <a class="btn btn-outline" href={~p"/jobs?page=#{@page - 1}"}>{gettext("Previous")}</a>
+    <a class="btn btn-outline" href={~p"/jobs?#{@conn.query_params |> Map.put("p", @page - 1)}"}>
+      {gettext("Previous")}
+    </a>
   <% end %>
   <span>{gettext("Page %{page}", page: @page)}</span>
-  <a class="btn btn-outline" href={~p"/jobs?page=#{@page + 1}"}>{gettext("Next")}</a>
+  <a class="btn btn-outline" href={~p"/jobs?#{@conn.query_params |> Map.put("p", @page + 1)}"}>
+    {gettext("Next")}
+  </a>
 </div>

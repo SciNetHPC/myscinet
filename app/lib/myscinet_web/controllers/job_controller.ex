@@ -31,7 +31,7 @@ defmodule MySciNetWeb.JobController do
   end
 
   def index(conn, params) do
-    page = Map.get(params, "page", "1") |> String.to_integer()
+    page = Map.get(params, "p", "1") |> String.to_integer()
     offset = (page - 1) * @page_size
 
     jobsq =
