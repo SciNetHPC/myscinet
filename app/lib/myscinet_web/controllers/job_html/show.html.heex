@@ -14,7 +14,7 @@
 <div class="tabs tabs-border">
   <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Details")} />
   <div class="tab-content">
-    <div class="card bg-base-200 shadow-md">
+    <div class="card bg-base-200 shadow-sm">
       <div class="card-body">
         <style>
           dt {
@@ -82,7 +82,7 @@
 
   <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Performance")} checked />
   <div class="tab-content">
-    <div class="card bg-base-200 shadow-md">
+    <div class="card bg-base-200 shadow-sm">
       <div class="card-body">
         <div id="plots-spinner" class="flex justify-center items-center h-48">
           <span class="loading loading-spinner loading-lg text-primary"></span>
@@ -101,7 +101,7 @@
   <%= if @script do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Script")} />
     <div class="tab-content">
-      <div class="card bg-base-200 shadow-md">
+      <div class="card bg-base-200 shadow-sm">
         <div class="card-body">
           <%= if @command do %>
             <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
@@ -116,7 +116,7 @@
   <%= if @env do %>
     <input type="radio" name="job_tabs" class="tab" aria-label={gettext("Environment")} />
     <div class="tab-content">
-      <div class="card bg-base-200 shadow-md">
+      <div class="card bg-base-200 shadow-sm">
         <div class="card-body">
           <pre class="whitespace-pre-wrap overflow-x-auto"><%= @env %></pre>
         </div>
