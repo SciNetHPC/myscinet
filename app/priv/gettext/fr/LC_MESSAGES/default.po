@@ -375,12 +375,12 @@ msgstr "Utilisation GPU FP64"
 #: lib/myscinet_web/controllers/job_html/show.html.heex:239
 #, elixir-autogen, elixir-format
 msgid "GPU SM Active [%]"
-msgstr "SM GPU actifs [%]"
+msgstr "SM GPU actifs (%)"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:247
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU SM Occupancy [%]"
-msgstr "Occupation des SM GPU [%]"
+msgstr "Occupation des SM GPU (%)"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:231
 #, elixir-autogen, elixir-format, fuzzy
@@ -520,7 +520,7 @@ msgstr "%{val}Tio"
 #: lib/myscinet_web/controllers/storage_html.ex:30
 #, elixir-autogen, elixir-format
 msgid "0 B"
-msgstr "0B"
+msgstr "0o"
 
 #: lib/myscinet_web/controllers/page_html/home.html.heex:67
 #, elixir-autogen, elixir-format
