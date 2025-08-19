@@ -71,7 +71,7 @@ defmodule MySciNetWeb.JobController do
   defp apply_filters(query, other) do
     case other do
       {:number, n} ->
-        query |> where([j], like(j.jobid, ^"%:#{n}") or ilike(j.jobid, ^"%:#{n}_%"))
+        query |> where([j], like(j.jobid, ^"%:#{n}") or like(j.jobid, ^"%:#{n}\\_%"))
 
       {_, x} ->
         query |> where([j], ilike(j.jobname, ^"%#{x}%"))
