@@ -151,7 +151,7 @@ defmodule MySciNetWeb.JobController do
         )
 
         render(conn, "show.html",
-          page_title: "job #{id}",
+          page_title: "job #{cluster_slug}/#{cluster_job_id}",
           command: command,
           job: job,
           env: env,
