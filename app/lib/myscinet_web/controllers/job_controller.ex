@@ -69,17 +69,20 @@ defmodule MySciNetWeb.JobController do
   end
 
   defp apply_filters(query, other) do
-    case other do
-      {:number, n} ->
-        query |> where([j], like(j.jobid, ^"%:#{n}") or like(j.jobid, ^"%:#{n}\\_%"))
-
-      {_, x} ->
-        query |> where([j], ilike(j.jobname, ^"%#{x}%"))
-    end
+    query |> apply_filter(other)
   end
 
   defp apply_filter(query, filter) do
     case filter do
+      {:number, n} ->
+        query |> where([j], like(j.jobid, ^"%:#{n}") or like(j.jobid, ^"%:#{n}\\_%"))
+
+      {:ident, x} ->
+        query |> where([j], ilike(j.jobname, ^"%#{x}%"))
+
+      {:string, x} ->
+        query |> where([j], ilike(j.jobname, ^"%#{x}%"))
+
       {:is_eq, :cluster, cluster} ->
         slug =
           case get_cluster(to_string(cluster)) do
@@ -110,7 +113,8 @@ defmodule MySciNetWeb.JobController do
       {:is_ge, :nodes, n} ->
         query |> where([j], j.nnodes >= ^n)
 
-      _ ->
+      unrecognized ->
+        dbg({:unrecognized_job_filter, unrecognized})
         query
     end
   end
