@@ -49,8 +49,12 @@ defmodule MySciNetWeb.JobController do
 
     {conn, jobsq} =
       case filters do
-        {:ok, ast} -> {conn, jobsq |> apply_filters(ast)}
-        _ -> {conn |> put_flash(:error, "Invalid query"), jobsq}
+        {:ok, ast} ->
+          {conn, jobsq |> apply_filters(ast)}
+
+        error ->
+          dbg(error)
+          {conn |> put_flash(:error, "Invalid query"), jobsq}
       end
 
     jobs = jobsq |> Repo.all()
@@ -98,24 +102,55 @@ defmodule MySciNetWeb.JobController do
       {:is_eq, :group, g} ->
         query |> where([j], ilike(j.account, ^"%-#{g}%"))
 
-      {:is_eq, :nodes, n} ->
+      {:is_eq, :nodes, {:number, n}} ->
         query |> where(nnodes: ^n)
 
-      {:is_lt, :nodes, n} ->
+      {:is_lt, :nodes, {:number, n}} ->
         query |> where([j], j.nnodes < ^n)
 
-      {:is_le, :nodes, n} ->
+      {:is_le, :nodes, {:number, n}} ->
         query |> where([j], j.nnodes <= ^n)
 
-      {:is_gt, :nodes, n} ->
+      {:is_gt, :nodes, {:number, n}} ->
         query |> where([j], j.nnodes > ^n)
 
-      {:is_ge, :nodes, n} ->
+      {:is_ge, :nodes, {:number, n}} ->
         query |> where([j], j.nnodes >= ^n)
+
+      {op, :time, {:string, t}} when op in [:is_lt, :is_le, :is_gt, :is_ge] ->
+        case parse_naive_datetime(t) do
+          {:ok, dt} ->
+            case op do
+              :is_lt -> query |> where([j], j.start < ^dt)
+              :is_le -> query |> where([j], j.start <= ^dt)
+              :is_gt -> query |> where([j], j.start > ^dt)
+              :is_ge -> query |> where([j], j.start >= ^dt)
+            end
+
+          error ->
+            dbg({:bad_time_filter, t, error})
+            query
+        end
 
       unrecognized ->
         dbg({:unrecognized_job_filter, unrecognized})
         query
+    end
+  end
+
+  defp parse_naive_datetime(t) when is_binary(t) do
+    case Date.from_iso8601(t) do
+      {:ok, date} ->
+        {:ok, NaiveDateTime.new!(date, ~T[00:00:00])}
+
+      _ ->
+        case NaiveDateTime.from_iso8601(t) do
+          {:ok, dt} ->
+            {:ok, dt}
+
+          error ->
+            error
+        end
     end
   end
 

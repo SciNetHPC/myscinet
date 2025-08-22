@@ -37,7 +37,9 @@ filter -> ident : '$1'.
 filter -> string : '$1'.
 
 name -> ident : element(2, '$1').
-num -> number : element(2, '$1').
+
+num -> number : '$1'.
+num -> string : '$1'.
 
 value -> number : element(2, '$1').
 value -> ident  : element(2, '$1').
