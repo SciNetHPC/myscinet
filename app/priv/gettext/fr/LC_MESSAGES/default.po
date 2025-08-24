@@ -570,4 +570,4 @@ msgstr "Éducation"
 #: lib/myscinet_web/components/layouts/root.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Support"
-msgstr "Support"
+msgstr "Soutien"
