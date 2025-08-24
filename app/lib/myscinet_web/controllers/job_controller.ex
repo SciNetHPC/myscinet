@@ -38,7 +38,7 @@ defmodule MySciNetWeb.JobController do
       Jsum
       |> query_authz(conn)
       |> where([j], not ilike(j.partition, ^"debug%"))
-      |> order_by([j], desc: j.submit)
+      |> order_by([j], desc: j.start)
       |> limit(^@page_size)
       |> offset(^offset)
 

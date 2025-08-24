@@ -20,7 +20,7 @@
       <th>{gettext("Cluster/ID")}</th>
       <th>{gettext("User")}</th>
       <th>{gettext("Account")}</th>
-      <th>{gettext("Submit Time")}</th>
+      <th>{gettext("Start Time")}</th>
       <th>{gettext("Name")}</th>
       <th>{gettext("Walltime")}</th>
       <th>{gettext("Nodes")}</th>
@@ -35,7 +35,7 @@
         <td><a class="link font-mono" href={href}>{cluster}/<wbr />{cjobid}</a></td>
         <td>{job.username}</td>
         <td>{job.account}</td>
-        <td>{job.submit}</td>
+        <td>{job.start}</td>
         <td><span class="font-mono">{add_breakpoints(job.jobname)}</span></td>
         <td>{job.elapsed}</td>
         <td>{job.nnodes}</td>
