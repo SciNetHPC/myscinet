@@ -88,6 +88,7 @@ defmodule MySciNetWeb.Router do
 
     get "/users", UserController, :index
     get "/users/:id", UserController, :show
+    get "/users/:id/allocations", AllocationController, :user_allocations
     get "/users/:id/storage", StorageController, :user_storage
   end
 

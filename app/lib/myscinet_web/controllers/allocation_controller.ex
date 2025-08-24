@@ -56,7 +56,11 @@ defmodule MySciNetWeb.AllocationController do
   end
 
   def index(conn, _params) do
-    case get_allocations_for_user(conn.assigns.current_user.username) do
+    user_allocations(conn, %{"id" => conn.assigns.current_user.username})
+  end
+
+  def user_allocations(conn, %{"id" => id}) do
+    case get_allocations_for_user(id) do
       {:ok, allocs} ->
         render(conn, :index, allocations: allocs)
 

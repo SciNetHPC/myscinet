@@ -19,10 +19,13 @@
     </table>
     <div class="mt-6 flex gap-4">
       <a href={~p"/jobs/?q=user:#{@user.username}"} class="btn btn-primary">
-        {gettext("View Jobs for User")}
+        {gettext("Jobs")}
+      </a>
+      <a href={~p"/users/#{@user.username}/allocations"} class="btn btn-primary">
+        {gettext("Allocations")}
       </a>
       <a href={~p"/users/#{@user.username}/storage"} class="btn btn-primary">
-        {gettext("View Storage for User")}
+        {gettext("Storage")}
       </a>
     </div>
   </div>
