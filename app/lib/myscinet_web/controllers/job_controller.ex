@@ -99,8 +99,17 @@ defmodule MySciNetWeb.JobController do
       {:is_eq, :user, {:ident, u}} ->
         query |> where(username: ^to_string(u))
 
+      {:is_eq, :user, {:number, n}} ->
+        query |> where(uid: ^n)
+
       {:is_eq, :group, {:ident, g}} ->
-        query |> where([j], ilike(j.account, ^"%-#{g}%"))
+        query |> where([j], like(j.account, ^"%-#{g}%"))
+
+      {:is_eq, :group, {:number, n}} ->
+        query |> where(gid: ^n)
+
+      {:is_eq, :state, {:ident, s}} ->
+        query |> where([j], ilike(j.state, ^"#{s}%"))
 
       {:is_eq, :nodes, {:number, n}} ->
         query |> where(nnodes: ^n)
