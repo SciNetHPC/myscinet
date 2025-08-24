@@ -87,7 +87,7 @@ defmodule MySciNetWeb.JobController do
       {:string, x} ->
         query |> where([j], ilike(j.jobname, ^"%#{x}%"))
 
-      {:is_eq, :cluster, cluster} ->
+      {:is_eq, :cluster, {:ident, cluster}} ->
         slug =
           case get_cluster(to_string(cluster)) do
             %{slug_psql: slug_psql} -> slug_psql
@@ -96,10 +96,10 @@ defmodule MySciNetWeb.JobController do
 
         query |> where([j], ilike(j.jobid, ^"#{slug}:%"))
 
-      {:is_eq, :user, u} ->
+      {:is_eq, :user, {:ident, u}} ->
         query |> where(username: ^to_string(u))
 
-      {:is_eq, :group, g} ->
+      {:is_eq, :group, {:ident, g}} ->
         query |> where([j], ilike(j.account, ^"%-#{g}%"))
 
       {:is_eq, :nodes, {:number, n}} ->

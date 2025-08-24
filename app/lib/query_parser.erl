@@ -2,7 +2,7 @@
 -module(query_parser).
 -file("lib/query_parser.erl", 3).
 -export([parse/1, parse_and_scan/1, format_error/1]).
--file("lib/myscinet/query_parser.yrl", 48).
+-file("lib/myscinet/query_parser.yrl", 44).
 
 -file("/usr/local/lib/erlang/lib/parsetools-2.6/include/yeccpre.hrl", 0).
 %%
@@ -217,33 +217,29 @@ yeccpars2(7=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 yeccpars2(9=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(10=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_10(S, Cat, Ss, Stack, T, Ts, Tzr);
+ yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(11=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_10(S, Cat, Ss, Stack, T, Ts, Tzr);
+ yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(12=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_10(S, Cat, Ss, Stack, T, Ts, Tzr);
+ yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(13=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_10(S, Cat, Ss, Stack, T, Ts, Tzr);
+ yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
 %% yeccpars2(14=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %%  yeccpars2_14(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(15=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_15(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(16=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_16(S, Cat, Ss, Stack, T, Ts, Tzr);
-%% yeccpars2(17=S, Cat, Ss, Stack, T, Ts, Tzr) ->
-%%  yeccpars2_17(S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccpars2(17=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_17(S, Cat, Ss, Stack, T, Ts, Tzr);
 %% yeccpars2(18=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %%  yeccpars2_18(S, Cat, Ss, Stack, T, Ts, Tzr);
 %% yeccpars2(19=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %%  yeccpars2_19(S, Cat, Ss, Stack, T, Ts, Tzr);
 %% yeccpars2(20=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %%  yeccpars2_20(S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccpars2(21=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_21(S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccpars2(22=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_22(S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccpars2(23=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_23(S, Cat, Ss, Stack, T, Ts, Tzr);
+%% yeccpars2(21=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+%%  yeccpars2_21(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(Other, _, _, _, _, _, _) ->
  erlang:error({yecc_bug,"1.4",{missing_state_in_action_table, Other}}).
 
@@ -339,28 +335,21 @@ yeccpars2_8(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
 -dialyzer({nowarn_function, yeccpars2_9/7}).
 -compile({nowarn_unused_function,  yeccpars2_9/7}).
 yeccpars2_9(S, 'ident', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 21, Ss, Stack, T, Ts, Tzr);
+ yeccpars1(S, 15, Ss, Stack, T, Ts, Tzr);
 yeccpars2_9(S, 'number', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 22, Ss, Stack, T, Ts, Tzr);
+ yeccpars1(S, 16, Ss, Stack, T, Ts, Tzr);
 yeccpars2_9(S, 'string', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 23, Ss, Stack, T, Ts, Tzr);
+ yeccpars1(S, 17, Ss, Stack, T, Ts, Tzr);
 yeccpars2_9(_, _, _, _, T, _, _) ->
  yeccerror(T).
 
--dialyzer({nowarn_function, yeccpars2_10/7}).
--compile({nowarn_unused_function,  yeccpars2_10/7}).
-yeccpars2_10(S, 'number', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 15, Ss, Stack, T, Ts, Tzr);
-yeccpars2_10(S, 'string', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 16, Ss, Stack, T, Ts, Tzr);
-yeccpars2_10(_, _, _, _, T, _, _) ->
- yeccerror(T).
+%% yeccpars2_10: see yeccpars2_9
 
-%% yeccpars2_11: see yeccpars2_10
+%% yeccpars2_11: see yeccpars2_9
 
-%% yeccpars2_12: see yeccpars2_10
+%% yeccpars2_12: see yeccpars2_9
 
-%% yeccpars2_13: see yeccpars2_10
+%% yeccpars2_13: see yeccpars2_9
 
 -dialyzer({nowarn_function, yeccpars2_14/7}).
 -compile({nowarn_unused_function,  yeccpars2_14/7}).
@@ -373,20 +362,19 @@ yeccpars2_14(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
 -compile({nowarn_unused_function,  yeccpars2_15/7}).
 yeccpars2_15(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  NewStack = yeccpars2_15_(Stack),
- yeccgoto_num(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
+ yeccgoto_value(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 -dialyzer({nowarn_function, yeccpars2_16/7}).
 -compile({nowarn_unused_function,  yeccpars2_16/7}).
 yeccpars2_16(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  NewStack = yeccpars2_16_(Stack),
- yeccgoto_num(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
+ yeccgoto_value(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 -dialyzer({nowarn_function, yeccpars2_17/7}).
 -compile({nowarn_unused_function,  yeccpars2_17/7}).
 yeccpars2_17(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- [_,_|Nss] = Ss,
  NewStack = yeccpars2_17_(Stack),
- yeccgoto_filter(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
+ yeccgoto_value(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 -dialyzer({nowarn_function, yeccpars2_18/7}).
 -compile({nowarn_unused_function,  yeccpars2_18/7}).
@@ -412,20 +400,9 @@ yeccpars2_20(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
 -dialyzer({nowarn_function, yeccpars2_21/7}).
 -compile({nowarn_unused_function,  yeccpars2_21/7}).
 yeccpars2_21(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ [_,_|Nss] = Ss,
  NewStack = yeccpars2_21_(Stack),
- yeccgoto_value(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
-
--dialyzer({nowarn_function, yeccpars2_22/7}).
--compile({nowarn_unused_function,  yeccpars2_22/7}).
-yeccpars2_22(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- NewStack = yeccpars2_22_(Stack),
- yeccgoto_value(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
-
--dialyzer({nowarn_function, yeccpars2_23/7}).
--compile({nowarn_unused_function,  yeccpars2_23/7}).
-yeccpars2_23(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- NewStack = yeccpars2_23_(Stack),
- yeccgoto_value(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
+ yeccgoto_filter(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
 
 -dialyzer({nowarn_function, yeccgoto_filter/7}).
 -compile({nowarn_unused_function,  yeccgoto_filter/7}).
@@ -448,17 +425,6 @@ yeccgoto_name(0, Cat, Ss, Stack, T, Ts, Tzr) ->
 yeccgoto_name(4, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr).
 
--dialyzer({nowarn_function, yeccgoto_num/7}).
--compile({nowarn_unused_function,  yeccgoto_num/7}).
-yeccgoto_num(10=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_19(_S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_num(11=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_18(_S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_num(12=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_17(_S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_num(13=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_14(_S, Cat, Ss, Stack, T, Ts, Tzr).
-
 -dialyzer({nowarn_function, yeccgoto_root/7}).
 -compile({nowarn_unused_function,  yeccgoto_root/7}).
 yeccgoto_root(0, Cat, Ss, Stack, T, Ts, Tzr) ->
@@ -467,12 +433,20 @@ yeccgoto_root(0, Cat, Ss, Stack, T, Ts, Tzr) ->
 -dialyzer({nowarn_function, yeccgoto_value/7}).
 -compile({nowarn_unused_function,  yeccgoto_value/7}).
 yeccgoto_value(9=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_20(_S, Cat, Ss, Stack, T, Ts, Tzr).
+ yeccpars2_21(_S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_value(10=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_20(_S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_value(11=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_19(_S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_value(12=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_18(_S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_value(13=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_14(_S, Cat, Ss, Stack, T, Ts, Tzr).
 
 -compile({inline,yeccpars2_0_/1}).
 -dialyzer({nowarn_function, yeccpars2_0_/1}).
 -compile({nowarn_unused_function,  yeccpars2_0_/1}).
--file("lib/myscinet/query_parser.yrl", 20).
+-file("lib/myscinet/query_parser.yrl", 19).
 yeccpars2_0_(__Stack0) ->
  [begin
                    []
@@ -481,7 +455,7 @@ yeccpars2_0_(__Stack0) ->
 -compile({inline,yeccpars2_3_/1}).
 -dialyzer({nowarn_function, yeccpars2_3_/1}).
 -compile({nowarn_unused_function,  yeccpars2_3_/1}).
--file("lib/myscinet/query_parser.yrl", 21).
+-file("lib/myscinet/query_parser.yrl", 20).
 yeccpars2_3_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -491,7 +465,7 @@ yeccpars2_3_(__Stack0) ->
 -compile({inline,yeccpars2_4_/1}).
 -dialyzer({nowarn_function, yeccpars2_4_/1}).
 -compile({nowarn_unused_function,  yeccpars2_4_/1}).
--file("lib/myscinet/query_parser.yrl", 23).
+-file("lib/myscinet/query_parser.yrl", 22).
 yeccpars2_4_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -501,7 +475,7 @@ yeccpars2_4_(__Stack0) ->
 -compile({inline,'yeccpars2_5_$end'/1}).
 -dialyzer({nowarn_function, 'yeccpars2_5_$end'/1}).
 -compile({nowarn_unused_function,  'yeccpars2_5_$end'/1}).
--file("lib/myscinet/query_parser.yrl", 32).
+-file("lib/myscinet/query_parser.yrl", 31).
 'yeccpars2_5_$end'(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -511,7 +485,7 @@ yeccpars2_4_(__Stack0) ->
 -compile({inline,yeccpars2_5_ident/1}).
 -dialyzer({nowarn_function, yeccpars2_5_ident/1}).
 -compile({nowarn_unused_function,  yeccpars2_5_ident/1}).
--file("lib/myscinet/query_parser.yrl", 32).
+-file("lib/myscinet/query_parser.yrl", 31).
 yeccpars2_5_ident(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -521,7 +495,7 @@ yeccpars2_5_ident(__Stack0) ->
 -compile({inline,yeccpars2_5_number/1}).
 -dialyzer({nowarn_function, yeccpars2_5_number/1}).
 -compile({nowarn_unused_function,  yeccpars2_5_number/1}).
--file("lib/myscinet/query_parser.yrl", 32).
+-file("lib/myscinet/query_parser.yrl", 31).
 yeccpars2_5_number(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -531,7 +505,7 @@ yeccpars2_5_number(__Stack0) ->
 -compile({inline,yeccpars2_5_string/1}).
 -dialyzer({nowarn_function, yeccpars2_5_string/1}).
 -compile({nowarn_unused_function,  yeccpars2_5_string/1}).
--file("lib/myscinet/query_parser.yrl", 32).
+-file("lib/myscinet/query_parser.yrl", 31).
 yeccpars2_5_string(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -541,7 +515,7 @@ yeccpars2_5_string(__Stack0) ->
 -compile({inline,yeccpars2_5_/1}).
 -dialyzer({nowarn_function, yeccpars2_5_/1}).
 -compile({nowarn_unused_function,  yeccpars2_5_/1}).
--file("lib/myscinet/query_parser.yrl", 35).
+-file("lib/myscinet/query_parser.yrl", 34).
 yeccpars2_5_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -551,7 +525,7 @@ yeccpars2_5_(__Stack0) ->
 -compile({inline,yeccpars2_6_/1}).
 -dialyzer({nowarn_function, yeccpars2_6_/1}).
 -compile({nowarn_unused_function,  yeccpars2_6_/1}).
--file("lib/myscinet/query_parser.yrl", 31).
+-file("lib/myscinet/query_parser.yrl", 30).
 yeccpars2_6_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -561,7 +535,7 @@ yeccpars2_6_(__Stack0) ->
 -compile({inline,yeccpars2_7_/1}).
 -dialyzer({nowarn_function, yeccpars2_7_/1}).
 -compile({nowarn_unused_function,  yeccpars2_7_/1}).
--file("lib/myscinet/query_parser.yrl", 33).
+-file("lib/myscinet/query_parser.yrl", 32).
 yeccpars2_7_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -571,7 +545,7 @@ yeccpars2_7_(__Stack0) ->
 -compile({inline,yeccpars2_8_/1}).
 -dialyzer({nowarn_function, yeccpars2_8_/1}).
 -compile({nowarn_unused_function,  yeccpars2_8_/1}).
--file("lib/myscinet/query_parser.yrl", 24).
+-file("lib/myscinet/query_parser.yrl", 23).
 yeccpars2_8_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -581,11 +555,11 @@ yeccpars2_8_(__Stack0) ->
 -compile({inline,yeccpars2_14_/1}).
 -dialyzer({nowarn_function, yeccpars2_14_/1}).
 -compile({nowarn_unused_function,  yeccpars2_14_/1}).
--file("lib/myscinet/query_parser.yrl", 28).
+-file("lib/myscinet/query_parser.yrl", 27).
 yeccpars2_14_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
-                          {is_ge, ___1, ___3}
+                            {is_ge, ___1, ___3}
   end | __Stack].
 
 -compile({inline,yeccpars2_15_/1}).
@@ -595,37 +569,37 @@ yeccpars2_14_(__Stack0) ->
 yeccpars2_15_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
-                ___1
+                  ___1
   end | __Stack].
 
 -compile({inline,yeccpars2_16_/1}).
 -dialyzer({nowarn_function, yeccpars2_16_/1}).
 -compile({nowarn_unused_function,  yeccpars2_16_/1}).
--file("lib/myscinet/query_parser.yrl", 38).
+-file("lib/myscinet/query_parser.yrl", 36).
 yeccpars2_16_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
-                ___1
+                  ___1
   end | __Stack].
 
 -compile({inline,yeccpars2_17_/1}).
 -dialyzer({nowarn_function, yeccpars2_17_/1}).
 -compile({nowarn_unused_function,  yeccpars2_17_/1}).
--file("lib/myscinet/query_parser.yrl", 27).
+-file("lib/myscinet/query_parser.yrl", 38).
 yeccpars2_17_(__Stack0) ->
- [___3,___2,___1 | __Stack] = __Stack0,
+ [___1 | __Stack] = __Stack0,
  [begin
-                          {is_gt, ___1, ___3}
+                  ___1
   end | __Stack].
 
 -compile({inline,yeccpars2_18_/1}).
 -dialyzer({nowarn_function, yeccpars2_18_/1}).
 -compile({nowarn_unused_function,  yeccpars2_18_/1}).
--file("lib/myscinet/query_parser.yrl", 30).
+-file("lib/myscinet/query_parser.yrl", 26).
 yeccpars2_18_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
-                          {is_le, ___1, ___3}
+                            {is_gt, ___1, ___3}
   end | __Stack].
 
 -compile({inline,yeccpars2_19_/1}).
@@ -635,48 +609,28 @@ yeccpars2_18_(__Stack0) ->
 yeccpars2_19_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
-                          {is_lt, ___1, ___3}
+                            {is_le, ___1, ___3}
   end | __Stack].
 
 -compile({inline,yeccpars2_20_/1}).
 -dialyzer({nowarn_function, yeccpars2_20_/1}).
 -compile({nowarn_unused_function,  yeccpars2_20_/1}).
--file("lib/myscinet/query_parser.yrl", 26).
+-file("lib/myscinet/query_parser.yrl", 28).
 yeccpars2_20_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
-                           {is_eq, ___1, ___3}
+                            {is_lt, ___1, ___3}
   end | __Stack].
 
 -compile({inline,yeccpars2_21_/1}).
 -dialyzer({nowarn_function, yeccpars2_21_/1}).
 -compile({nowarn_unused_function,  yeccpars2_21_/1}).
--file("lib/myscinet/query_parser.yrl", 41).
+-file("lib/myscinet/query_parser.yrl", 25).
 yeccpars2_21_(__Stack0) ->
- [___1 | __Stack] = __Stack0,
+ [___3,___2,___1 | __Stack] = __Stack0,
  [begin
-                  element(2, ___1)
-  end | __Stack].
-
--compile({inline,yeccpars2_22_/1}).
--dialyzer({nowarn_function, yeccpars2_22_/1}).
--compile({nowarn_unused_function,  yeccpars2_22_/1}).
--file("lib/myscinet/query_parser.yrl", 40).
-yeccpars2_22_(__Stack0) ->
- [___1 | __Stack] = __Stack0,
- [begin
-                  element(2, ___1)
-  end | __Stack].
-
--compile({inline,yeccpars2_23_/1}).
--dialyzer({nowarn_function, yeccpars2_23_/1}).
--compile({nowarn_unused_function,  yeccpars2_23_/1}).
--file("lib/myscinet/query_parser.yrl", 42).
-yeccpars2_23_(__Stack0) ->
- [___1 | __Stack] = __Stack0,
- [begin
-                  element(2, ___1)
+                           {is_eq, ___1, ___3}
   end | __Stack].
 
 
--file("lib/myscinet/query_parser.yrl", 49).
+-file("lib/myscinet/query_parser.yrl", 45).
