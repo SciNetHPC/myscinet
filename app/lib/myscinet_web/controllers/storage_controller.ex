@@ -2,12 +2,23 @@ defmodule MySciNetWeb.StorageController do
   use MySciNetWeb, :controller
 
   def index(conn, _params) do
-    username = conn.assigns.current_user.username
+    user_storage(conn, %{"id" => conn.assigns.current_user.username})
+  end
 
+  def user_storage(conn, %{"id" => username}) do
     # gather allocations for user and filter allowed prefixes
     allocations =
-      conn.assigns.current_user.groups
-      |> Enum.filter(&String.match?(&1, ~r/^(def-|rrg-|rpp-|ctb-)/))
+      case MySciNetWeb.AllocationController.get_allocations_for_user(username) do
+        {:ok, allocs} ->
+          allocs
+          |> Enum.map(fn {_, a} -> a end)
+          |> List.flatten()
+          |> Enum.uniq()
+
+        error ->
+          dbg(error)
+          []
+      end
 
     redis_keys = storage_keys(username, allocations)
 
