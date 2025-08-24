@@ -212,6 +212,7 @@ msgstr ""
 #: lib/myscinet_web/components/layouts/root.html.heex:57
 #: lib/myscinet_web/components/layouts/root.html.heex:74
 #: lib/myscinet_web/controllers/job_html/index.html.heex:2
+#: lib/myscinet_web/controllers/user_html/show.html.heex:22
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Jobs"
 msgstr ""
@@ -307,6 +308,7 @@ msgstr ""
 #: lib/myscinet_web/components/layouts/root.html.heex:75
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:1
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:8
+#: lib/myscinet_web/controllers/user_html/show.html.heex:25
 #, elixir-autogen, elixir-format
 msgid "Allocations"
 msgstr ""
@@ -440,14 +442,10 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: lib/myscinet_web/controllers/user_html/show.html.heex:22
-#, elixir-autogen, elixir-format
-msgid "View Jobs for User"
-msgstr ""
-
 #: lib/myscinet_web/components/layouts/root.html.heex:59
 #: lib/myscinet_web/components/layouts/root.html.heex:76
 #: lib/myscinet_web/controllers/storage_html/index.html.heex:1
+#: lib/myscinet_web/controllers/user_html/show.html.heex:28
 #, elixir-autogen, elixir-format
 msgid "Storage"
 msgstr ""
@@ -570,9 +568,4 @@ msgstr ""
 #: lib/myscinet_web/components/layouts/root.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Support"
-msgstr ""
-
-#: lib/myscinet_web/controllers/user_html/show.html.heex:25
-#, elixir-autogen, elixir-format
-msgid "View Storage for User"
 msgstr ""
