@@ -24,96 +24,95 @@ msgstr "Connexion Internet introuvable"
 msgid "close"
 msgstr "fermer"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:16
-#: lib/myscinet_web/controllers/job_html/show.html.heex:30
+#: lib/myscinet_web/controllers/job_html/index.html.heex:22
+#: lib/myscinet_web/controllers/job_html/show.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "Account"
 msgstr "Compte"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:21
-#: lib/myscinet_web/controllers/job_html/show.html.heex:27
+#: lib/myscinet_web/controllers/job_html/index.html.heex:27
+#: lib/myscinet_web/controllers/job_html/show.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "State"
 msgstr "État"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:17
-#: lib/myscinet_web/controllers/job_html/show.html.heex:40
+#: lib/myscinet_web/controllers/job_html/show.html.heex:52
 #, elixir-autogen, elixir-format
 msgid "Submit Time"
 msgstr "Heure de soumission"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:39
-#: lib/myscinet_web/controllers/job_html/index.html.heex:15
+#: lib/myscinet_web/controllers/job_html/index.html.heex:21
 #: lib/myscinet_web/controllers/job_html/show.html.heex:28
 #: lib/myscinet_web/controllers/user_html/show.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "User"
 msgstr "Utilisateur"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:91
+#: lib/myscinet_web/components/layouts/root.html.heex:110
 #: lib/myscinet_web/controllers/login_html/new.html.heex:1
-#: lib/myscinet_web/controllers/login_html/new.html.heex:6
+#: lib/myscinet_web/controllers/login_html/new.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Sign In"
 msgstr "Se connecter"
 
-#: lib/myscinet_web/controllers/login_controller.ex:20
+#: lib/myscinet_web/controllers/login_controller.ex:24
 #, elixir-autogen, elixir-format
 msgid "Invalid username or password."
 msgstr "Nom d'utilisateur ou mot de passe invalide."
 
-#: lib/myscinet_web/controllers/login_controller.ex:13
+#: lib/myscinet_web/controllers/login_controller.ex:14
 #, elixir-autogen, elixir-format
 msgid "Login successful!"
 msgstr "Connexion réussie!"
 
-#: lib/myscinet_web/controllers/login_html/new.html.heex:5
+#: lib/myscinet_web/controllers/login_html/new.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Password"
 msgstr "Mot de passe"
 
-#: lib/myscinet_web/controllers/login_html/new.html.heex:4
-#: lib/myscinet_web/controllers/user_html/index.html.heex:14
+#: lib/myscinet_web/controllers/login_html/new.html.heex:5
+#: lib/myscinet_web/controllers/user_html/index.html.heex:20
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:39
+#: lib/myscinet_web/controllers/job_html/show.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Alloc TRES"
 msgstr "TRES alloués"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:36
+#: lib/myscinet_web/controllers/job_html/show.html.heex:44
 #, elixir-autogen, elixir-format
 msgid "CPU Time"
 msgstr "Temps CPU"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:16
+#: lib/myscinet_web/controllers/job_html/show.html.heex:15
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Details"
 msgstr "Détails"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:35
+#: lib/myscinet_web/controllers/job_html/show.html.heex:42
 #, elixir-autogen, elixir-format
 msgid "Elapsed"
 msgstr "Temps écoulé"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:44
+#: lib/myscinet_web/controllers/job_html/show.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "End Time"
 msgstr "Heure de fin"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:93
+#: lib/myscinet_web/controllers/job_html/show.html.heex:117
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Environment"
 msgstr "Environnement"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:45
+#: lib/myscinet_web/controllers/job_html/show.html.heex:61
 #, elixir-autogen, elixir-format
 msgid "Exit Code"
 msgstr "Code de sortie"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:29
+#: lib/myscinet_web/controllers/job_html/show.html.heex:30
 #, elixir-autogen, elixir-format
 msgid "Group"
 msgstr "Groupe"
@@ -123,172 +122,173 @@ msgstr "Groupe"
 msgid "Job"
 msgstr "Tâche"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:46
+#: lib/myscinet_web/controllers/job_html/show.html.heex:63
 #, elixir-autogen, elixir-format
 msgid "Max Disk Read"
 msgstr "Lecture disque maximale"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:47
+#: lib/myscinet_web/controllers/job_html/show.html.heex:65
 #, elixir-autogen, elixir-format
 msgid "Max Disk Write"
 msgstr "Écriture disque maximale"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:48
+#: lib/myscinet_web/controllers/job_html/show.html.heex:67
 #, elixir-autogen, elixir-format
 msgid "Max RSS"
 msgstr "RSS maximal"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:49
+#: lib/myscinet_web/controllers/job_html/show.html.heex:69
 #, elixir-autogen, elixir-format
 msgid "Max VM Size"
 msgstr "Taille VM maximale"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:20
-#: lib/myscinet_web/controllers/job_html/show.html.heex:37
+#: lib/myscinet_web/controllers/job_html/index.html.heex:26
+#: lib/myscinet_web/controllers/job_html/show.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Nodes"
 msgstr "Nœuds"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:31
+#: lib/myscinet_web/controllers/job_html/show.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "Partition"
 msgstr "Partition"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:59
+#: lib/myscinet_web/controllers/job_html/show.html.heex:83
 #, elixir-autogen, elixir-format
 msgid "Performance"
 msgstr "Performance"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:32
+#: lib/myscinet_web/controllers/job_html/show.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "QOS"
 msgstr "QoS"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:78
+#: lib/myscinet_web/controllers/job_html/show.html.heex:102
 #, elixir-autogen, elixir-format
 msgid "Script"
 msgstr "Script"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:42
+#: lib/myscinet_web/controllers/job_html/index.html.heex:23
+#: lib/myscinet_web/controllers/job_html/show.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Start Time"
 msgstr "Heure de début"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:52
+#: lib/myscinet_web/controllers/job_html/show.html.heex:75
 #, elixir-autogen, elixir-format
 msgid "System CPU"
 msgstr "CPU système"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:34
+#: lib/myscinet_web/controllers/job_html/show.html.heex:40
 #, elixir-autogen, elixir-format
 msgid "Time Limit"
 msgstr "Limite de temps"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:50
+#: lib/myscinet_web/controllers/job_html/show.html.heex:71
 #, elixir-autogen, elixir-format
 msgid "Total CPU"
 msgstr "CPU total"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:51
+#: lib/myscinet_web/controllers/job_html/show.html.heex:73
 #, elixir-autogen, elixir-format, fuzzy
 msgid "User CPU"
 msgstr "CPU utilisateur"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:33
+#: lib/myscinet_web/controllers/job_html/show.html.heex:38
 #, elixir-autogen, elixir-format
 msgid "Workdir"
 msgstr "Répertoire de travail"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:14
+#: lib/myscinet_web/controllers/job_html/index.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Cluster/ID"
 msgstr "Grappe/ID"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:70
+#: lib/myscinet_web/controllers/job_html/show.html.heex:94
 #, elixir-autogen, elixir-format
 msgid "Download CSV"
 msgstr "Télécharger CSV"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:44
-#: lib/myscinet_web/components/layouts/root.html.heex:59
+#: lib/myscinet_web/components/layouts/root.html.heex:57
+#: lib/myscinet_web/components/layouts/root.html.heex:74
 #: lib/myscinet_web/controllers/job_html/index.html.heex:2
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Jobs"
 msgstr "Tâches"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:18
-#: lib/myscinet_web/controllers/user_html/index.html.heex:15
+#: lib/myscinet_web/controllers/job_html/index.html.heex:24
+#: lib/myscinet_web/controllers/user_html/index.html.heex:21
 #: lib/myscinet_web/controllers/user_html/show.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "Name"
 msgstr "Nom"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:19
+#: lib/myscinet_web/controllers/job_html/index.html.heex:25
 #, elixir-autogen, elixir-format
 msgid "Walltime"
 msgstr "Temps mur"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:41
+#: lib/myscinet_web/controllers/job_html/show.html.heex:54
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Eligible Time"
 msgstr "Temps éligible"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:38
+#: lib/myscinet_web/controllers/job_html/show.html.heex:48
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Node List"
 msgstr "Liste des nœuds"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:5
+#: lib/myscinet_web/controllers/job_html/index.html.heex:9
 #, elixir-autogen, elixir-format
 msgid "Search for..."
 msgstr "Rechercher..."
 
-#: lib/myscinet_web/components/layouts/root.html.heex:86
+#: lib/myscinet_web/components/layouts/root.html.heex:105
 #, elixir-autogen, elixir-format
 msgid "Sign out %{user}"
 msgstr "Déconnexion de %{user}"
 
-#: lib/myscinet_web/controllers/login_controller.ex:29
+#: lib/myscinet_web/controllers/login_controller.ex:34
 #, elixir-autogen, elixir-format
 msgid "Signed out %{user}"
 msgstr "%{user} déconnecté"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:143
+#: lib/myscinet_web/controllers/job_html/show.html.heex:167
 #, elixir-autogen, elixir-format
 msgid "CPU Memory Available [GiB]"
 msgstr "Mémoire CPU disponible (Gio)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:119
+#: lib/myscinet_web/controllers/job_html/show.html.heex:143
 #, elixir-autogen, elixir-format
 msgid "CPU Usage [%]"
 msgstr "Utilisation CPU (%)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:111
+#: lib/myscinet_web/controllers/job_html/show.html.heex:135
 #, elixir-autogen, elixir-format
 msgid "GPU Usage [%]"
 msgstr "Utilisation GPU (%)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:264
+#: lib/myscinet_web/controllers/job_html/show.html.heex:288
 #, elixir-autogen, elixir-format
 msgid "Infiniband data received [GiB/s]"
 msgstr "Données Infiniband reçues (Gio/s)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:255
+#: lib/myscinet_web/controllers/job_html/show.html.heex:279
 #, elixir-autogen, elixir-format
 msgid "Infiniband data transmitted [GiB/s]"
 msgstr "Données Infiniband émises (Gio/s)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:282
+#: lib/myscinet_web/controllers/job_html/show.html.heex:306
 #, elixir-autogen, elixir-format
 msgid "Infiniband packets received [million/s]"
 msgstr "Paquets Infiniband reçus (millions/s)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:273
+#: lib/myscinet_web/controllers/job_html/show.html.heex:297
 #, elixir-autogen, elixir-format
 msgid "Infiniband packets transmitted [million/s]"
 msgstr "Paquets Infiniband émis (millions/s)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:401
+#: lib/myscinet_web/controllers/job_html/show.html.heex:425
 #, elixir-autogen, elixir-format
 msgid "Error loading performance data."
 msgstr "Erreur lors du chargement des données de performance."
@@ -303,8 +303,8 @@ msgstr "Ici, \"récent\" signifie quelques semaines.\nLa mémoire de l'ordonnanc
 msgid "Allocation"
 msgstr "Allocation"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:45
-#: lib/myscinet_web/components/layouts/root.html.heex:60
+#: lib/myscinet_web/components/layouts/root.html.heex:58
+#: lib/myscinet_web/components/layouts/root.html.heex:75
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:1
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:8
 #, elixir-autogen, elixir-format
@@ -316,27 +316,27 @@ msgstr "Allocations"
 msgid "Allocations are \"use it or lose it\", not a lump sum.\nThe scheduler adjusts your job priority based on your recent usage,\nso that your average usage matches your allocation.\n"
 msgstr "Les allocations sont \"utilisez-les ou perdez-les\", pas un montant forfaitaire.\nL'ordonnanceur ajuste la priorité de vos tâches en fonction de votre utilisation récente,\nafin que votre utilisation moyenne corresponde à votre allocation.\n"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:127
+#: lib/myscinet_web/controllers/job_html/show.html.heex:151
 #, elixir-autogen, elixir-format, fuzzy
 msgid "CPU IO Wait [ms]"
 msgstr "Attente E/S CPU (ms)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:135
+#: lib/myscinet_web/controllers/job_html/show.html.heex:159
 #, elixir-autogen, elixir-format, fuzzy
 msgid "CPU Load Average"
 msgstr "Charge moyenne CPU"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:159
+#: lib/myscinet_web/controllers/job_html/show.html.heex:183
 #, elixir-autogen, elixir-format
 msgid "CPU cycles per instruction"
 msgstr "Cycles CPU par instruction"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:151
+#: lib/myscinet_web/controllers/job_html/show.html.heex:175
 #, elixir-autogen, elixir-format
 msgid "CPU frequency [GHz]"
 msgstr "Fréquence CPU (GHz)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:167
+#: lib/myscinet_web/controllers/job_html/show.html.heex:191
 #, elixir-autogen, elixir-format
 msgid "CPU power [W]"
 msgstr "Puissance CPU (W)"
@@ -346,43 +346,43 @@ msgstr "Puissance CPU (W)"
 msgid "Cluster"
 msgstr "Grappe"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:175
+#: lib/myscinet_web/controllers/job_html/show.html.heex:199
 #, elixir-autogen, elixir-format
 msgid "Double-precision floating point operations [TFLOP/s]"
 msgstr "Opérations en virgule flottante double précision (TFlop/s)"
 
-#: lib/myscinet_web/controllers/user_html/index.html.heex:16
+#: lib/myscinet_web/controllers/user_html/index.html.heex:22
 #: lib/myscinet_web/controllers/user_html/show.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Email(s)"
 msgstr "Courriel(s)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:223
+#: lib/myscinet_web/controllers/job_html/show.html.heex:247
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU FP16 Usage"
 msgstr "Utilisation GPU FP16"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:215
+#: lib/myscinet_web/controllers/job_html/show.html.heex:239
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU FP32 Usage"
 msgstr "Utilisation GPU FP32"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:207
+#: lib/myscinet_web/controllers/job_html/show.html.heex:231
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU FP64 Usage"
 msgstr "Utilisation GPU FP64"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:239
+#: lib/myscinet_web/controllers/job_html/show.html.heex:263
 #, elixir-autogen, elixir-format
 msgid "GPU SM Active [%]"
 msgstr "SM GPU actifs (%)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:247
+#: lib/myscinet_web/controllers/job_html/show.html.heex:271
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU SM Occupancy [%]"
 msgstr "Occupation des SM GPU (%)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:231
+#: lib/myscinet_web/controllers/job_html/show.html.heex:255
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU Tensor Usage"
 msgstr "Utilisation des tenseurs GPU"
@@ -392,12 +392,12 @@ msgstr "Utilisation des tenseurs GPU"
 msgid "Groups"
 msgstr "Groupes"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:191
+#: lib/myscinet_web/controllers/job_html/show.html.heex:215
 #, elixir-autogen, elixir-format
 msgid "Memory read bandwidth [GiB/s]"
 msgstr "Bande passante lecture mémoire (Gio/s)"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:199
+#: lib/myscinet_web/controllers/job_html/show.html.heex:223
 #, elixir-autogen, elixir-format
 msgid "Memory write bandwidth [GiB/s]"
 msgstr "Bande passante écriture mémoire (Gio/s)"
@@ -417,24 +417,24 @@ msgstr "Utilisation récente (%)"
 msgid "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} %{units}</strong>)."
 msgstr "Récemment, ce compte a utilisé <strong>%{percent}%</strong> de son allocation glissante (<strong>~%{cores} %{units}</strong>)."
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:6
-#: lib/myscinet_web/controllers/user_html/index.html.heex:6
+#: lib/myscinet_web/controllers/job_html/index.html.heex:12
+#: lib/myscinet_web/controllers/user_html/index.html.heex:12
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Search"
 msgstr "Recherche"
 
-#: lib/myscinet_web/controllers/user_html/index.html.heex:5
+#: lib/myscinet_web/controllers/user_html/index.html.heex:9
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Search users..."
 msgstr "Rechercher des utilisateurs..."
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:183
+#: lib/myscinet_web/controllers/job_html/show.html.heex:207
 #, elixir-autogen, elixir-format
 msgid "Single-precision floating point operations [TFLOP/s]"
 msgstr "Opérations en virgule flottante simple précision (TFlop/s)"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:48
-#: lib/myscinet_web/components/layouts/root.html.heex:63
+#: lib/myscinet_web/components/layouts/root.html.heex:61
+#: lib/myscinet_web/components/layouts/root.html.heex:78
 #: lib/myscinet_web/controllers/user_html/index.html.heex:3
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Users"
@@ -445,24 +445,24 @@ msgstr "Utilisateurs"
 msgid "View Jobs for User"
 msgstr "Voir les tâches de l'utilisateur"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:46
-#: lib/myscinet_web/components/layouts/root.html.heex:61
+#: lib/myscinet_web/components/layouts/root.html.heex:59
+#: lib/myscinet_web/components/layouts/root.html.heex:76
 #: lib/myscinet_web/controllers/storage_html/index.html.heex:1
 #, elixir-autogen, elixir-format
 msgid "Storage"
 msgstr "Stockage"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:52
+#: lib/myscinet_web/controllers/job_html/index.html.heex:61
 #, elixir-autogen, elixir-format
 msgid "Next"
 msgstr "Suivant"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:51
+#: lib/myscinet_web/controllers/job_html/index.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Page %{page}"
 msgstr "Page %{page}"
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:49
+#: lib/myscinet_web/controllers/job_html/index.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Previous"
 msgstr "Précédent"
@@ -522,52 +522,52 @@ msgstr "%{val}Tio"
 msgid "0 B"
 msgstr "0o"
 
-#: lib/myscinet_web/controllers/page_html/home.html.heex:67
+#: lib/myscinet_web/controllers/page_html/home.html.heex:70
 #, elixir-autogen, elixir-format
 msgid "Days of Work"
 msgstr "Jours de travail"
 
-#: lib/myscinet_web/controllers/page_html/home.html.heex:63
+#: lib/myscinet_web/controllers/page_html/home.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "Jobs in Queue"
 msgstr "Tâches en file d'attente"
 
-#: lib/myscinet_web/controllers/page_html/home.html.heex:72
+#: lib/myscinet_web/controllers/page_html/home.html.heex:76
 #, elixir-autogen, elixir-format
 msgid "Login Nodes"
 msgstr "Nœuds de connexion"
 
-#: lib/myscinet_web/controllers/page_html/home.html.heex:42
+#: lib/myscinet_web/controllers/page_html/home.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Online"
 msgstr "En ligne"
 
-#: lib/myscinet_web/controllers/page_html/home.html.heex:44
+#: lib/myscinet_web/controllers/page_html/home.html.heex:47
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Stale"
 msgstr "Obsolète"
 
-#: lib/myscinet_web/controllers/page_html/home.html.heex:50
+#: lib/myscinet_web/controllers/page_html/home.html.heex:53
 #, elixir-autogen, elixir-format
 msgid "Utilization"
 msgstr "Utilisation"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:53
+#: lib/myscinet_web/components/layouts/root.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "my.SciNet"
 msgstr "mon.SciNet"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:103
+#: lib/myscinet_web/components/layouts/root.html.heex:123
 #, elixir-autogen, elixir-format
 msgid "Documentation"
 msgstr "Documentation"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:105
+#: lib/myscinet_web/components/layouts/root.html.heex:127
 #, elixir-autogen, elixir-format
 msgid "Education"
 msgstr "Éducation"
 
-#: lib/myscinet_web/components/layouts/root.html.heex:107
+#: lib/myscinet_web/components/layouts/root.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Support"
 msgstr "Support"
