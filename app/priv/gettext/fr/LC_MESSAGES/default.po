@@ -318,11 +318,6 @@ msgstr "Allocations"
 msgid "Allocations are \"use it or lose it\", not a lump sum.\nThe scheduler adjusts your job priority based on your recent usage,\nso that your average usage matches your allocation.\n"
 msgstr "Les allocations sont \"utilisez-les ou perdez-les\", pas un montant forfaitaire.\nL'ordonnanceur ajuste la priorité de vos tâches en fonction de votre utilisation récente,\nafin que votre utilisation moyenne corresponde à votre allocation.\n"
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:151
-#, elixir-autogen, elixir-format, fuzzy
-msgid "CPU IO Wait [ms]"
-msgstr "Attente E/S CPU (ms)"
-
 #: lib/myscinet_web/controllers/job_html/show.html.heex:159
 #, elixir-autogen, elixir-format, fuzzy
 msgid "CPU Load Average"
@@ -569,3 +564,8 @@ msgstr "Éducation"
 #, elixir-autogen, elixir-format
 msgid "Support"
 msgstr "Soutien"
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:151
+#, elixir-autogen, elixir-format, fuzzy
+msgid "CPU IO Wait [s]"
+msgstr "Attente E/S CPU (s)"

@@ -331,11 +331,6 @@ msgstr ""
 msgid "Allocations are \"use it or lose it\", not a lump sum.\nThe scheduler adjusts your job priority based on your recent usage,\nso that your average usage matches your allocation.\n"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:151
-#, elixir-autogen, elixir-format
-msgid "CPU IO Wait [ms]"
-msgstr ""
-
 #: lib/myscinet_web/controllers/job_html/show.html.heex:159
 #, elixir-autogen, elixir-format
 msgid "CPU Load Average"
@@ -581,4 +576,9 @@ msgstr ""
 #: lib/myscinet_web/components/layouts/root.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Support"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/show.html.heex:151
+#, elixir-autogen, elixir-format
+msgid "CPU IO Wait [s]"
 msgstr ""

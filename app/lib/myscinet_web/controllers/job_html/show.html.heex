@@ -148,10 +148,10 @@
     },
     {
       id: "cpu-iowait-plot",
-      label: "<%= gettext "CPU IO Wait [ms]" %>",
-      y: d => d.iowait,
+      label: "<%= gettext "CPU IO Wait [s]" %>",
+      y: d => d.iowait*1e-3,
       z: "nodename",
-      range: [0, 1000],
+      range: [0, 1],
       when: "cpu"
     },
     {
