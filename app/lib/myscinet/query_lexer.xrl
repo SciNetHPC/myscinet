@@ -3,7 +3,7 @@ Definitions.
 WHITESPACE = [\s\t\n\r]+
 NUMBER     = [0-9]+
 IDENT      = [a-zA-Z_][a-zA-Z0-9_-]*
-BARESTR    = [^"%:<=>\s\t\n\r]+
+BARESTR    = [^"%:<=>&|)(\s\t\n\r]+
 QUOTESTR   = "[^"%]*"
 
 Rules.
@@ -18,6 +18,10 @@ Rules.
 \<\=         : {token, {'<='}}.
 \>           : {token, {'>'}}.
 \>\=         : {token, {'>='}}.
+\(           : {token, {'(', TokenLoc}}.
+\)           : {token, {')', TokenLoc}}.
+\|\|         : {token, {'||'}}.
+\&\&         : {token, {'&&'}}.
 
 Erlang code.
 

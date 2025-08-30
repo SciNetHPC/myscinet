@@ -68,88 +68,122 @@ defmodule MySciNetWeb.JobController do
 
   defp apply_filters(query, []), do: query
 
-  defp apply_filters(query, [filter | rest]) do
-    query |> apply_filter(filter) |> apply_filters(rest)
+  defp apply_filters(query, filters) do
+    case filters_and(filters) do
+      {dynamic, []} ->
+        query |> where(^dynamic)
+
+      {_, errors} ->
+        dbg(errors)
+        query
+    end
   end
 
-  defp apply_filters(query, other) do
-    query |> apply_filter(other)
+  defp filters_and(filters) do
+    Enum.reduce(filters, {dynamic(true), []}, fn
+      filter, {good, bad} ->
+        case filter_to_dynamic_fragment(filter) do
+          {:ok, dynamic} ->
+            {dynamic(^good and ^dynamic), bad}
+
+          error ->
+            {good, [error | bad]}
+        end
+    end)
   end
 
-  defp apply_filter(query, filter) do
-    null = dynamic(true)
+  defp filters_or(filters) do
+    Enum.reduce(filters, {dynamic(false), []}, fn
+      filter, {good, bad} ->
+        case filter_to_dynamic_fragment(filter) do
+          {:ok, dynamic} ->
+            {dynamic(^good or ^dynamic), bad}
 
-    dynamic =
-      case filter do
-        {:number, n} ->
-          dynamic([j], like(j.jobid, ^"%:#{n}") or like(j.jobid, ^"%:#{n}\\_%"))
+          error ->
+            {good, [error | bad]}
+        end
+    end)
+  end
 
-        {:ident, x} ->
-          dynamic([j], ilike(j.jobname, ^"%#{x}%"))
+  defp filter_to_dynamic_fragment(filter) do
+    case filter do
+      {:number, n} ->
+        {:ok, dynamic([j], like(j.jobid, ^"%:#{n}") or like(j.jobid, ^"%:#{n}\\_%"))}
 
-        {:string, x} ->
-          dynamic([j], ilike(j.jobname, ^"%#{x}%"))
+      {:ident, x} ->
+        {:ok, dynamic([j], ilike(j.jobname, ^"%#{x}%"))}
 
-        {:is_eq, :cluster, {:ident, cluster}} ->
-          slug =
-            case get_cluster(to_string(cluster)) do
-              %{slug_psql: slug_psql} -> slug_psql
-              _ -> cluster
-            end
+      {:string, x} ->
+        {:ok, dynamic([j], ilike(j.jobname, ^"%#{x}%"))}
 
-          dynamic([j], ilike(j.jobid, ^"#{slug}:%"))
-
-        {:is_eq, :user, {:ident, u}} ->
-          dynamic([j], j.username == ^to_string(u))
-
-        {:is_eq, :user, {:number, n}} ->
-          dynamic([j], j.uid == ^n)
-
-        {:is_eq, :group, {:ident, g}} ->
-          dynamic([j], like(j.account, ^"%-#{g}%"))
-
-        {:is_eq, :group, {:number, n}} ->
-          dynamic([j], j.gid == ^n)
-
-        {:is_eq, :state, {:ident, s}} ->
-          dynamic([j], ilike(j.state, ^"#{s}%"))
-
-        {:is_eq, :nodes, {:number, n}} ->
-          dynamic([j], j.nnodes == ^n)
-
-        {:is_lt, :nodes, {:number, n}} ->
-          dynamic([j], j.nnodes < ^n)
-
-        {:is_le, :nodes, {:number, n}} ->
-          dynamic([j], j.nnodes <= ^n)
-
-        {:is_gt, :nodes, {:number, n}} ->
-          dynamic([j], j.nnodes > ^n)
-
-        {:is_ge, :nodes, {:number, n}} ->
-          dynamic([j], j.nnodes >= ^n)
-
-        {op, :time, {:string, t}} when op in [:is_lt, :is_le, :is_gt, :is_ge] ->
-          case parse_naive_datetime(t) do
-            {:ok, dt} ->
-              case op do
-                :is_lt -> dynamic([j], j.start < ^dt)
-                :is_le -> dynamic([j], j.start <= ^dt)
-                :is_gt -> dynamic([j], j.start > ^dt)
-                :is_ge -> dynamic([j], j.start >= ^dt)
-              end
-
-            error ->
-              dbg({:bad_time_filter, t, error})
-              null
+      {:is_eq, :cluster, {:ident, cluster}} ->
+        slug =
+          case get_cluster(to_string(cluster)) do
+            %{slug_psql: slug_psql} -> slug_psql
+            _ -> cluster
           end
 
-        unrecognized ->
-          dbg({:unrecognized_job_filter, unrecognized})
-          null
-      end
+        {:ok, dynamic([j], ilike(j.jobid, ^"#{slug}:%"))}
 
-    query |> where(^dynamic)
+      {:is_eq, :user, {:ident, u}} ->
+        {:ok, dynamic([j], j.username == ^to_string(u))}
+
+      {:is_eq, :user, {:number, n}} ->
+        {:ok, dynamic([j], j.uid == ^n)}
+
+      {:is_eq, :group, {:ident, g}} ->
+        {:ok, dynamic([j], like(j.account, ^"%-#{g}%"))}
+
+      {:is_eq, :group, {:number, n}} ->
+        {:ok, dynamic([j], j.gid == ^n)}
+
+      {:is_eq, :state, {:ident, s}} ->
+        {:ok, dynamic([j], ilike(j.state, ^"#{s}%"))}
+
+      {:is_eq, :nodes, {:number, n}} ->
+        {:ok, dynamic([j], j.nnodes == ^n)}
+
+      {:is_lt, :nodes, {:number, n}} ->
+        {:ok, dynamic([j], j.nnodes < ^n)}
+
+      {:is_le, :nodes, {:number, n}} ->
+        {:ok, dynamic([j], j.nnodes <= ^n)}
+
+      {:is_gt, :nodes, {:number, n}} ->
+        {:ok, dynamic([j], j.nnodes > ^n)}
+
+      {:is_ge, :nodes, {:number, n}} ->
+        {:ok, dynamic([j], j.nnodes >= ^n)}
+
+      {op, :time, {:string, t}} when op in [:is_lt, :is_le, :is_gt, :is_ge] ->
+        case parse_naive_datetime(t) do
+          {:ok, dt} ->
+            case op do
+              :is_lt -> {:ok, dynamic([j], j.start < ^dt)}
+              :is_le -> {:ok, dynamic([j], j.start <= ^dt)}
+              :is_gt -> {:ok, dynamic([j], j.start > ^dt)}
+              :is_ge -> {:ok, dynamic([j], j.start >= ^dt)}
+            end
+
+          error ->
+            error
+        end
+
+      {:||, filters} ->
+        case filters_or(filters) do
+          {dynamic, []} -> {:ok, dynamic}
+          {_, errors} -> {:errors, errors}
+        end
+
+      {:&&, filters} ->
+        case filters_and(filters) do
+          {dynamic, []} -> {:ok, dynamic}
+          {_, errors} -> {:errors, errors}
+        end
+
+      unrecognized ->
+        {:error, :unrecognized_filter, unrecognized}
+    end
   end
 
   defp parse_naive_datetime(t) when is_binary(t) do
