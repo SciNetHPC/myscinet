@@ -623,24 +623,24 @@ yyaction(3, TokenLen, YYtcs, _, _) ->
 yyaction(4, TokenLen, YYtcs, _, _) ->
     TokenChars = yypre(YYtcs, TokenLen),
     yyaction_4(TokenChars);
-yyaction(5, _, _, _, _) ->
-    yyaction_5();
-yyaction(6, _, _, _, _) ->
-    yyaction_6();
-yyaction(7, _, _, _, _) ->
-    yyaction_7();
-yyaction(8, _, _, _, _) ->
-    yyaction_8();
-yyaction(9, _, _, _, _) ->
-    yyaction_9();
+yyaction(5, _, _, TokenLine, TokenCol) ->
+    yyaction_5(TokenLine, TokenCol);
+yyaction(6, _, _, TokenLine, TokenCol) ->
+    yyaction_6(TokenLine, TokenCol);
+yyaction(7, _, _, TokenLine, TokenCol) ->
+    yyaction_7(TokenLine, TokenCol);
+yyaction(8, _, _, TokenLine, TokenCol) ->
+    yyaction_8(TokenLine, TokenCol);
+yyaction(9, _, _, TokenLine, TokenCol) ->
+    yyaction_9(TokenLine, TokenCol);
 yyaction(10, _, _, TokenLine, TokenCol) ->
     yyaction_10(TokenLine, TokenCol);
 yyaction(11, _, _, TokenLine, TokenCol) ->
     yyaction_11(TokenLine, TokenCol);
-yyaction(12, _, _, _, _) ->
-    yyaction_12();
-yyaction(13, _, _, _, _) ->
-    yyaction_13();
+yyaction(12, _, _, TokenLine, TokenCol) ->
+    yyaction_12(TokenLine, TokenCol);
+yyaction(13, _, _, TokenLine, TokenCol) ->
+    yyaction_13(TokenLine, TokenCol);
 yyaction(_, _, _, _, _) -> error.
 
 -compile({inline,yyaction_0/0}).
@@ -668,30 +668,35 @@ yyaction_3(TokenChars) ->
 yyaction_4(TokenChars) ->
      { token, { string, list_to_binary (drop_first_and_last (TokenChars)) } } .
 
--compile({inline,yyaction_5/0}).
+-compile({inline,yyaction_5/2}).
 -file("lib/myscinet/query_lexer.xrl", 14).
-yyaction_5() ->
-     { token, { ':' } } .
+yyaction_5(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { ':', TokenLoc } } .
 
--compile({inline,yyaction_6/0}).
+-compile({inline,yyaction_6/2}).
 -file("lib/myscinet/query_lexer.xrl", 15).
-yyaction_6() ->
-     { token, { '<' } } .
+yyaction_6(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { '<', TokenLoc } } .
 
--compile({inline,yyaction_7/0}).
+-compile({inline,yyaction_7/2}).
 -file("lib/myscinet/query_lexer.xrl", 16).
-yyaction_7() ->
-     { token, { '<=' } } .
+yyaction_7(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { '<=', TokenLoc } } .
 
--compile({inline,yyaction_8/0}).
+-compile({inline,yyaction_8/2}).
 -file("lib/myscinet/query_lexer.xrl", 17).
-yyaction_8() ->
-     { token, { '>' } } .
+yyaction_8(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { '>', TokenLoc } } .
 
--compile({inline,yyaction_9/0}).
+-compile({inline,yyaction_9/2}).
 -file("lib/myscinet/query_lexer.xrl", 18).
-yyaction_9() ->
-     { token, { '>=' } } .
+yyaction_9(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { '>=', TokenLoc } } .
 
 -compile({inline,yyaction_10/2}).
 -file("lib/myscinet/query_lexer.xrl", 19).
@@ -705,13 +710,15 @@ yyaction_11(TokenLine, TokenCol) ->
     TokenLoc={TokenLine,TokenCol},
      { token, { ')', TokenLoc } } .
 
--compile({inline,yyaction_12/0}).
+-compile({inline,yyaction_12/2}).
 -file("lib/myscinet/query_lexer.xrl", 21).
-yyaction_12() ->
-     { token, { '||' } } .
+yyaction_12(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { '||', TokenLoc } } .
 
--compile({inline,yyaction_13/0}).
+-compile({inline,yyaction_13/2}).
 -file("lib/myscinet/query_lexer.xrl", 22).
-yyaction_13() ->
-     { token, { '&&' } } .
+yyaction_13(TokenLine, TokenCol) ->
+    TokenLoc={TokenLine,TokenCol},
+     { token, { '&&', TokenLoc } } .
 -file("/usr/local/lib/erlang/lib/parsetools-2.6/include/leexinc.hrl", 344).

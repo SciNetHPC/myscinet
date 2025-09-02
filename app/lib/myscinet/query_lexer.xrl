@@ -13,15 +13,15 @@ Rules.
 {IDENT}      : {token, {ident, list_to_atom(TokenChars)}}.
 {BARESTR}    : {token, {string, list_to_binary(TokenChars)}}.
 {QUOTESTR}   : {token, {string, list_to_binary(drop_first_and_last(TokenChars))}}.
-\:           : {token, {':'}}.
-\<           : {token, {'<'}}.
-\<\=         : {token, {'<='}}.
-\>           : {token, {'>'}}.
-\>\=         : {token, {'>='}}.
+\:           : {token, {':', TokenLoc}}.
+\<           : {token, {'<', TokenLoc}}.
+\<\=         : {token, {'<=', TokenLoc}}.
+\>           : {token, {'>', TokenLoc}}.
+\>\=         : {token, {'>=', TokenLoc}}.
 \(           : {token, {'(', TokenLoc}}.
 \)           : {token, {')', TokenLoc}}.
-\|\|         : {token, {'||'}}.
-\&\&         : {token, {'&&'}}.
+\|\|         : {token, {'||', TokenLoc}}.
+\&\&         : {token, {'&&', TokenLoc}}.
 
 Erlang code.
 
