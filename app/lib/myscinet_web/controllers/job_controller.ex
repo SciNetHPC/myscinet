@@ -24,8 +24,8 @@ defmodule MySciNetWeb.JobController do
         |> where(
           [j],
           j.user == ^username or
-            like(j.groupname, ^"%-#{username}") or
-            like(j.groupname, ^"%-#{username}-%")
+            like(j.account, ^"___-#{username}") or
+            like(j.account, ^"___-#{username}-a_")
         )
 
       true ->
