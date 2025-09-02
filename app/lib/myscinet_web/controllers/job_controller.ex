@@ -21,8 +21,12 @@ defmodule MySciNetWeb.JobController do
       "def-#{username}" in groups ->
         # PIs can see their group's jobs
         query
-        |> where([j], like(j.groupname, ^"%-#{username}"))
-        |> where([j], like(j.groupname, ^"%-#{username}-%"))
+        |> where(
+          [j],
+          j.user == ^username or
+            like(j.groupname, ^"%-#{username}") or
+            like(j.groupname, ^"%-#{username}-%")
+        )
 
       true ->
         # everyone else can only see their own jobs
