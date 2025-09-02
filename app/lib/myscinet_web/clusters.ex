@@ -22,7 +22,7 @@ defmodule MySciNetWeb.Clusters do
       slug_web: "trillium-gpu",
       slug_redis: "grillium",
       slug_psql: "trig",
-      nodes: 61,
+      nodes: 63,
       cpumem: 768,
       gpu?: true,
       logins: ["trig-login01"]
