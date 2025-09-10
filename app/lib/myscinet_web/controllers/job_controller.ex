@@ -230,7 +230,7 @@ defmodule MySciNetWeb.JobController do
         command =
           case row && row.jobcom do
             nil -> nil
-            str -> String.replace(str, "/opt/slurm/bin/sbatch --export=NONE", "sbatch")
+            str -> String.replace(str, "/opt/slurm/bin/sbatch --export=NONE --get-user-env=L", "sbatch")
           end
 
         row = Repo.get_by(MySciNet.Jenv, jobid: id)
