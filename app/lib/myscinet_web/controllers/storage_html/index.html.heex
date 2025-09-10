@@ -19,13 +19,12 @@
         <%= for map <- @storage do %>
           <% display_path = display_path(map[:path]) %>
 
-          <% percent_capacity = map[:percent_capacity] %>
-          <% percent_inodes = map[:percent_inodes] %>
-
           <% used_capacity = map[:used_capacity] %>
-          <% max_capacity = map[:hard_limit] %>
+          <% max_capacity = map[:soft_limit] %>
+          <% percent_capacity = if max_capacity > 0, do: round(100.0 * used_capacity / max_capacity), else: 0 %>
           <% used_inodes = map[:used_inodes] %>
-          <% max_inodes = map[:hard_limit_inodes] %>
+          <% max_inodes = map[:soft_limit_inodes] %>
+          <% percent_inodes = if max_inodes > 0, do: round(100.0 * used_inodes / max_inodes), else: 0 %>
 
           <tr class="border-t">
             <td class="px-4 py-3 align-top whitespace-nowrap">
