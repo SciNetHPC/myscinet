@@ -76,20 +76,15 @@ defmodule MySciNetWeb.StorageHTML do
 
     ~H"""
     <div>
-      <div class="w-full bg-base-200 rounded h-6 overflow-hidden relative">
+      <div aria-hidden="true" class="w-full bg-base-200 rounded h-6 overflow-hidden relative">
         <div
           class={"absolute left-0 top-0 h-6 flex items-center justify-center text-sm font-semibold " <> fill_text_class(@percent) <> " " <> fill_class(@percent)}
-          style={"width: #{@percent}%;"}
+          style={"width: #{min(@percent, 100)}%;"}
         >
           <%= if @percent >= 15 do %>
             <span class="px-1">{@percent}%</span>
           <% end %>
         </div>
-        <%= if false && @percent < 15 do %>
-          <div class="absolute left-1 inset-y-0 flex items-center text-sm pointer-events-none">
-            <span class="px-1">{@percent}%</span>
-          </div>
-        <% end %>
       </div>
 
       <div class="text-xs text-base-content/50 mb-1">
