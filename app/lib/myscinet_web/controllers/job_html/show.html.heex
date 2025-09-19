@@ -104,7 +104,7 @@
       <div class="card bg-base-200 shadow-sm">
         <div class="card-body">
           <%= if @command do %>
-            <pre class="text-base-content/60"><%= "$ #{@command}" %></pre>
+            <div class="text-base-content/60 font-mono">{"$ #{@command}"}</div>
             <hr class="-mx-6 border-base-300 my-2" />
           <% end %>
           <pre class="whitespace-pre-wrap overflow-x-auto"><code class="language-bash"><%= @script %></code></pre>
