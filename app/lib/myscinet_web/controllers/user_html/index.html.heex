@@ -31,7 +31,7 @@
           >
             <td>{user.uid}</td>
             <td>{user.cn}</td>
-            <td>{Enum.join(user.mail, ", ")}</td>
+            <td>{Enum.join(Map.get(user, :mail, []), ", ")}</td>
           </tr>
         <% end %>
       </tbody>
