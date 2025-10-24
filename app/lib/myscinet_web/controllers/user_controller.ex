@@ -33,6 +33,7 @@ defmodule MySciNetWeb.UserController do
 
   def naughty(conn, _) do
     a_week_ago = DateTime.utc_now() |> DateTime.add(-7, :day)
+
     query =
       """
       select username, count(*), avg(wastage) as wastage, avg(wastage)*sqrt(count(*)) as demerits
@@ -47,6 +48,7 @@ defmodule MySciNetWeb.UserController do
       order by demerits desc
       limit 10;
       """
+
     results = Ecto.Adapters.SQL.query!(MySciNet.Repo, query, [a_week_ago])
     render(conn, :naughty, page_title: "Naughty Users", naughty_list: results)
   end
