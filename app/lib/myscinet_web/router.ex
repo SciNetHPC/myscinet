@@ -90,6 +90,7 @@ defmodule MySciNetWeb.Router do
     get "/users/:id", UserController, :show
     get "/users/:id/allocations", AllocationController, :user_allocations
     get "/users/:id/storage", StorageController, :user_storage
+    get "/naughty-list", UserController, :naughty
   end
 
   # Other scopes may use custom stacks.
