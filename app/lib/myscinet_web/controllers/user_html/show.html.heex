@@ -27,6 +27,17 @@
       <a href={~p"/users/#{@user.username}/storage"} class="btn btn-primary">
         {gettext("Storage")}
       </a>
+      <%= if Map.has_key?(@user, :cci) do %>
+        <a
+          href={"https://support.alliancecan.ca/otrs/index.pl?Action=AgentCustomerInformationCenter;CustomerID=#{@user.username}"}
+          class="btn btn-primary"
+        >
+          {gettext("OTRS")}
+        </a>
+        <a href={"https://ccdb.alliancecan.ca/people/#{@user.cci}"} class="btn btn-primary">
+          {gettext("CCDB")}
+        </a>
+      <% end %>
     </div>
   </div>
 </div>

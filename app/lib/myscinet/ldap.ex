@@ -78,7 +78,7 @@ defmodule MySciNet.LDAP do
              base: dn,
              scope: :eldap.baseObject(),
              filter: :eldap.present(~c"gidNumber"),
-             attributes: [~c"cn", ~c"gidNumber", ~c"mail", ~c"uid", ~c"loginShell"]
+             attributes: [~c"cci", ~c"cn", ~c"gidNumber", ~c"mail", ~c"uid", ~c"loginShell"]
            ),
          {:ok, group_results} <-
            search(handle,
@@ -94,16 +94,24 @@ defmodule MySciNet.LDAP do
       groups = for %{cn: [val]} <- group_results, do: val
       emails = Map.get(user_result, :mail, [])
 
-      {:ok,
-       %{
-         fullname: fullname,
-         username: username,
-         groups: groups,
-         emails: emails,
-         shell: shell
-       }}
+      user_info = %{
+        fullname: fullname,
+        username: username,
+        groups: groups,
+        emails: emails,
+        shell: shell
+      }
+
+      user_info =
+        if Map.has_key?(user_result, :cci) do
+          user_info |> Map.put(:cci, hd(user_result[:cci]))
+        else
+          user_info
+        end
+
+      {:ok, user_info}
     else
-      {:ok, info} -> {:error, :bad_ldap_search_response, info}
+      {:ok, result} -> {:error, :bad_ldap_search_response, result}
       error -> error
     end
   end

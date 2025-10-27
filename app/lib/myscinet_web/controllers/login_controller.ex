@@ -16,7 +16,9 @@ defmodule MySciNetWeb.LoginController do
         |> put_session(:current_user, info)
         |> redirect(to: redirect_to)
 
-      _ ->
+      error ->
+        dbg(error)
+
         # Slow down brute force attacks
         :timer.sleep(1000)
 
