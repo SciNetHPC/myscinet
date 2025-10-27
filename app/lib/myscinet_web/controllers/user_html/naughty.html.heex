@@ -15,7 +15,7 @@
           <tr class="hover:bg-primary/10">
             <td><a class="link link-underline" href={~p"/users/#{username}"}>{username}</a></td>
             <td class="text-right">{Float.round(Enum.at(entry, 1) * 2 / (24 * 60), 1)}</td>
-            <td class="text-right">{Float.round(Enum.at(entry, 2), 1)}</td>
+            <td class="text-right">{Float.round(Enum.at(entry, 2) * 100, 1)}</td>
           </tr>
         <% end %>
       </tbody>

@@ -32,24 +32,31 @@ defmodule MySciNetWeb.UserController do
   end
 
   def naughty(conn, _) do
-    a_week_ago = DateTime.utc_now() |> DateTime.add(-7, :day)
-
     query =
       """
-      select username, count(*), avg(wastage) as wastage, avg(wastage)*sqrt(count(*)) as demerits
+      select
+        username,
+        sum(samples)::integer as total_samples,
+        sum(samples*percent_wasted)/sum(samples) as wasted_percent,
+        sum(samples*percent_wasted)/sqrt(sum(samples)) as demerits
       from (
-        select jobid, time,
-          (100 - greatest(cpupercent, 100*(1 - (memfree+buffers+cached)/393216))) as wastage
+        select
+          jobid,
+          count(*) as samples,
+          1.0 - greatest(avg(cpupercent)/100.0, 1.0 - min(memfree + buffers + cached)/(500*1024.0)) as percent_wasted
         from utilcpu
-      ) utilcpu2
-      join jsum on utilcpu2.jobid = jsum.jobid
-      where time > $1
+        where time > now() - interval '7 days'
+        group by jobid
+      ) jutilcpu
+      join jsum on jutilcpu.jobid = jsum.jobid
       group by username
+      having
+        sum(samples*percent_wasted) > 7*24*30
       order by demerits desc
       limit 10;
       """
 
-    results = Ecto.Adapters.SQL.query!(MySciNet.Repo, query, [a_week_ago])
+    results = Ecto.Adapters.SQL.query!(MySciNet.Repo, query, [])
     render(conn, :naughty, page_title: "Naughty Users", naughty_list: results)
   end
 end
