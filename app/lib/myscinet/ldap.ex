@@ -135,17 +135,18 @@ defmodule MySciNet.LDAP do
   def user_search(q) do
     transact_as_admin(fn handle ->
       conf = config()
-      q = to_charlist(q)
+      cq = to_charlist(q)
       attr = [~c"cn", ~c"mail", ~c"uid"]
 
+      substring_filter = for s <- String.split(q), do: {:any, to_charlist(s)}
       case search(handle,
              base: conf[:user_base],
              scope: :eldap.singleLevel(),
              filter:
                :eldap.or([
-                 :eldap.substrings(~c"cn", [{:any, q}]),
-                 :eldap.substrings(~c"uid", [{:any, q}]),
-                 :eldap.substrings(~c"mail", [{:any, q}])
+                 :eldap.substrings(~c"cn", substring_filter),
+                 :eldap.substrings(~c"uid", substring_filter),
+                 :eldap.substrings(~c"mail", substring_filter)
                ]),
              attributes: attr
            ) do
@@ -155,8 +156,8 @@ defmodule MySciNet.LDAP do
             scope: :eldap.singleLevel(),
             filter:
               :eldap.or([
-                :eldap.approxMatch(~c"cn", q),
-                :eldap.approxMatch(~c"mail", q)
+                :eldap.approxMatch(~c"cn", cq),
+                :eldap.approxMatch(~c"mail", cq)
               ]),
             attributes: attr
           )
