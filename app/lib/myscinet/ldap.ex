@@ -139,6 +139,7 @@ defmodule MySciNet.LDAP do
       attr = [~c"cn", ~c"mail", ~c"uid"]
 
       substring_filter = for s <- String.split(q), do: {:any, to_charlist(s)}
+
       case search(handle,
              base: conf[:user_base],
              scope: :eldap.singleLevel(),
