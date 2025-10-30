@@ -23,7 +23,7 @@ defmodule MySciNetWeb.JobController do
         query
         |> where(
           [j],
-          j.user == ^username or
+          j.username == ^username or
             like(j.account, ^"___-#{username}") or
             like(j.account, ^"___-#{username}-a_")
         )
