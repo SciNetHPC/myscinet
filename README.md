@@ -25,6 +25,8 @@ LDAP_BIND_DN="xxx"
 LDAP_BIND_PW="xxx"
 LDAP_USER_BASE="ou=people,dc=example,dc=com"
 LDAP_GROUP_BASE="ou=group,dc=example,dc=com"
+LDAP_LOCAL_USER_BASE="ou=people,dc=local,dc=example,dc=com"
+LDAP_LOCAL_GROUP_BASE="ou=group,dc=local,dc=example,dc=com"
 
 # redis
 REDIS_URL="redis://localhost:6379"

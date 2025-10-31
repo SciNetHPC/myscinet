@@ -39,7 +39,9 @@ config :myscinet, MySciNet.LDAP,
   bind_dn: System.get_env("LDAP_BIND_DN"),
   bind_pw: System.get_env("LDAP_BIND_PW"),
   user_base: System.get_env("LDAP_USER_BASE"),
-  group_base: System.get_env("LDAP_GROUP_BASE")
+  group_base: System.get_env("LDAP_GROUP_BASE"),
+  local_user_base: System.get_env("LDAP_LOCAL_USER_BASE"),
+  local_group_base: System.get_env("LDAP_LOCAL_GROUP_BASE")
 
 if config_env() == :prod do
   host = System.get_env("PHX_HOST") || "my.scinet.utoronto.ca"

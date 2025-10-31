@@ -91,6 +91,23 @@ defmodule MySciNet.LDAP do
                ]),
              attributes: [~c"cn"]
            ) do
+
+      # get local groups as well
+      group_results =
+        case search(handle,
+               base: config()[:local_group_base],
+               scope: :eldap.singleLevel(),
+               filter:
+                 :eldap.or([
+                   :eldap.equalityMatch(~c"memberUid", uid),
+                   :eldap.equalityMatch(~c"gidNumber", gid)
+                 ]),
+               attributes: [~c"cn"]
+             ) do
+          {:ok, local_group_results} -> group_results ++ local_group_results
+          error -> dbg(error); group_results
+        end
+
       groups = for %{cn: [val]} <- group_results, do: val
       emails = Map.get(user_result, :mail, [])
 
