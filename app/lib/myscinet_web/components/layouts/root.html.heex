@@ -59,6 +59,8 @@
               <li><a href={~p"/storage"}>{gettext("Storage")}</a></li>
               <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
                 <li><a href={~p"/users"}>{gettext("Users")}</a></li>
+              <% end %>
+              <%= if MySciNetWeb.Permissions.is_superuser?(@conn) do %>
                 <li><a href={~p"/naughty-list"}>{gettext("Naughty List")}</a></li>
               <% end %>
             </ul>
@@ -77,6 +79,8 @@
             <li><a href={~p"/storage"}>{gettext("Storage")}</a></li>
             <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
               <li><a href={~p"/users"}>{gettext("Users")}</a></li>
+            <% end %>
+            <%= if MySciNetWeb.Permissions.is_superuser?(@conn) do %>
               <li><a href={~p"/naughty-list"}>{gettext("Naughty List")}</a></li>
             <% end %>
           </ul>

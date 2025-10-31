@@ -55,12 +55,26 @@ defmodule MySciNetWeb.Router do
     end
   end
 
+  defp is_superuser(conn, _) do
+    if MySciNetWeb.Permissions.is_superuser?(conn) do
+      conn
+    else
+      conn
+      |> put_status(404)
+      |> halt
+    end
+  end
+
   pipeline :authenticated do
     plug :authenticate
   end
 
   pipeline :staff do
     plug :is_staff_user
+  end
+
+  pipeline :superuser do
+    plug :is_superuser
   end
 
   scope "/", MySciNetWeb do
@@ -90,6 +104,11 @@ defmodule MySciNetWeb.Router do
     get "/users/:id", UserController, :show
     get "/users/:id/allocations", AllocationController, :user_allocations
     get "/users/:id/storage", StorageController, :user_storage
+  end
+
+  scope "/", MySciNetWeb do
+    pipe_through [:browser, :authenticated, :staff, :superuser]
+
     get "/naughty-list", UserController, :naughty
   end
 
