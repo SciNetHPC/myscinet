@@ -28,7 +28,6 @@ defmodule MySciNetWeb.Plugs.SetLocale do
           |> Enum.find(fn lang -> lang in available_locales end) || default_locale
       end
 
-    IO.puts("Setting locale to: #{locale}")
     Gettext.put_locale(locale)
 
     conn
