@@ -133,6 +133,7 @@
     {
       id: "gpu-usage-util",
       label: "<%= gettext "GPU Usage [%]" %>",
+      dcgm_field_name: "dcgm_fi_prof_gr_engine_active",
       y: d => 100*d.dcgm_fi_prof_gr_engine_active,
       z: nodegpu,
       range: [0, 100],
@@ -229,6 +230,7 @@
     {
       id: "gpu-fp64-plot",
       label: "<%= gettext "GPU FP64 Usage" %>",
+      dcgm_field_name: "dcgm_fi_prof_pipe_fp64_active",
       y: d => 100*d.dcgm_fi_prof_pipe_fp64_active,
       z: nodegpu,
       range: [0, 100],
@@ -237,6 +239,7 @@
     {
       id: "gpu-fp32-plot",
       label: "<%= gettext "GPU FP32 Usage" %>",
+      dcgm_field_name: "dcgm_fi_prof_pipe_fp32_active",
       y: d => 100*d.dcgm_fi_prof_pipe_fp32_active,
       z: nodegpu,
       range: [0, 100],
@@ -245,6 +248,7 @@
     {
       id: "gpu-fp16-plot",
       label: "<%= gettext "GPU FP16 Usage" %>",
+      dcgm_field_name: "dcgm_fi_prof_pipe_fp16_active",
       y: d => 100*d.dcgm_fi_prof_pipe_fp16_active,
       z: nodegpu,
       range: [0, 100],
@@ -253,6 +257,7 @@
     {
       id: "gpu-tensor-plot",
       label: "<%= gettext "GPU Tensor Usage" %>",
+      dcgm_field_name: "dcgm_fi_prof_pipe_tensor_active",
       y: d => 100*d.dcgm_fi_prof_pipe_tensor_active,
       z: nodegpu,
       range: [0, 100],
@@ -261,6 +266,7 @@
     {
       id: "gpu-smact-plot",
       label: "<%= gettext "GPU SM Active [%]" %>",
+      dcgm_field_name: "dcgm_fi_prof_sm_active",
       y: d => 100*d.dcgm_fi_prof_sm_active,
       z: nodegpu,
       range: [0, 100],
@@ -269,6 +275,7 @@
     {
       id: "gpu-smocc-plot",
       label: "<%= gettext "GPU SM Occupancy [%]" %>",
+      dcgm_field_name: "dcgm_fi_prof_sm_occupancy",
       y: d => 100*d.dcgm_fi_prof_sm_occupancy,
       z: nodegpu,
       range: [0, 100],
@@ -381,6 +388,13 @@
         const label = document.createElement("h2");
         label.className = "text-base font-normal font-mono card-title";
         label.textContent = plot.label;
+        if (plot.dcgm_field_name) {
+          const infoLink = document.createElement("a");
+          infoLink.href = `https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-api/dcgm-api-field-ids.html#c.${plot.dcgm_field_name.toUpperCase()}`;
+          infoLink.className = "ml-auto text-xs text-gray-400";
+          infoLink.innerHTML = plot.dcgm_field_name;
+          label.appendChild(infoLink);
+        }
         plotDiv.appendChild(label);
         plotsContainer.appendChild(plotDiv);
         // Render plot
