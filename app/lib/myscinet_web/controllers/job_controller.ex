@@ -274,6 +274,7 @@ defmodule MySciNetWeb.JobController do
            :memfree,
            :buffers,
            :cached,
+           :dcgm_fi_dev_power_usage,
            :dcgm_fi_prof_gr_engine_active,
            :dcgm_fi_prof_pipe_fp16_active,
            :dcgm_fi_prof_pipe_fp32_active,

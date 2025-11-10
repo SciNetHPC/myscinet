@@ -140,6 +140,15 @@
       when: "gpu"
     },
     {
+      "id": "gpu-power-usage",
+      "label": "<%= gettext "GPU Power Usage [W]" %>",
+      "dcgm_field_name": "dcgm_fi_dev_power_usage",
+      "y": d => d.dcgm_fi_dev_power_usage,
+      "z": nodegpu,
+      "range": [0, 750],
+      "when": "gpu"
+    },
+    {
       id: "cpu-usage-plot",
       label: "<%= gettext "CPU Usage [%]" %>",
       y: d => d.cpupercent,
