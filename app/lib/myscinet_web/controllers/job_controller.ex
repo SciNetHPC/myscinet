@@ -194,13 +194,7 @@ defmodule MySciNetWeb.JobController do
         {:ok, NaiveDateTime.new!(date, ~T[00:00:00])}
 
       _ ->
-        case NaiveDateTime.from_iso8601(t) do
-          {:ok, dt} ->
-            {:ok, dt}
-
-          error ->
-            error
-        end
+        NaiveDateTime.from_iso8601(t)
     end
   end
 
