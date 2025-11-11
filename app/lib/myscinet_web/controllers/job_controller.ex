@@ -51,10 +51,10 @@ defmodule MySciNetWeb.JobController do
       |> MySciNet.JobQuery.parse()
 
     {conn, jobsq} =
-      case filters do
-        {:ok, ast} ->
-          {conn, jobsq |> apply_filters(ast)}
-
+      with {:ok, ast} <- filters,
+           {:ok, filtered_query} <- jobsq |> apply_filters(ast) do
+        {conn, filtered_query}
+      else
         error ->
           dbg(error)
           {conn |> put_flash(:error, "Invalid query"), jobsq}
@@ -69,16 +69,15 @@ defmodule MySciNetWeb.JobController do
     )
   end
 
-  defp apply_filters(query, []), do: query
+  defp apply_filters(query, []), do: {:ok, query}
 
   defp apply_filters(query, filters) do
     case filters_and(filters) do
       {dynamic, []} ->
-        query |> where(^dynamic)
+        {:ok, query |> where(^dynamic)}
 
       {_, errors} ->
-        dbg(errors)
-        query
+        {:error, :invalid_filters, errors}
     end
   end
 
