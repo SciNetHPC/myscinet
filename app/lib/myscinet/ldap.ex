@@ -4,12 +4,7 @@ defmodule MySciNet.LDAP do
 
   defp uid2dn(uid) when is_binary(uid) do
     uid = Regex.replace(~r/[^a-zA-Z0-9_]/, uid, "")
-    ~c"uid=#{uid},#{config()[:user_base]}"
-  end
-
-  defp gid2dn(gid) when is_binary(gid) do
-    gid = Regex.replace(~r/[^a-zA-Z0-9]/, gid, "")
-    ~c"cn=#{gid},#{config()[:group_base]}"
+    {~c"uid=#{uid},#{config()[:user_base]}", ~c"uid=#{uid},#{config()[:local_user_base]}"}
   end
 
   defp transact(dn, pw, handler) do
@@ -136,9 +131,7 @@ defmodule MySciNet.LDAP do
     end
   end
 
-  def authenticate(username, password) do
-    dn = uid2dn(username)
-
+  def authenticate(username, dn, password) do
     transact(dn, password, fn handle ->
       case userinfo(handle, username, dn) do
         {:ok, %{shell: "/sbin/nologin"}} -> {:error, :nologin}
@@ -148,8 +141,28 @@ defmodule MySciNet.LDAP do
     end)
   end
 
+  def authenticate(username, password) do
+    {cc_dn, local_dn} = uid2dn(username)
+
+    case authenticate(username, cc_dn, password) do
+      {:ok, info} ->
+        {:ok, info}
+
+      _ ->
+        authenticate(username, local_dn, password)
+    end
+  end
+
   def user_info(username) do
-    transact_as_admin(&userinfo(&1, username, uid2dn(username)))
+    {cc_dn, local_dn} = uid2dn(username)
+
+    case transact_as_admin(&userinfo(&1, username, cc_dn)) do
+      {:ok, info} ->
+        {:ok, info}
+
+      _ ->
+        transact_as_admin(&userinfo(&1, username, local_dn))
+    end
   end
 
   def user_search(q) do
@@ -188,20 +201,6 @@ defmodule MySciNet.LDAP do
 
         error ->
           error
-      end
-    end)
-  end
-
-  def group_members(group) do
-    transact_as_admin(fn handle ->
-      case search(handle,
-             base: gid2dn(group),
-             scope: :eldap.baseObject(),
-             filter: :eldap.present(~c"memberUid"),
-             attributes: [~c"memberUid"]
-           ) do
-        [%{memberUid: members}] -> members
-        error -> error
       end
     end)
   end
