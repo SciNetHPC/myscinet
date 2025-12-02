@@ -20,7 +20,8 @@ defmodule MySciNetWeb.StorageController do
           []
       end
 
-    redis_keys = storage_keys(username, allocations)
+    {:ok, %{groups: groups}} = MySciNet.LDAP.user_info(username)
+    redis_keys = storage_keys(username, allocations, groups)
 
     case MySciNet.Redis.hgetalls(redis_keys, fn k, v ->
            case k do
@@ -43,7 +44,7 @@ defmodule MySciNetWeb.StorageController do
     end
   end
 
-  defp storage_keys(username, allocations) do
+  defp storage_keys(username, allocations, groups) do
     projects =
       for(
         alloc <- allocations,
@@ -52,6 +53,18 @@ defmodule MySciNetWeb.StorageController do
       |> Enum.sort()
       |> Enum.reverse()
 
-    ["du:trillium_home:#{username}", "du:trillium_scratch:#{username}"] ++ projects
+    # commercial users have special directories
+    specials =
+      ["du:trillium_home:#{String.first(username)}:#{username}"] ++
+        for(
+          group <- groups,
+          do: "du:trillium_scratch:#{String.first(group)}:#{group}"
+        ) ++
+        for(
+          group <- groups,
+          do: "du:trillium_project:#{String.first(group)}:#{group}"
+        )
+
+    ["du:trillium_home:#{username}", "du:trillium_scratch:#{username}"] ++ projects ++ specials
   end
 end
