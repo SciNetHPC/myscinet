@@ -288,7 +288,7 @@ defmodule MySciNetWeb.JobController do
            :loadavg,
            :freq,
            :cpi,
-           :powerl3,
+           :powercore,
            :mflops,
            :smflops,
            :memread,
