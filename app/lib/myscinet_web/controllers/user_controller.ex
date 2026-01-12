@@ -32,7 +32,7 @@ defmodule MySciNetWeb.UserController do
   end
 
   def naughty(conn, _) do
-    query =
+    cpu_query =
       """
       select
         username,
@@ -56,7 +56,40 @@ defmodule MySciNetWeb.UserController do
       limit 10;
       """
 
-    results = Ecto.Adapters.SQL.query!(MySciNet.Repo, query, [])
-    render(conn, :naughty, page_title: "Naughty Users", naughty_list: results)
+    gpu_query =
+      """
+      select
+        username,
+        sum(samples)::integer as total_samples,
+        sum(samples*percent_wasted)/sum(samples) as wasted_percent,
+        sum(samples*percent_wasted)/sqrt(sum(samples)) as demerits
+      from (
+        select
+          jobid,
+          count(*) as samples,
+          1.0 - avg(dcgm_fi_prof_gr_engine_active) as percent_wasted
+        from utilgpu
+        where
+          time > now() - interval '7 days'
+          and dcgm_fi_prof_gr_engine_active > 0
+          and nodename like 'trig%'
+        group by jobid
+      ) jutilgpu
+      join jsum on jutilgpu.jobid = jsum.jobid
+      group by username
+      having
+        sum(samples*percent_wasted) > 24*30
+      order by demerits desc
+      limit 10;
+      """
+
+    cpu_results = Ecto.Adapters.SQL.query!(MySciNet.Repo, cpu_query, [])
+    gpu_results = Ecto.Adapters.SQL.query!(MySciNet.Repo, gpu_query, [])
+
+    render(conn, :naughty,
+      page_title: "Naughty Users",
+      cpu_naughty_list: cpu_results,
+      gpu_naughty_list: gpu_results
+    )
   end
 end
