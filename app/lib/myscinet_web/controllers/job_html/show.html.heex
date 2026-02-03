@@ -202,9 +202,9 @@
     {
       id: "cpu-power-plot",
       label: "<%= gettext "CPU power [W]" %>",
-      y: d => d.powercore,
+      y: d => d.powerpkg,
       z: "nodename",
-      range: [500, 1500],
+      range: [500, 1000],
       when: "cpu"
     },
     {
@@ -386,6 +386,12 @@
         } else {
           if (plot.when == "gpu") continue;
         };
+
+        // don't plot bad CPU power & frequency data
+        if ("<%= @job.start %>" < "2026-01-28T12:00:00" && (plot.id == "cpu-power-plot" || plot.id == "cpu-freq-plot")) {
+          continue;
+        }
+
         const plotdata = plot.counter ? diff : data;
         const [datamin, datamax] = d3.extent(plotdata, plot.y);
         let yrange = [
