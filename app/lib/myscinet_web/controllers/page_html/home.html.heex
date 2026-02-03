@@ -91,13 +91,18 @@
                                 name="hero-question-mark-circle-solid"
                                 class="text-gray-400 mr-1"
                               />
-                            <% status.cpu > 90.0 or status.memfree < 20.0 or status.load > 16.0 -> %>
+                            <% status.cpu > 80.0 or status.memfree < 25.0 or status.load > 96.0 -> %>
                               <.icon
                                 name="hero-exclamation-triangle-solid"
-                                class="text-error mr-1"
+                                class="alert alert-error mr-1"
+                              />
+                            <% status.cpu > 50.0 or status.memfree < 50.0 or status.load > 48.0 -> %>
+                              <.icon
+                                name="hero-minus-circle-solid"
+                                class="alert alert-warning mr-1"
                               />
                             <% true -> %>
-                              <.icon name="hero-check-circle-solid" class="text-success mr-1" />
+                              <.icon name="hero-check-circle-solid" class="alert alert-success mr-1" />
                           <% end %>
                         </span>
                       </li>
