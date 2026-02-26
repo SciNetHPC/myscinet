@@ -313,7 +313,7 @@ msgstr "Allocations"
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Allocations are \"use it or lose it\", not a lump sum.\nThe scheduler adjusts your job priority based on your recent usage,\nso that your average usage matches your allocation.\n"
-msgstr "Les allocations sont \"utilisez-les ou perdez-les\", pas un montant forfaitaire.\nL'ordonnanceur ajuste la priorité de vos tâches en fonction de votre utilisation récente,\nafin que votre utilisation moyenne corresponde à votre allocation.\n"
+msgstr "Les allocations sont « utilisez-les ou perdez-les », pas un montant forfaitaire.\nL'ordonnanceur ajuste la priorité de vos tâches en fonction de votre utilisation récente,\nafin que votre utilisation moyenne corresponde à votre allocation.\n"
 
 #: lib/myscinet_web/controllers/job_html/show.html.heex:172
 #, elixir-autogen, elixir-format, fuzzy
@@ -603,7 +603,7 @@ msgstr ""
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:27
 #, elixir-autogen, elixir-format, fuzzy
 msgid "\"Recent\" here means a few weeks.\nThe scheduler's memory of past usage decays with a half-life of one week.\nThe table shows each user's share of recent usage.\n"
-msgstr "Ici, \"récent\" signifie quelques semaines.\nLa mémoire de l'ordonnanceur pour l'utilisation passée décroît avec une demi-vie d'une semaine.\nLe graphique circulaire montre la part d'utilisation récente de chaque utilisateur.\n"
+msgstr "Ici, « récent » signifie quelques semaines.\nLa mémoire de l'ordonnanceur pour l'utilisation passée décroît avec une demi-vie d'une semaine.\nLe graphique circulaire montre la part d'utilisation récente de chaque utilisateur.\n"
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:58
 #, elixir-autogen, elixir-format
