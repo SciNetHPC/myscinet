@@ -41,10 +41,22 @@
               </tr>
             </thead>
             <tbody>
-              <%= for {user, usage} <- @sshare |> Enum.filter(fn {_, u} -> u > 0 end) |> Enum.sort_by(fn {_, u} -> -u end) do %>
+              <% recent_usage =
+                @sshare
+                |> Enum.filter(fn {_, u} -> u > 0 end)
+                |> Enum.sort_by(fn {_, u} -> -u end) %>
+              <%= if length(recent_usage) > 0 do %>
+                <%= for {user, usage} <- recent_usage do %>
+                  <tr>
+                    <td class="text-left">{user}</td>
+                    <td class="text-right">{Float.round(100 * usage, 1)}</td>
+                  </tr>
+                <% end %>
+              <% else %>
                 <tr>
-                  <td class="text-left">{user}</td>
-                  <td class="text-right">{Float.round(100 * usage, 1)}</td>
+                  <td colspan="2" class="text-center italic text-base-content/60">
+                    {gettext("No recent usage")}
+                  </td>
                 </tr>
               <% end %>
             </tbody>
