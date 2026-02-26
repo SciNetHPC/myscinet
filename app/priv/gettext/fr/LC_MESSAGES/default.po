@@ -608,7 +608,7 @@ msgstr "Ici, \"récent\" signifie quelques semaines.\nLa mémoire de l'ordonnanc
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:58
 #, elixir-autogen, elixir-format
 msgid "No recent usage"
-msgstr ""
+msgstr "Aucune utilisation récente"
 
 #: lib/myscinet_web/controllers/user_html/naughty.html.heex:34
 #, elixir-autogen, elixir-format, fuzzy
