@@ -54,6 +54,15 @@
               tabindex="0"
               class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
+              <li>
+                <a href={~p"/"} class="flex items-baseline gap-2">
+                  <span>{gettext("my.SciNet")}</span>
+                  <span class="text-xs text-base-content/60">
+                    v{Application.spec(:myscinet, :vsn) |> to_string()}
+                  </span>
+                </a>
+              </li>
+              <li><hr class="my-2 h-0 border-gray-300 rounded-none" /></li>
               <li><a href={~p"/jobs"}>{gettext("Jobs")}</a></li>
               <li><a href={~p"/allocations"}>{gettext("Allocations")}</a></li>
               <li><a href={~p"/storage"}>{gettext("Storage")}</a></li>
@@ -65,7 +74,7 @@
               <% end %>
             </ul>
           </div>
-          <a class="btn btn-ghost text-xl flex items-baseline gap-2" href={~p"/"}>
+          <a class="btn btn-ghost text-xl hidden lg:flex items-baseline gap-2" href={~p"/"}>
             <span>{gettext("my.SciNet")}</span>
             <span class="text-xs text-base-content/60">
               v{Application.spec(:myscinet, :vsn) |> to_string()}
