@@ -392,7 +392,7 @@
           continue;
         }
 
-        const plotdata = plot.counter ? diff : data;
+        const plotdata = plot.counter ? diff : (hasGPUs && plot.when == "all" ? data.filter(d => d.gpu == 0) : data);
         const [datamin, datamax] = d3.extent(plotdata, plot.y);
         let yrange = [
           Math.min(plot.range[0], datamin),
