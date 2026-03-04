@@ -165,7 +165,7 @@
       y: d => d.iowait*1e-3,
       z: "nodename",
       range: [0, 1],
-      when: "cpu"
+      when: "all"
     },
     {
       id: "cpu-loadavg-plot",
@@ -173,7 +173,7 @@
       y: d => d.loadavg,
       z: "nodename",
       range: [0, 200],
-      when: "cpu"
+      when: "all"
     },
     {
       id: "cpu-mem-plot",
