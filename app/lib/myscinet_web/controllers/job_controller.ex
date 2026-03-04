@@ -263,10 +263,12 @@ defmodule MySciNetWeb.JobController do
          [
            :nodename,
            :gpu,
-           :cpupercent,
            :memfree,
            :buffers,
            :cached,
+           :cpupercent,
+           :iowait,
+           :loadavg,
            :dcgm_fi_dev_power_usage,
            :dcgm_fi_prof_gr_engine_active,
            :dcgm_fi_prof_pipe_fp16_active,
