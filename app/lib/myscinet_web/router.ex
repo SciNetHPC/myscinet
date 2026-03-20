@@ -65,6 +65,10 @@ defmodule MySciNetWeb.Router do
     end
   end
 
+  pipeline :tv_layout do
+    plug :put_root_layout, html: {MySciNetWeb.Layouts, :root_tv}
+  end
+
   pipeline :authenticated do
     plug :authenticate
   end
@@ -83,6 +87,12 @@ defmodule MySciNetWeb.Router do
     get "/", PageController, :home
     get "/login", LoginController, :new
     post "/login", LoginController, :create
+  end
+
+  scope "/", MySciNetWeb do
+    pipe_through [:browser, :tv_layout]
+
+    get "/tv", TvController, :index
   end
 
   scope "/", MySciNetWeb do

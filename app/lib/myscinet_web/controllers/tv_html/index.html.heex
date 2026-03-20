@@ -1,0 +1,29 @@
+<% now = DateTime.utc_now()
+timestamp = Calendar.strftime(now, "%Y-%m-%d %H:%M:%S UTC")
+
+# Total display width: 3 × 49ch cards + 2 × 2ch gaps = 151ch
+total_w = 151
+
+# Header line: ╔ SciNet TV [═ fill] timestamp ╗
+# Fixed chars: ╔(1) + space(1) + "SciNet TV"(9) + space(1) + fill + space(1) + ts(23) + space(1) + ╗(1) = 38 + fill
+ts_len = String.length(timestamp)
+fill_len = total_w - 9 - ts_len - 6
+fill = String.duplicate("═", fill_len)
+sep_line = String.duplicate("═", total_w - 2) %>
+<style>
+  .tv-dash { font-size: 20px; line-height: 1.55; color: #888; }
+  .tv-dash pre { margin: 0; overflow: hidden; }
+  .tv-clusters { margin-top: 1ch; display: flex; gap: 2ch; align-items: flex-start; }
+  .tv-card { width: 49ch; min-width: 49ch; max-width: 49ch; }
+</style>
+
+<div class="tv-dash">
+  <pre>╔ <span style="color:#fff;">SciNet TV</span> {fill} {timestamp} ╗
+╚{sep_line}╝</pre>
+
+  <div class="tv-clusters">
+    <%= for cluster <- @clusters do %>
+      <pre class="tv-card"><%= raw(cluster_card(cluster, @now_unix)) %></pre>
+    <% end %>
+  </div>
+</div>

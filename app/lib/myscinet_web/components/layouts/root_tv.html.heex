@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <title>my.SciNet TV</title>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
+    </script>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden;
+                   background: #000; color: #fff; font-family: monospace; }
+      /* ~2.5% overscan safe area */
+      body { padding: 27px 48px; }
+    </style>
+  </head>
+  <body>
+    {@inner_content}
+  </body>
+</html>
