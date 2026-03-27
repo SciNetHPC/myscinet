@@ -5,7 +5,7 @@ defmodule MySciNetWeb.Clusters do
       slug_web: "trillium",
       slug_redis: "trillium",
       slug_psql: "tric",
-      nodes: 1224 + 35,
+      nodes: 1224 + 38,
       cpumem: 768,
       gpu?: false,
       logins: [
