@@ -380,6 +380,7 @@
       });
 
       const hasGPUs = "gpu" in data[0];
+      const minGPU = hasGPUs ? d3.min(data, d => +d.gpu) : 0;
       for (const plot of plots) {
         if (hasGPUs) {
           if (plot.when == "cpu") continue;
@@ -392,7 +393,7 @@
           continue;
         }
 
-        const plotdata = plot.counter ? diff : (hasGPUs && plot.when == "all" ? data.filter(d => d.gpu == 0) : data);
+        const plotdata = plot.counter ? diff : (hasGPUs && plot.when == "all" ? data.filter(d => d.gpu == minGPU) : data);
         const [datamin, datamax] = d3.extent(plotdata, plot.y);
         let yrange = [
           Math.min(plot.range[0], datamin),
