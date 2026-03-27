@@ -231,6 +231,10 @@ defmodule MySciNetWeb.JobController do
                 "sbatch"
               )
               |> String.replace(
+                "/opt/slurm/bin/sbatch --export=NONE --get-user-env",
+                "sbatch"
+              )
+              |> String.replace(
                 "/opt/slurm/bin/sbatch --export=NONE",
                 "sbatch"
               )
