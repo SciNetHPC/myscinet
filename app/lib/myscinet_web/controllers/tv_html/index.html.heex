@@ -15,12 +15,16 @@ sep_line = String.duplicate("═", total_w - 2) %>
   .tv-dash pre { margin: 0; overflow: hidden; }
   .tv-clusters { margin-top: 1ch; display: flex; gap: 2ch; align-items: flex-start; }
   .tv-card { width: 49ch; min-width: 49ch; max-width: 49ch; }
+  .tv-dash pre.tv-vast { margin-top: 1ch; }
 </style>
 
 <div class="tv-dash">
   <pre>╔ <span style="font-weight: bold;">SciNet TV</span> {fill} {timestamp} ╗
 ╚{sep_line}╝</pre>
 
+  <%= if @vast do %>
+    <pre class="tv-vast"><%= raw(vast_row(@vast)) %></pre>
+  <% end %>
   <div class="tv-clusters">
     <%= for cluster <- @clusters do %>
       <pre class="tv-card"><%= raw(cluster_card(cluster, @now_unix)) %></pre>

@@ -10,6 +10,9 @@ defmodule MySciNetWeb.TvHTML do
   @cw 45
   @max_login_rows 3
 
+  # Total TV display width (3 × 49ch cards + 2 × 2ch gaps)
+  @tv_w 151
+
   def cluster_card(cluster, now_unix) do
     nodes = cluster.nodes
     nodes_running = Map.get(cluster, :nodesRunning, 0.0)
@@ -121,5 +124,60 @@ defmodule MySciNetWeb.TvHTML do
         [blank, bot]
 
     Enum.join(lines, "\n")
+  end
+
+  def vast_row(vast) do
+    usable_tb = Map.get(vast, :usable_capacity_tb, 0.0)
+    free_tb = Map.get(vast, :free_usable_capacity_tb, 0.0)
+    used_tb = usable_tb - free_tb
+    pct_used = if usable_tb > 0, do: 100.0 * used_tb / usable_tb, else: 0.0
+
+    rd_bw = Map.get(vast, :rd_bw_mb, 0.0)
+    wr_bw = Map.get(vast, :wr_bw_mb, 0.0)
+    rd_iops = Map.get(vast, :rd_iops, 0.0)
+    wr_iops = Map.get(vast, :wr_iops, 0.0)
+    rd_lat = Map.get(vast, :rd_latency_ms, 0.0)
+    wr_lat = Map.get(vast, :wr_latency_ms, 0.0)
+
+    cap_color =
+      cond do
+        pct_used >= 90 -> "#ff5555"
+        pct_used >= 80 -> "#ffcc44"
+        true -> "#00e887"
+      end
+
+    fmt_bw = fn mb -> "#{Float.round(mb / 1024.0, 1)} GB/s" end
+
+    fmt_k = fn n ->
+      r = round(n)
+      if r >= 1000, do: "#{div(r, 1000)}K", else: "#{r}"
+    end
+
+    # Left section: capacity usage (visible chars only)
+    tb_str = "#{Float.round(used_tb, 1)}/#{Float.round(usable_tb, 1)} TB"
+    pct_str = "#{Float.round(pct_used, 1)}%"
+    cap_section = " #{tb_str}  #{pct_str} "
+
+    # Right section: I/O stats (visible chars only)
+    io_section =
+      " Rd #{fmt_bw.(rd_bw)}  #{fmt_k.(rd_iops)} IOPS  #{Float.round(rd_lat, 2)}ms" <>
+        "    " <>
+        "Wr #{fmt_bw.(wr_bw)}  #{fmt_k.(wr_iops)} IOPS  #{Float.round(wr_lat, 2)}ms "
+
+    # Bar fills the remaining width between sections
+    # Visible layout: │ cap │ space bar space │ io │  = 6 fixed chars + sections + bar
+    bar_w = @tv_w - 6 - String.length(cap_section) - String.length(io_section)
+    bar_filled = round(pct_used / 100 * bar_w) |> min(bar_w) |> max(0)
+    bar = String.duplicate("█", bar_filled) <> String.duplicate("░", bar_w - bar_filled)
+
+    # Title line: ┌─ VastData ───...───┐  (total @tv_w chars)
+    # "┌─ VastData " = 12 chars, "┐" = 1 char, so dashes = @tv_w - 13
+    title_line = "┌─ VastData #{String.duplicate("─", @tv_w - 13)}┐"
+    bot_line = "└#{String.duplicate("─", @tv_w - 2)}┘"
+
+    content =
+      "│#{cap_section}│ <span style='color:#{cap_color}'>#{bar}</span> │#{io_section}│"
+
+    Enum.join([title_line, content, bot_line], "\n")
   end
 end

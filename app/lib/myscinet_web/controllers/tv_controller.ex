@@ -37,19 +37,34 @@ defmodule MySciNetWeb.TvController do
     end
   end
 
+  defp get_vast do
+    case MySciNet.Redis.hgetalls(["vast:clusters"], fn _, v -> string_to_float(v) end) do
+      {:ok, [vast]} -> {:ok, vast}
+      _ -> :error
+    end
+  end
+
   def index(conn, _params) do
     now_unix = DateTime.utc_now() |> DateTime.to_unix()
+
+    vast =
+      case get_vast() do
+        {:ok, v} -> v
+        _ -> nil
+      end
 
     case get_clusters(Clusters.get_clusters()) do
       {:ok, clusters} ->
         conn
         |> assign(:clusters, clusters)
+        |> assign(:vast, vast)
         |> assign(:now_unix, now_unix)
         |> render(:index)
 
       _ ->
         conn
         |> assign(:clusters, [])
+        |> assign(:vast, vast)
         |> assign(:now_unix, now_unix)
         |> render(:index)
     end
