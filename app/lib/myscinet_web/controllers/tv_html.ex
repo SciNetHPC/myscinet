@@ -141,8 +141,8 @@ defmodule MySciNetWeb.TvHTML do
 
     cap_color =
       cond do
-        pct_used >= 90 -> "#ff5555"
-        pct_used >= 80 -> "#ffcc44"
+        pct_used >= 85 -> "#ff5555"
+        pct_used >= 70 -> "#ffcc44"
         true -> "#00e887"
       end
 
