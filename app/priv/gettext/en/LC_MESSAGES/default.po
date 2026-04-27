@@ -53,7 +53,7 @@ msgstr ""
 #: lib/myscinet_web/controllers/login_html/new.html.heex:1
 #: lib/myscinet_web/controllers/login_html/new.html.heex:20
 #, elixir-autogen, elixir-format
-msgid "Sign In"
+msgid "Sign in"
 msgstr ""
 
 #: lib/myscinet_web/controllers/login_controller.ex:26
@@ -248,7 +248,7 @@ msgstr ""
 
 #: lib/myscinet_web/components/layouts/root.html.heex:120
 #, elixir-autogen, elixir-format
-msgid "Sign out %{user}"
+msgid "Sign out"
 msgstr ""
 
 #: lib/myscinet_web/controllers/login_controller.ex:36

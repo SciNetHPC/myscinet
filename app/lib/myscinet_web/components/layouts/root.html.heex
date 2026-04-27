@@ -117,12 +117,12 @@
           <%= if assigns[:current_user] do %>
             <.form for={} action={~p"/logout"} method="post">
               <button type="submit" class="btn btn-primary">
-                {gettext("Sign out %{user}", user: assigns[:current_user].username)}
+                {gettext("Sign out")}
               </button>
             </.form>
           <% else %>
             <a href={~p"/login"} class="btn btn-primary">
-              {gettext("Sign In")}
+              {gettext("Sign in")}
             </a>
           <% end %>
         </div>
