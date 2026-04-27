@@ -152,6 +152,15 @@
       "when": "gpu"
     },
     {
+      id: "gpu-mem-free-plot",
+      label: "<%= gettext "GPU Memory Free [GiB]" %>",
+      dcgm_field_name: "dcgm_fi_dev_fb_free",
+      y: d => d.dcgm_fi_dev_fb_free/1024,
+      z: nodegpu,
+      range: [0, 80],
+      when: "gpu"
+    },
+    {
       id: "cpu-usage-plot",
       label: "<%= gettext "CPU Usage [%]" %>",
       y: d => d.cpupercent,
