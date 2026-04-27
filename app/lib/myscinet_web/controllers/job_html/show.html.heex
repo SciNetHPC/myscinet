@@ -388,6 +388,7 @@
         }
       });
 
+      const xrange = d3.extent(data, d => d.time);
       const hasGPUs = "gpu" in data[0];
       const minGPU = hasGPUs ? d3.min(data, d => +d.gpu) : 0;
       for (const plot of plots) {
@@ -436,6 +437,7 @@
         const width = plotDiv.clientWidth || 600;
         const p = Plot.plot({
           x: {
+            domain: xrange,
             nice: true,
             type: "time",
           },
