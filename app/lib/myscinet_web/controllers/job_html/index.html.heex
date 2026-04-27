@@ -1,14 +1,146 @@
 <div class="flex justify-between items-center">
   <.header>{gettext("Jobs")}</.header>
-  <form method="get" action="" class="flex items-center pb-4">
+  <form id="job-search-form" method="get" action="" class="flex items-center pb-4">
     <span class="join">
-      <input
-        name="q"
-        type="text"
-        value={@conn.query_params["q"]}
-        placeholder={gettext("Search for...")}
-        class="input input-bordered input-sm join-item w-80"
-      />
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-sm join-item gap-1">
+          <.icon name="hero-funnel" class="size-3.5" />
+          {gettext("Filter")}
+        </div>
+        <ul
+          tabindex="0"
+          class="dropdown-content menu bg-base-100 border border-base-300 rounded-box z-10 w-52 p-2 shadow-lg"
+        >
+          <li>
+            <details>
+              <summary>{gettext("State")}</summary>
+              <ul>
+                <li>
+                  <button type="button" onclick="addFilter('state:RUNNING')">
+                    <.job_state_icon state="RUNNING" class="size-4" /> {gettext("Running")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addFilter('state:COMPLETED')">
+                    <.job_state_icon state="COMPLETED" class="size-4" /> {gettext("Completed")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addFilter('state:FAILED')">
+                    <.job_state_icon state="FAILED" class="size-4" /> {gettext("Failed")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addFilter('state:TIMEOUT')">
+                    <.job_state_icon state="TIMEOUT" class="size-4" /> {gettext("Timeout")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addFilter('state:CANCELLED')">
+                    <.job_state_icon state="CANCELLED" class="size-4" /> {gettext("Cancelled")}
+                  </button>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>{gettext("Cluster")}</summary>
+              <ul>
+                <%= for cluster <- get_clusters() do %>
+                  <li>
+                    <button type="button" onclick={"addFilter('cluster:#{cluster.slug_web}')"}>
+                      {cluster.name}
+                    </button>
+                  </li>
+                <% end %>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>{gettext("Time")}</summary>
+              <ul>
+                <li>
+                  <button type="button" onclick="addDateFilter('>=', 1)">
+                    {gettext("Past 24 hours")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addDateFilter('>=', 7)">
+                    {gettext("Past week")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addDateFilter('>=', 30)">
+                    {gettext("Past month")}
+                  </button>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>{gettext("Nodes")}</summary>
+              <ul>
+                <li>
+                  <button type="button" onclick="addFilter('nodes: ')">
+                    {gettext("Exactly…")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addFilter('nodes > ')">
+                    {gettext("More than…")}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onclick="addFilter('nodes < ')">
+                    {gettext("Fewer than…")}
+                  </button>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <%= if MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
+            <li>
+              <details>
+                <summary>{gettext("User / Group")}</summary>
+                <ul>
+                  <li>
+                    <button type="button" onclick="addFilter('user: ')">
+                      {gettext("User…")}
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" onclick="addFilter('group: ')">
+                      {gettext("Group…")}
+                    </button>
+                  </li>
+                </ul>
+              </details>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <label class="input input-bordered input-sm join-item flex items-center gap-1 w-80">
+        <input
+          id="job-search-input"
+          name="q"
+          type="text"
+          value={@conn.query_params["q"]}
+          placeholder={gettext("Search for...")}
+          class="grow min-w-0"
+        />
+        <%= if @conn.query_params["q"] not in [nil, ""] do %>
+          <a
+            href={~p"/jobs"}
+            class="text-base-content/40 hover:text-base-content"
+            title={gettext("Clear search")}
+          >
+            <.icon name="hero-x-mark" class="size-4" />
+          </a>
+        <% end %>
+      </label>
       <button type="submit" class="btn btn-sm btn-primary join-item">{gettext("Search")}</button>
     </span>
   </form>
@@ -61,3 +193,19 @@
     {gettext("Next")}
   </a>
 </div>
+
+<script>
+  function addFilter(text) {
+    const input = document.getElementById('job-search-input');
+    const current = input.value.trim();
+    input.value = current ? current + ' ' + text : text;
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+  }
+
+  function addDateFilter(op, daysAgo) {
+    const d = new Date();
+    d.setDate(d.getDate() - daysAgo);
+    addFilter('time' + op + d.toISOString().slice(0, 10));
+  }
+</script>

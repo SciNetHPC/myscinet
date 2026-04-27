@@ -37,13 +37,14 @@ msgstr ""
 msgid "close"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:22
+#: lib/myscinet_web/controllers/job_html/index.html.heex:154
 #: lib/myscinet_web/controllers/job_html/show.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "Account"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:27
+#: lib/myscinet_web/controllers/job_html/index.html.heex:16
+#: lib/myscinet_web/controllers/job_html/index.html.heex:159
 #: lib/myscinet_web/controllers/job_html/show.html.heex:29
 #, elixir-autogen, elixir-format
 msgid "State"
@@ -55,7 +56,7 @@ msgid "Submit Time"
 msgstr ""
 
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:39
-#: lib/myscinet_web/controllers/job_html/index.html.heex:21
+#: lib/myscinet_web/controllers/job_html/index.html.heex:153
 #: lib/myscinet_web/controllers/job_html/show.html.heex:31
 #: lib/myscinet_web/controllers/user_html/show.html.heex:3
 #, elixir-autogen, elixir-format
@@ -157,7 +158,8 @@ msgstr ""
 msgid "Max VM Size"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:26
+#: lib/myscinet_web/controllers/job_html/index.html.heex:84
+#: lib/myscinet_web/controllers/job_html/index.html.heex:158
 #: lib/myscinet_web/controllers/job_html/show.html.heex:49
 #, elixir-autogen, elixir-format
 msgid "Nodes"
@@ -183,7 +185,7 @@ msgstr ""
 msgid "Script"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:23
+#: lib/myscinet_web/controllers/job_html/index.html.heex:155
 #: lib/myscinet_web/controllers/job_html/show.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Start Time"
@@ -214,7 +216,7 @@ msgstr ""
 msgid "Workdir"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:20
+#: lib/myscinet_web/controllers/job_html/index.html.heex:152
 #, elixir-autogen, elixir-format
 msgid "Cluster/ID"
 msgstr ""
@@ -232,14 +234,14 @@ msgstr ""
 msgid "Jobs"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:24
+#: lib/myscinet_web/controllers/job_html/index.html.heex:156
 #: lib/myscinet_web/controllers/user_html/index.html.heex:21
 #: lib/myscinet_web/controllers/user_html/show.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "Name"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:25
+#: lib/myscinet_web/controllers/job_html/index.html.heex:157
 #, elixir-autogen, elixir-format
 msgid "Walltime"
 msgstr ""
@@ -254,7 +256,7 @@ msgstr ""
 msgid "Node List"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:9
+#: lib/myscinet_web/controllers/job_html/index.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Search for..."
 msgstr ""
@@ -304,7 +306,7 @@ msgstr ""
 msgid "Infiniband packets transmitted [million/s]"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/show.html.heex:467
+#: lib/myscinet_web/controllers/job_html/show.html.heex:469
 #, elixir-autogen, elixir-format
 msgid "Error loading performance data."
 msgstr ""
@@ -349,6 +351,7 @@ msgid "CPU power [W]"
 msgstr ""
 
 #: lib/myscinet_web/controllers/allocation_html/index.html.heex:7
+#: lib/myscinet_web/controllers/job_html/index.html.heex:48
 #, elixir-autogen, elixir-format
 msgid "Cluster"
 msgstr ""
@@ -424,7 +427,7 @@ msgstr ""
 msgid "Recently, this account has used <strong>%{percent}%</strong> of its rolling allocation (<strong>~%{cores} %{units}</strong>)."
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:12
+#: lib/myscinet_web/controllers/job_html/index.html.heex:144
 #: lib/myscinet_web/controllers/user_html/index.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Search"
@@ -455,17 +458,17 @@ msgstr ""
 msgid "Storage"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:61
+#: lib/myscinet_web/controllers/job_html/index.html.heex:193
 #, elixir-autogen, elixir-format
 msgid "Next"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:59
+#: lib/myscinet_web/controllers/job_html/index.html.heex:191
 #, elixir-autogen, elixir-format
 msgid "Page %{page}"
 msgstr ""
 
-#: lib/myscinet_web/controllers/job_html/index.html.heex:56
+#: lib/myscinet_web/controllers/job_html/index.html.heex:188
 #, elixir-autogen, elixir-format
 msgid "Previous"
 msgstr ""
@@ -631,4 +634,89 @@ msgstr ""
 #: lib/myscinet_web/controllers/job_html/show.html.heex:156
 #, elixir-autogen, elixir-format
 msgid "GPU Memory Free [GiB]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:40
+#, elixir-autogen, elixir-format
+msgid "Cancelled"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:138
+#, elixir-autogen, elixir-format
+msgid "Clear search"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:25
+#, elixir-autogen, elixir-format
+msgid "Completed"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:88
+#, elixir-autogen, elixir-format
+msgid "Exactly…"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:30
+#, elixir-autogen, elixir-format
+msgid "Failed"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:98
+#, elixir-autogen, elixir-format
+msgid "Fewer than…"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Filter"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:116
+#, elixir-autogen, elixir-format
+msgid "Group…"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:93
+#, elixir-autogen, elixir-format
+msgid "More than…"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:66
+#, elixir-autogen, elixir-format
+msgid "Past 24 hours"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:76
+#, elixir-autogen, elixir-format
+msgid "Past month"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:71
+#, elixir-autogen, elixir-format
+msgid "Past week"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:20
+#, elixir-autogen, elixir-format
+msgid "Running"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:62
+#, elixir-autogen, elixir-format
+msgid "Time"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:35
+#, elixir-autogen, elixir-format
+msgid "Timeout"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:107
+#, elixir-autogen, elixir-format
+msgid "User / Group"
+msgstr ""
+
+#: lib/myscinet_web/controllers/job_html/index.html.heex:111
+#, elixir-autogen, elixir-format
+msgid "User…"
 msgstr ""
