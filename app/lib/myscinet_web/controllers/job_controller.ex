@@ -35,7 +35,12 @@ defmodule MySciNetWeb.JobController do
   end
 
   def index(conn, params) do
-    page = Map.get(params, "p", "1") |> String.to_integer()
+    page =
+      case Integer.parse(Map.get(params, "p", "1")) do
+        {n, ""} when n >= 1 -> n
+        _ -> 1
+      end
+
     offset = (page - 1) * @page_size
 
     jobsq =
@@ -113,10 +118,10 @@ defmodule MySciNetWeb.JobController do
         {:ok, dynamic([j], like(j.jobid, ^"%:#{n}") or like(j.jobid, ^"%:#{n}\\_%"))}
 
       {:ident, x} ->
-        {:ok, dynamic([j], ilike(j.jobname, ^"%#{x}%"))}
+        {:ok, dynamic([j], ilike(j.jobname, ^"%#{escape_like(x)}%"))}
 
       {:string, x} ->
-        {:ok, dynamic([j], ilike(j.jobname, ^"%#{x}%"))}
+        {:ok, dynamic([j], ilike(j.jobname, ^"%#{escape_like(x)}%"))}
 
       {:is_eq, :cluster, {:ident, cluster}} ->
         slug =
@@ -134,13 +139,13 @@ defmodule MySciNetWeb.JobController do
         {:ok, dynamic([j], j.uid == ^n)}
 
       {:is_eq, :group, {:ident, g}} ->
-        {:ok, dynamic([j], like(j.account, ^"%-#{g}%"))}
+        {:ok, dynamic([j], like(j.account, ^"%-#{escape_like(g)}%"))}
 
       {:is_eq, :group, {:number, n}} ->
         {:ok, dynamic([j], j.gid == ^n)}
 
       {:is_eq, :state, {:ident, s}} ->
-        {:ok, dynamic([j], ilike(j.state, ^"#{s}%"))}
+        {:ok, dynamic([j], ilike(j.state, ^"#{escape_like(s)}%"))}
 
       {:is_eq, :nodes, {:number, n}} ->
         {:ok, dynamic([j], j.nnodes == ^n)}
@@ -186,6 +191,13 @@ defmodule MySciNetWeb.JobController do
       unrecognized ->
         {:error, :unrecognized_filter, unrecognized}
     end
+  end
+
+  defp escape_like(x) do
+    to_string(x)
+    |> String.replace("\\", "\\\\")
+    |> String.replace("%", "\\%")
+    |> String.replace("_", "\\_")
   end
 
   defp parse_naive_datetime(t) when is_binary(t) do
@@ -261,6 +273,10 @@ defmodule MySciNetWeb.JobController do
   def perf(conn, %{"cluster" => cluster_slug, "id" => cluster_job_id}) do
     id = to_psql_jobid(cluster_slug, cluster_job_id)
 
+    unless id =~ ~r/\A[a-z0-9_:-]+\z/ do
+      raise ArgumentError, "invalid job id: #{inspect(id)}"
+    end
+
     {table, cols} =
       if get_cluster(cluster_slug).gpu? do
         {:utilgpu,
@@ -308,12 +324,11 @@ defmodule MySciNetWeb.JobController do
       end
 
     cols = Enum.join(Enum.map(cols, &Atom.to_string/1), ",")
-    escaped_id = String.replace(id, "'", "''")
 
     case Cachex.get(:myscinet_cache, {:job_authz, id, conn.assigns.current_user.username}) do
       {:ok, true} ->
         query =
-          "COPY (SELECT to_char(time,'YYYY-MM-DD\"T\"HH24:MI:SS') as time,#{cols} FROM #{table} WHERE jobid = '#{escaped_id}' ORDER BY time) TO STDOUT CSV HEADER"
+          "COPY (SELECT to_char(time,'YYYY-MM-DD\"T\"HH24:MI:SS') as time,#{cols} FROM #{table} WHERE jobid = '#{id}' ORDER BY time) TO STDOUT CSV HEADER"
 
         conn =
           conn
