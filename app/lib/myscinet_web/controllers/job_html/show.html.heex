@@ -303,6 +303,15 @@
       when: "gpu"
     },
     {
+      id: "gpu-dram-active-plot",
+      label: "<%= gettext "GPU DRAM Active [%]" %>",
+      dcgm_field_name: "dcgm_fi_prof_dram_active",
+      y: d => 100*d.dcgm_fi_prof_dram_active,
+      z: nodegpu,
+      range: [0, 100],
+      when: "gpu"
+    },
+    {
       id: "portxmitdata-plot",
       label: "<%= gettext "Infiniband data transmitted [GiB/s]" %>",
       y: d => d.portxmitdata*4/1024**3, // portxmitdata has units of 4 bytes
