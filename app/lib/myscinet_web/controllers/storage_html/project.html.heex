@@ -1,0 +1,180 @@
+<.header>{gettext("Storage")}: /project/{@project_id}</.header>
+
+<div id="progress-container" class="my-8">
+  <p class="text-sm text-base-content/60 mb-3">
+    {gettext("Loading per-user storage breakdown…")}
+  </p>
+  <progress id="progress-bar" class="progress progress-primary w-full" value="0" max="100">
+  </progress>
+</div>
+
+<div id="error-container" hidden>
+  <div class="alert alert-error">
+    <span id="error-message"></span>
+  </div>
+</div>
+
+<div id="table-container" hidden>
+  <div class="overflow-x-auto">
+    <table class="table w-full table-auto border-collapse">
+      <thead>
+        <tr id="table-head"></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+      <tfoot id="table-foot"></tfoot>
+    </table>
+  </div>
+</div>
+
+<script>
+  const csvUrl = "/storage/project/<%= @project_id %>/users.csv";
+
+  function humanBytes(b) {
+    const units = [
+      [1024 ** 4, "<%= gettext("%{val} TiB", val: "") %>"],
+      [1024 ** 3, "<%= gettext("%{val} GiB", val: "") %>"],
+      [1024 ** 2, "<%= gettext("%{val} MiB", val: "") %>"],
+      [1024 ** 1, "<%= gettext("%{val} KiB", val: "") %>"],
+    ];
+    for (const [threshold, unit] of units) {
+      if (b >= threshold) return (b / threshold).toFixed(2) + unit;
+    }
+    return b + "<%= gettext("%{val} B", val: "") %>";
+  }
+
+  function humanPct(value, total) {
+    if (total === 0) return "—";
+    return (100 * value / total).toFixed(1) + "%";
+  }
+
+  function humanInodes(n) {
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + "G";
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
+    if (n >= 1e3) return (n / 1e3).toFixed(2) + "K";
+    return String(n);
+  }
+
+  function parseCSV(text) {
+    const lines = text.trim().split("\n");
+    const headers = lines[0].split(",").map(h => h.trim());
+    return lines.slice(1).map(line => {
+      const values = line.split(",");
+      const row = {};
+      headers.forEach((h, i) => { row[h] = values[i]?.trim(); });
+      return row;
+    });
+  }
+
+  const columns = [
+    { key: "user",       label: "<%= gettext "User" %>",     align: "left",  numeric: false },
+    { key: "num_inodes", label: "<%= gettext "Inodes" %>",   align: "right", numeric: true  },
+    { key: "pct_inodes", label: "<%= gettext "Inodes %" %>", align: "right", numeric: true, sortKey: "num_inodes" },
+    { key: "sum_size",   label: "<%= gettext "Size" %>",     align: "right", numeric: true  },
+    { key: "pct_size",   label: "<%= gettext "Size %" %>",   align: "right", numeric: true, sortKey: "sum_size"   },
+  ];
+
+  let allRows = [];
+  let totalInodes = 0, totalSize = 0;
+  let sortCol = "sum_size";
+  let sortDir = -1; // -1 = descending, 1 = ascending
+
+  function rowSortValue(row, key) {
+    if (key === "user") return (row.username || row.uid).toLowerCase();
+    if (key === "pct_inodes") return Number(row.num_inodes);
+    if (key === "pct_size") return Number(row.sum_size);
+    return Number(row[key]);
+  }
+
+  function renderTable() {
+    const sorted = [...allRows].sort((a, b) => {
+      const av = rowSortValue(a, sortCol), bv = rowSortValue(b, sortCol);
+      return av < bv ? -sortDir : av > bv ? sortDir : 0;
+    });
+
+    const thead = document.getElementById("table-head");
+    thead.innerHTML = "";
+    for (const col of columns) {
+      const th = document.createElement("th");
+      th.className = `text-${col.align} px-4 py-2 cursor-pointer select-none`;
+      const effectiveKey = col.sortKey || col.key;
+      const arrow = sortCol === effectiveKey ? (sortDir === 1 ? " ▲" : " ▼") : "";
+      th.textContent = col.label + arrow;
+      th.addEventListener("click", () => {
+        const effectiveKey = col.sortKey || col.key;
+        if (sortCol === effectiveKey) {
+          sortDir = -sortDir;
+        } else {
+          sortCol = effectiveKey;
+          sortDir = col.numeric ? -1 : 1;
+        }
+        renderTable();
+      });
+      thead.appendChild(th);
+    }
+
+    const tbody = document.getElementById("table-body");
+    tbody.innerHTML = "";
+    for (const row of sorted) {
+      const tr = document.createElement("tr");
+      tr.className = "border-t";
+      const inodes = Number(row.num_inodes), size = Number(row.sum_size);
+      tr.innerHTML =
+        `<td class="px-4 py-2 font-mono">${row.username || row.uid}</td>` +
+        `<td class="px-4 py-2 text-right font-mono">${humanInodes(inodes)}</td>` +
+        `<td class="px-4 py-2 text-right font-mono">${humanPct(inodes, totalInodes)}</td>` +
+        `<td class="px-4 py-2 text-right font-mono">${humanBytes(size)}</td>` +
+        `<td class="px-4 py-2 text-right font-mono">${humanPct(size, totalSize)}</td>`;
+      tbody.appendChild(tr);
+    }
+  }
+
+  const progressBar = document.getElementById("progress-bar");
+  let progress = 0;
+  const tickMs = 200;
+  const totalMs = 13600;
+  const step = 100 / (totalMs / tickMs);
+
+  const timer = setInterval(() => {
+    progress = Math.min(progress + step, 100);
+    progressBar.value = progress;
+  }, tickMs);
+
+  fetch(csvUrl)
+    .then(response => {
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return response.text();
+    })
+    .then(text => {
+      clearInterval(timer);
+      progressBar.value = 100;
+
+      allRows = parseCSV(text);
+
+      for (const row of allRows) {
+        totalInodes += Number(row.num_inodes);
+        totalSize += Number(row.sum_size);
+      }
+
+      const tfoot = document.getElementById("table-foot");
+      tfoot.innerHTML =
+        `<tr class="border-t-2 font-bold">` +
+        `<td class="px-4 py-2"><%= gettext "Total" %></td>` +
+        `<td class="px-4 py-2 text-right font-mono">${humanInodes(totalInodes)}</td>` +
+        `<td class="px-4 py-2 text-right font-mono">100%</td>` +
+        `<td class="px-4 py-2 text-right font-mono">${humanBytes(totalSize)}</td>` +
+        `<td class="px-4 py-2 text-right font-mono">100%</td>` +
+        `</tr>`;
+
+      renderTable();
+
+      document.getElementById("progress-container").hidden = true;
+      document.getElementById("table-container").hidden = false;
+    })
+    .catch(error => {
+      clearInterval(timer);
+      document.getElementById("progress-container").hidden = true;
+      const errorContainer = document.getElementById("error-container");
+      document.getElementById("error-message").textContent = "<%= gettext "Error loading data" %>: " + error.message;
+      errorContainer.hidden = false;
+    });
+</script>

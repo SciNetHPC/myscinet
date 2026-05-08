@@ -45,6 +45,7 @@ msgstr ""
 #: lib/myscinet_web/controllers/allocation_html/show.html.heex:39
 #: lib/myscinet_web/controllers/job_html/index.html.heex:153
 #: lib/myscinet_web/controllers/job_html/show.html.heex:31
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:67
 #: lib/myscinet_web/controllers/user_html/show.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "User"
@@ -440,6 +441,7 @@ msgstr ""
 #: lib/myscinet_web/components/layouts/root.html.heex:68
 #: lib/myscinet_web/components/layouts/root.html.heex:88
 #: lib/myscinet_web/controllers/storage_html/index.html.heex:1
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:1
 #: lib/myscinet_web/controllers/user_html/show.html.heex:28
 #, elixir-autogen, elixir-format
 msgid "Storage"
@@ -460,7 +462,7 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: lib/myscinet_web/controllers/storage_html/index.html.heex:62
+#: lib/myscinet_web/controllers/storage_html/index.html.heex:71
 #, elixir-autogen, elixir-format
 msgid "No storage information available."
 msgstr ""
@@ -486,26 +488,31 @@ msgid "Space"
 msgstr ""
 
 #: lib/myscinet_web/controllers/storage_html.ex:26
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:40
 #, elixir-autogen, elixir-format
 msgid "%{val} B"
 msgstr ""
 
 #: lib/myscinet_web/controllers/storage_html.ex:15
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:33
 #, elixir-autogen, elixir-format
 msgid "%{val} GiB"
 msgstr ""
 
 #: lib/myscinet_web/controllers/storage_html.ex:23
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "%{val} KiB"
 msgstr ""
 
 #: lib/myscinet_web/controllers/storage_html.ex:19
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "%{val} MiB"
 msgstr ""
 
 #: lib/myscinet_web/controllers/storage_html.ex:11
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "%{val} TiB"
 msgstr ""
@@ -711,4 +718,39 @@ msgstr ""
 #: lib/myscinet_web/controllers/job_html/show.html.heex:307
 #, elixir-autogen, elixir-format, fuzzy
 msgid "GPU DRAM Active [%]"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:175
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Error loading data"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:68
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Inodes"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:69
+#, elixir-autogen, elixir-format
+msgid "Inodes %"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:4
+#, elixir-autogen, elixir-format
+msgid "Loading per-user storage breakdown…"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:70
+#, elixir-autogen, elixir-format
+msgid "Size"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:71
+#, elixir-autogen, elixir-format
+msgid "Size %"
+msgstr ""
+
+#: lib/myscinet_web/controllers/storage_html/project.html.heex:159
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Total"
 msgstr ""

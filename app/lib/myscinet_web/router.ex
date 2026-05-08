@@ -105,6 +105,8 @@ defmodule MySciNetWeb.Router do
     get "/jobs/:cluster/:id/perf.csv", JobController, :perf
     post "/logout", LoginController, :delete
     get "/storage", StorageController, :index
+    get "/storage/project/:id", StorageController, :project
+    get "/storage/project/:id/users.csv", StorageController, :project_users_csv
   end
 
   scope "/", MySciNetWeb do

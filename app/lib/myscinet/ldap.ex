@@ -165,6 +165,36 @@ defmodule MySciNet.LDAP do
     end
   end
 
+  def users_by_uid_numbers([]), do: {:ok, %{}}
+
+  def users_by_uid_numbers(uid_numbers) do
+    transact_as_admin(fn handle ->
+      filters =
+        Enum.map(uid_numbers, fn n ->
+          :eldap.equalityMatch(~c"uidNumber", to_charlist(to_string(n)))
+        end)
+
+      filter =
+        case filters do
+          [single] -> single
+          multiple -> :eldap.or(multiple)
+        end
+
+      case search_upstream_and_local_users(handle, filter, [~c"uid", ~c"uidNumber"]) do
+        {:ok, results} ->
+          mapping =
+            for %{uid: [username], uidNumber: [uid_num]} <- results, into: %{} do
+              {uid_num, username}
+            end
+
+          {:ok, mapping}
+
+        error ->
+          error
+      end
+    end)
+  end
+
   def user_search(q) do
     transact_as_admin(fn handle ->
       cq = to_charlist(q)

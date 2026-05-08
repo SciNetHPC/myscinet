@@ -99,4 +99,7 @@ defmodule MySciNetWeb.StorageHTML do
 
   def display_path(<<"/trillium_", rest::binary>>), do: "/" <> rest
   def display_path(path) when is_binary(path), do: path
+
+  def project_id_from_path(<<"/trillium_project/", id::binary>>), do: id
+  def project_id_from_path(_), do: nil
 end

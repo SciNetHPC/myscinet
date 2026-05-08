@@ -18,6 +18,7 @@
       <tbody>
         <%= for map <- @storage do %>
           <% display_path = display_path(map[:path]) %>
+          <% project_id = project_id_from_path(map[:path]) %>
 
           <% used_capacity = map[:used_capacity] %>
           <% max_capacity = map[:soft_limit] %>
@@ -30,7 +31,15 @@
 
           <tr class="border-t">
             <td class="px-4 py-3 align-top whitespace-nowrap">
-              <div class="font-semibold">{display_path}</div>
+              <div class="font-semibold">
+                <%= if project_id && MySciNetWeb.Permissions.is_staff_user?(@conn) do %>
+                  <a href={~p"/storage/project/#{project_id}"} class="link link-primary">
+                    {display_path}
+                  </a>
+                <% else %>
+                  {display_path}
+                <% end %>
+              </div>
               <%= if map.state != "OK" do %>
                 <div class="text-xs">{map.state}</div>
               <% end %>
