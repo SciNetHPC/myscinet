@@ -14,6 +14,9 @@ services:
       MIX_ENV: dev
       REDIS_URL: ${REDIS_URL}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
+      VASTDB_ENDPOINTS: ${VASTDB_ENDPOINTS}
+      VASTDB_ACCESS_KEY: ${VASTDB_ACCESS_KEY}
+      VASTDB_SECRET_KEY: ${VASTDB_SECRET_KEY}
     ports:
       - "4000:4000"
     volumes:
@@ -27,4 +30,5 @@ services:
       - ./app/priv:/app/priv:Z
       - ./app/start.sh:/app/start.sh:Z
       - ./app/test:/app/test:Z
+      - ./scripts/vast_usage_by_user.py:/venv/bin/vast_usage_by_user.py:Z
 
