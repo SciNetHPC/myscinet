@@ -12,6 +12,13 @@ defmodule MySciNetWeb.PageController do
   defp parse_cluster_val("nodesRunning", sval), do: string_to_float(sval)
   defp parse_cluster_val(_, sval), do: String.to_integer(sval)
 
+  defp get_vast do
+    case MySciNet.Redis.hgetalls(["vast:clusters"], fn _, v -> string_to_float(v) end) do
+      {:ok, [vast]} -> {:ok, vast}
+      _ -> :error
+    end
+  end
+
   defp get_clusters(clusters) do
     cluster_keys = for cluster <- clusters, do: "cluster:#{cluster.slug_redis}"
 
@@ -39,15 +46,23 @@ defmodule MySciNetWeb.PageController do
   end
 
   def home(conn, _params) do
+    vast =
+      case get_vast() do
+        {:ok, v} -> v
+        _ -> nil
+      end
+
     case get_clusters(Clusters.get_clusters()) do
       {:ok, clusters} ->
         conn
         |> assign(:clusters, clusters)
+        |> assign(:vast, vast)
         |> render(:home)
 
       _ ->
         conn
         |> assign(:clusters, [])
+        |> assign(:vast, vast)
         |> put_flash(:error, "Failed to load clusters")
         |> render(:home)
     end

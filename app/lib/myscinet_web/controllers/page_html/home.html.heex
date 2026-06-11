@@ -1,36 +1,72 @@
 <div class="grid grid-cols-1 gap-6">
-  <!--
-  <div class="card bg-base-200 shadow-sm">
-    <div class="card-body grid grid-cols-6 gap-8 items-center">
-      <div class="col-span-1">
-        <h2 class="card-title">Storage</h2>
-        <p><span class="badge badge-success">Online</span></p>
-      </div>
-      <div class="col-span-4">
-        <div class="stats stats-horizontal">
-          <div class="stat">
-            <div class="stat-title">Utilization</div>
-            <div class="stat-value">36.8%</div>
-          </div>
-          <div class="stat">
-            <div class="stat-title">Total Capacity</div>
-            <div class="stat-value">32.7 PB</div>
-          </div>
-          <div class="stat">
-            <div class="stat-title">Free Space</div>
-            <div class="stat-value">20.4 PB</div>
+  <%= if @vast do %>
+    <% usable_tb = Map.get(@vast, :usable_capacity_tb, 0.0) %>
+    <% free_tb = Map.get(@vast, :free_usable_capacity_tb, 0.0) %>
+    <% used_tb = usable_tb - free_tb %>
+    <% pct_used = if usable_tb > 0, do: 100.0 * used_tb / usable_tb, else: 0.0 %>
+    <% rd_bw = Map.get(@vast, :rd_bw_mb, 0.0) %>
+    <% wr_bw = Map.get(@vast, :wr_bw_mb, 0.0) %>
+    <% rd_iops = Map.get(@vast, :rd_iops, 0.0) %>
+    <% wr_iops = Map.get(@vast, :wr_iops, 0.0) %>
+    <% rd_lat = Map.get(@vast, :rd_latency_ms, 0.0) %>
+    <% wr_lat = Map.get(@vast, :wr_latency_ms, 0.0) %>
+    <div class="card bg-base-200 shadow-sm">
+      <div class="card-body grid grid-cols-6 gap-8 items-center">
+        <div class="col-span-1">
+          <h2 class="card-title">VastData</h2>
+          <p class="badge badge-success">
+            Online
+          </p>
+        </div>
+        <div class="col-span-5">
+          <div class="stats stats-horizontal">
+            <div class="stat">
+              <div class="stat-title">{gettext("Utilization")}</div>
+              <div class={
+                cond do
+                  pct_used >= 80 -> "stat-value text-error"
+                  pct_used >= 66 -> "stat-value text-warning"
+                  true -> "stat-value"
+                end
+              }>
+                {Float.round(pct_used, 1)}%
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Capacity")}</div>
+              <div class="stat-value text-sm">
+                {Float.round(used_tb, 1)} / {Float.round(usable_tb, 1)} TB
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Read BW")}</div>
+              <div class="stat-value text-sm">{Float.round(rd_bw / 1024.0, 1)} GB/s</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Write BW")}</div>
+              <div class="stat-value text-sm">{Float.round(wr_bw / 1024.0, 1)} GB/s</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Read IOPS")}</div>
+              <div class="stat-value text-sm">{round(rd_iops)}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Write IOPS")}</div>
+              <div class="stat-value text-sm">{round(wr_iops)}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Read Lat")}</div>
+              <div class="stat-value text-sm">{Float.round(rd_lat, 2)} ms</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">{gettext("Write Lat")}</div>
+              <div class="stat-value text-sm">{Float.round(wr_lat, 2)} ms</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-span-1">
-        <ul class="flex flex-col gap-2">
-          <li>Cnodes: <span class="badge badge-success">43 Online</span></li>
-          <li>Dnodes: <span class="badge badge-success">56 Online</span></li>
-        </ul>
-      </div>
     </div>
-  </div>
-  -->
+  <% end %>
   <% now = DateTime.utc_now() |> DateTime.to_unix() %>
   <%= for cluster <- @clusters do %>
     <a href={~p"/jobs/?q=cluster:#{cluster.slug_web}"} class="block">
