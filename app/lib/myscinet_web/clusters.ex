@@ -6,6 +6,7 @@ defmodule MySciNetWeb.Clusters do
       slug_redis: "trillium",
       slug_psql: "tric",
       nodes: 1234 + 39,
+      billing: 1234 + 39,
       cpumem: 768,
       gpu?: false,
       logins: [
@@ -23,6 +24,7 @@ defmodule MySciNetWeb.Clusters do
       slug_redis: "grillium",
       slug_psql: "trig",
       nodes: 63,
+      billing: 63*4,
       cpumem: 768,
       gpu?: true,
       logins: ["trig-login01"]
@@ -33,6 +35,7 @@ defmodule MySciNetWeb.Clusters do
       slug_redis: "balam",
       slug_psql: "balam",
       nodes: 10,
+      billing: 10*4,
       cpumem: 1000,
       gpu?: true,
       logins: ["balam-login01"]
@@ -53,7 +56,7 @@ defmodule MySciNetWeb.Clusters do
 
   def days_of_work(cluster) do
     (Map.get(cluster, :active_procsecs, 0) + Map.get(cluster, :queued_procsecs, 0)) /
-      (86400.0 * cluster.nodes)
+      (86400.0 * cluster.billing)
   end
 
   def get_cluster(slug) do
