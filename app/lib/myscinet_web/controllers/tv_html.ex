@@ -1,5 +1,6 @@
 defmodule MySciNetWeb.TvHTML do
   use MySciNetWeb, :html
+  alias MySciNetWeb.Clusters
 
   embed_templates "tv_html/*"
 
@@ -16,17 +17,13 @@ defmodule MySciNetWeb.TvHTML do
   def cluster_card(cluster, now_unix) do
     nodes = cluster.nodes
     nodes_running = Map.get(cluster, :nodesRunning, 0.0)
-    active_count = Map.get(cluster, :active_count, 0)
-    queued_count = Map.get(cluster, :queued_count, 0)
-    active_secs = Map.get(cluster, :active_procsecs, 0)
-    queued_secs = Map.get(cluster, :queued_procsecs, 0)
     cluster_time = Map.get(cluster, :time, 0)
     login_stats = Map.get(cluster, :login_stats, [])
 
     online = now_unix - cluster_time < 600
     utilization = if nodes > 0, do: 100.0 * nodes_running / nodes, else: 0.0
-    days = if nodes > 0, do: (active_secs + queued_secs) / (86400.0 * nodes), else: 0.0
-    total_jobs = active_count + queued_count
+    days = Clusters.days_of_work(cluster)
+    total_jobs = Clusters.total_jobs(cluster)
 
     status_color = if online, do: "#00e887", else: "#ff5555"
     status_str = if online, do: "● ONLINE", else: "○  STALE"

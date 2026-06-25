@@ -47,6 +47,15 @@ defmodule MySciNetWeb.Clusters do
     @clusters
   end
 
+  def total_jobs(cluster) do
+    Map.get(cluster, :active_count, 0) + Map.get(cluster, :queued_count, 0)
+  end
+
+  def days_of_work(cluster) do
+    (Map.get(cluster, :active_procsecs, 0) + Map.get(cluster, :queued_procsecs, 0)) /
+      (86400.0 * cluster.nodes)
+  end
+
   def get_cluster(slug) do
     Enum.find(@clusters, fn c ->
       c.slug_web == slug || c.slug_redis == slug || c.slug_psql == slug
