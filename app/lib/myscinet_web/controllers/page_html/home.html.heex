@@ -116,16 +116,27 @@
                       <li class="flex items-center">
                         <% title =
                           "#{login_node}: " <>
-                            if status,
-                              do:
-                                "Load #{status.load}, CPU #{status.cpu}%, Mem free: #{status.memfree}%",
-                              else: "unknown" %>
+                            cond do
+                              is_nil(status) ->
+                                "unknown"
+
+                              Map.get(status, :nologin, false) ->
+                                "offline"
+
+                              true ->
+                                "Load #{status.load}, CPU #{status.cpu}%, Mem free: #{status.memfree}%"
+                            end %>
                         <span title={title}>
                           <%= cond do %>
                             <% is_nil(status) -> %>
                               <.icon
                                 name="hero-question-mark-circle-solid"
                                 class="text-gray-400 mr-1"
+                              />
+                            <% Map.get(status, :nologin, false) -> %>
+                              <.icon
+                                name="hero-x-circle-solid"
+                                class="alert alert-error mr-1"
                               />
                             <% status.cpu > 80.0 or status.memfree < 25.0 or status.load > 96.0 -> %>
                               <.icon

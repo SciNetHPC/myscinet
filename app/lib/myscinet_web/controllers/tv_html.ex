@@ -83,6 +83,9 @@ defmodule MySciNetWeb.TvHTML do
                 nil ->
                   {"○", "#555555"}
 
+                %{nologin: true} ->
+                  {"○", "#ff5555"}
+
                 s ->
                   cpu = Map.get(s, :cpu, 0.0)
                   memfree = Map.get(s, :memfree, 100.0)

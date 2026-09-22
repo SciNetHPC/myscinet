@@ -9,6 +9,9 @@ defmodule MySciNet.ClusterStats do
   defp parse_cluster_val("nodesRunning", sval), do: string_to_float(sval)
   defp parse_cluster_val(_, sval), do: String.to_integer(sval)
 
+  defp parse_login_val("nologin", sval), do: sval == "1"
+  defp parse_login_val(_, sval), do: String.to_float(sval)
+
   def get_vast do
     case MySciNet.Redis.hgetalls(["vast:clusters"], fn _, v -> string_to_float(v) end) do
       {:ok, [vast]} -> {:ok, vast}
@@ -26,7 +29,7 @@ defmodule MySciNet.ClusterStats do
             login_keys = for login <- cluster.logins, do: "#{login}:stats"
 
             login_stats =
-              case MySciNet.Redis.hgetalls(login_keys, fn _, v -> String.to_float(v) end) do
+              case MySciNet.Redis.hgetalls(login_keys, &parse_login_val/2) do
                 {:ok, results} -> results
                 _ -> for _ <- cluster.logins, do: nil
               end
