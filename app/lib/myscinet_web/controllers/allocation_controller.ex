@@ -1,6 +1,5 @@
 defmodule MySciNetWeb.AllocationController do
   use MySciNetWeb, :controller
-  require MySciNetWeb.Permissions
   alias MySciNetWeb.Clusters
 
   def get_allocations_for_user(username) do

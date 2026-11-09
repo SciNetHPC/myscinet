@@ -1,4 +1,4 @@
-FROM elixir:1.18-otp-27
+FROM elixir:1.20-otp-29
 
 ENV MIX_ENV=prod
 
@@ -14,9 +14,6 @@ RUN python3 -m venv /venv \
     && /venv/bin/pip3 install --no-cache-dir --upgrade pip \
     && /venv/bin/pip3 install --no-cache-dir duckdb vastdb
 COPY scripts/vast_usage_by_user.py /venv/bin/
-
-# install Tidewave AI mcp-proxy
-#RUN cd /usr/local/bin && curl -sL https://github.com/tidewave-ai/mcp_proxy_rust/releases/latest/download/mcp-proxy-x86_64-unknown-linux-musl.tar.gz | tar xvz
 
 COPY ./app /app
 WORKDIR /app
