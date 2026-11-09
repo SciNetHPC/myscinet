@@ -1,5 +1,5 @@
 <% {cluster, cjobid} = from_psql_jobid(@job.jobid) %>
-<% cpumem = get_cluster(cluster).cpumem %>
+<% specs = node_specs(get_cluster(cluster), @job.nodelist) %>
 <% perf_csv_path = ~p"/jobs/#{cluster}/#{cjobid}/perf.csv" %>
 
 <.header>
@@ -148,7 +148,7 @@
       "dcgm_field_name": "dcgm_fi_dev_power_usage",
       "y": d => d.dcgm_fi_dev_power_usage,
       "z": nodegpu,
-      "range": [0, 750],
+      "range": [0, <%= specs.gpupower %>],
       "when": "gpu"
     },
     {
@@ -157,7 +157,7 @@
       dcgm_field_name: "dcgm_fi_dev_fb_free",
       y: d => d.dcgm_fi_dev_fb_free/1024,
       z: nodegpu,
-      range: [0, 80],
+      range: [0, <%= specs.gpumem %>],
       when: "gpu"
     },
     {
@@ -189,7 +189,7 @@
       label: "<%= gettext "CPU Memory Available [GiB]" %>",
       y: d => (d.memfree + d.buffers + d.cached)/1024,
       z: "nodename",
-      range: [0, <%= cpumem %>],
+      range: [0, <%= specs.cpumem %>],
       when: "all"
     },
     {

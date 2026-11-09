@@ -15,7 +15,7 @@ defmodule MySciNetWeb.TvHTML do
   @tv_w 151
 
   def cluster_card(cluster, now_unix) do
-    nodes = cluster.nodes
+    nodes = cluster.nnodes
     nodes_running = Map.get(cluster, :nodesRunning, 0.0)
     cluster_time = Map.get(cluster, :time, 0)
     login_stats = Map.get(cluster, :login_stats, [])

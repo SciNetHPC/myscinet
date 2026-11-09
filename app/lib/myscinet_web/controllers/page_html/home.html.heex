@@ -87,7 +87,7 @@
             <div class="stats stats-horizontal">
               <div class="stat">
                 <div class="stat-title">{gettext("Utilization")}</div>
-                <% utilization = 100 * cluster.nodesRunning / cluster.nodes %>
+                <% utilization = 100 * cluster.nodesRunning / cluster.nnodes %>
                 <div class={
                   cond do
                     utilization >= 95 -> "stat-value text-success"
