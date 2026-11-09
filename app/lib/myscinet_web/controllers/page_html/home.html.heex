@@ -136,22 +136,22 @@
                             <% Map.get(status, :nologin, false) -> %>
                               <.icon
                                 name="hero-x-circle-solid"
-                                class="alert alert-error mr-1"
+                                class="text-error mr-1"
                               />
                             <% status.cpu > 80.0 or status.memfree < 25.0 or status.load > 96.0 -> %>
                               <.icon
                                 name="hero-exclamation-triangle-solid"
-                                class="alert alert-error mr-1"
+                                class="text-error mr-1"
                               />
                             <% status.cpu > 50.0 or status.memfree < 50.0 or status.load > 48.0 -> %>
                               <.icon
                                 name="hero-minus-circle-solid"
-                                class="alert alert-warning mr-1"
+                                class="text-warning mr-1"
                               />
                             <% true -> %>
                               <.icon
                                 name="hero-check-circle-solid"
-                                class="alert alert-success mr-1"
+                                class="text-success mr-1"
                               />
                           <% end %>
                         </span>
