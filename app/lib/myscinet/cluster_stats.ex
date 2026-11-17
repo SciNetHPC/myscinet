@@ -7,6 +7,7 @@ defmodule MySciNet.ClusterStats do
   end
 
   defp parse_cluster_val("nodesRunning", sval), do: string_to_float(sval)
+  defp parse_cluster_val("gpusRunning", sval), do: string_to_float(sval)
   defp parse_cluster_val(_, sval), do: String.to_integer(sval)
 
   defp parse_login_val("nologin", sval), do: sval == "1"

@@ -94,6 +94,23 @@ defmodule MySciNetWeb.Clusters do
     Map.get(cluster, :active_count, 0) + Map.get(cluster, :queued_count, 0)
   end
 
+  @doc """
+  `{running, total, unit}` for utilization: GPUs for GPU clusters that report
+  `gpusRunning`, otherwise nodes (from `nodesRunning`).
+  """
+  def utilization_counts(%{gpu?: true, billing: total, gpusRunning: running}),
+    do: {running, total, "GPUs"}
+
+  def utilization_counts(cluster),
+    do: {Map.get(cluster, :nodesRunning, 0.0), cluster.nnodes, "Nodes"}
+
+  def utilization(cluster) do
+    case utilization_counts(cluster) do
+      {running, total, _} when total > 0 -> 100.0 * running / total
+      _ -> 0.0
+    end
+  end
+
   def days_of_work(cluster) do
     (Map.get(cluster, :active_procsecs, 0) + Map.get(cluster, :queued_procsecs, 0)) /
       (86400.0 * cluster.billing)

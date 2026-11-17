@@ -15,13 +15,12 @@ defmodule MySciNetWeb.TvHTML do
   @tv_w 151
 
   def cluster_card(cluster, now_unix) do
-    nodes = cluster.nnodes
-    nodes_running = Map.get(cluster, :nodesRunning, 0.0)
+    {running, total, label} = Clusters.utilization_counts(cluster)
     cluster_time = Map.get(cluster, :time, 0)
     login_stats = Map.get(cluster, :login_stats, [])
 
     online = now_unix - cluster_time < 600
-    utilization = if nodes > 0, do: 100.0 * nodes_running / nodes, else: 0.0
+    utilization = Clusters.utilization(cluster)
     days = Clusters.days_of_work(cluster)
     total_jobs = Clusters.total_jobs(cluster)
 
@@ -111,7 +110,7 @@ defmodule MySciNetWeb.TvHTML do
     lines =
       [top, title, sep, blank] ++
         [
-          stat_row.("Nodes", "#{nodes_running} / #{nodes}"),
+          stat_row.(label, "#{running} / #{total}"),
           stat_row.("Utilization", util_str),
           bar_html,
           blank,
