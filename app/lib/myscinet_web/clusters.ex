@@ -61,7 +61,7 @@ defmodule MySciNetWeb.Clusters do
       gpu?: true,
       logins: ["balam-login01"],
       nodes: [
-        %{hostlist: "balam[001-010]", billing: 4, cpumem: 1000, gpumem: 80, gpupower: 750}
+        %{hostlist: "balam[001-010]", billing: 4, cpumem: 1000, gpumem: 40, gpupower: 400}
       ]
     }
   ]
